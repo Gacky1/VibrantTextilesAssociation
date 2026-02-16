@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import logo from '../assets/LogoRectTransparent.png';
 
 const About = () => {
   const ref = useRef(null);
@@ -52,20 +53,8 @@ const About = () => {
             transition={{ delay: 0.6, duration: 0.8 }}
             className="relative"
           >
-            <div className="aspect-square bg-gradient-to-br from-primary-100 to-accent-100 rounded-3xl shadow-2xl overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="grid grid-cols-2 gap-4 p-8">
-                  {[...Array(4)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0 }}
-                      animate={isInView ? { opacity: 1, scale: 1 } : {}}
-                      transition={{ delay: 0.8 + i * 0.1, duration: 0.5 }}
-                      className="aspect-square bg-white/50 backdrop-blur-sm rounded-2xl shadow-lg"
-                    />
-                  ))}
-                </div>
-              </div>
+            <div className="aspect-square bg-gradient-to-br from-primary-100 to-accent-100 rounded-3xl shadow-2xl overflow-hidden flex items-center justify-center p-12">
+              <img src={logo} alt="Vibrant Textiles Association" className="w-full h-auto object-contain" />
             </div>
           </motion.div>
         </motion.div>
