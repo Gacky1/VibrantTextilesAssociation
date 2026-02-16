@@ -55,23 +55,38 @@ const AboutTextile = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Overview Cards */}
           <div className="grid md:grid-cols-3 gap-6 mb-16">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 text-center shadow-lg">
-              <div className="text-5xl mb-4">💼</div>
-              <h3 className="text-3xl font-bold text-primary-700 mb-2">2.3%</h3>
-              <p className="text-gray-700">of India's GDP</p>
-              <p className="text-sm text-gray-600 mt-2">45M+ direct employment</p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 text-center shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10">
+                <img src="https://images.unsplash.com/photo-1558769132-cb1aea1c8f7f?w=400" alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="relative">
+                <div className="text-5xl mb-4">💼</div>
+                <h3 className="text-3xl font-bold text-primary-700 mb-2">2.3%</h3>
+                <p className="text-gray-700">of India's GDP</p>
+                <p className="text-sm text-gray-600 mt-2">45M+ direct employment</p>
+              </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl p-8 text-center shadow-lg">
-              <div className="text-5xl mb-4">📈</div>
-              <h3 className="text-3xl font-bold text-accent-700 mb-2">$225B</h3>
-              <p className="text-gray-700">Market Size (2025)</p>
-              <p className="text-sm text-gray-600 mt-2">$350B by 2030</p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl p-8 text-center shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10">
+                <img src="https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=400" alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="relative">
+                <div className="text-5xl mb-4">📈</div>
+                <h3 className="text-3xl font-bold text-accent-700 mb-2">$225B</h3>
+                <p className="text-gray-700">Market Size (2025)</p>
+                <p className="text-sm text-gray-600 mt-2">$350B by 2030</p>
+              </div>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center shadow-lg">
-              <div className="text-5xl mb-4">🌍</div>
-              <h3 className="text-3xl font-bold text-green-700 mb-2">$35-36B</h3>
-              <p className="text-gray-700">Annual Exports</p>
-              <p className="text-sm text-gray-600 mt-2">Leading global exporter</p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-8 text-center shadow-lg relative overflow-hidden">
+              <div className="absolute inset-0 opacity-10">
+                <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400" alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="relative">
+                <div className="text-5xl mb-4">🌍</div>
+                <h3 className="text-3xl font-bold text-green-700 mb-2">$35-36B</h3>
+                <p className="text-gray-700">Annual Exports</p>
+                <p className="text-sm text-gray-600 mt-2">Leading global exporter</p>
+              </div>
             </motion.div>
           </div>
 
