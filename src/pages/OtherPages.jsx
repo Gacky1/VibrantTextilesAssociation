@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 export const Media = () => {
   return (
@@ -10,6 +11,7 @@ export const Media = () => {
           <p className="text-lg text-gray-600">Coming Soon</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -24,6 +26,7 @@ export const Research = () => {
           <p className="text-lg text-gray-600">Coming Soon</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -38,6 +41,7 @@ export const Contact = () => {
           <p className="text-lg text-gray-600">Coming Soon</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
@@ -52,6 +56,7 @@ export const Membership = () => {
           <p className="text-lg text-gray-600">Coming Soon</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

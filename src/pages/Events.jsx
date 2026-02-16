@@ -1,4 +1,5 @@
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const Events = () => {
   return (
@@ -10,6 +11,7 @@ const Events = () => {
           <p className="text-lg text-gray-600">Coming Soon</p>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };

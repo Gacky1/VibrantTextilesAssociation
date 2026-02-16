@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 
 const AboutTextile = () => {
   const segments = [
@@ -118,13 +119,7 @@ const AboutTextile = () => {
         </div>
       </div>
 
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h3 className="text-2xl font-serif font-bold mb-4">Vibrant Textiles Association</h3>
-          <p className="text-gray-400 mb-4">Empowering India's Textile Ecosystem</p>
-          <p className="text-gray-500 text-sm">© 2024 Vibrant Textiles Association. All rights reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
