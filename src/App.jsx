@@ -5,7 +5,8 @@ import AboutTextile from './pages/AboutTextile';
 import Events from './pages/Events';
 import MembersPage from './pages/MembersPage';
 import SkillDevelopment from './pages/SkillDevelopment';
-import { Media, Research, Contact, Membership } from './pages/OtherPages';
+import Membership from './pages/Membership';
+import { Media, Research, Contact } from './pages/OtherPages';
 
 function App() {
   return (

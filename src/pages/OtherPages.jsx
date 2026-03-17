@@ -150,7 +150,6 @@ export const Contact = () => {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <div className="pt-32 pb-16">
-        {/* Hero Section */}
         <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 text-white py-16 mb-16 overflow-hidden">
           <div className="absolute inset-0 opacity-10">
             <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
@@ -163,7 +162,6 @@ export const Contact = () => {
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Contact Form */}
           <div className="bg-white rounded-2xl shadow-2xl p-8 md:p-12 mb-12">
             <form className="space-y-6">
               <div className="grid md:grid-cols-2 gap-6">
@@ -190,9 +188,7 @@ export const Contact = () => {
             </form>
           </div>
 
-          {/* Address and Map Section */}
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Contact Details */}
             <div className="space-y-6">
               <div className="bg-white rounded-xl p-6 shadow-lg">
                 <div className="flex items-start gap-4">
@@ -232,7 +228,6 @@ export const Contact = () => {
               </div>
             </div>
 
-            {/* Map */}
             <div className="bg-white rounded-xl shadow-lg overflow-hidden h-full min-h-[500px]">
               <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9746146598793!2d77.21787931508076!3d28.631447982422374!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd371d9e0d07%3A0x7e2c8c0b6b6b6b6b!2sConnaught%20Place%2C%20New%20Delhi%2C%20Delhi!5e0!3m2!1sen!2sin!4v1234567890123!5m2!1sen!2sin"
@@ -245,114 +240,6 @@ export const Contact = () => {
                 className="w-full h-full"
               ></iframe>
             </div>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
-
-export const Membership = () => {
-  const membershipTypes = [
-    {
-      name: "Individual Artisan",
-      price: "₹500/year",
-      icon: "🧑‍🎨",
-      features: ["Skill training access", "Market linkage support", "Certification assistance", "Networking events", "Monthly newsletter"]
-    },
-    {
-      name: "MSME/Vendor",
-      price: "₹5,000/year",
-      icon: "🏭",
-      popular: true,
-      features: ["All Individual benefits", "Business consultancy", "Export guidance", "Trade fair participation", "Priority support", "Quarterly reports"]
-    },
-    {
-      name: "Corporate",
-      price: "₹25,000/year",
-      icon: "🏢",
-      features: ["All MSME benefits", "Dedicated account manager", "Custom research", "Policy advocacy", "Branding opportunities", "Annual summit access"]
-    }
-  ];
-
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navbar />
-      <div className="pt-32 pb-16">
-        <div className="relative bg-gradient-to-br from-accent-600 via-primary-700 to-accent-800 text-white py-16 mb-16 overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
-            <div className="absolute bottom-10 right-10 w-96 h-96 bg-primary-300 rounded-full blur-3xl"></div>
-          </div>
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">Membership Plans</h1>
-            <p className="text-lg opacity-90">Join India's leading textile association and grow your business</p>
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {membershipTypes.map((plan, idx) => (
-              <div key={idx} className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all ${plan.popular ? 'ring-4 ring-primary-500 transform scale-105' : ''}`}>
-                {plan.popular && (
-                  <div className="bg-primary-600 text-white text-center py-2 font-semibold text-sm">MOST POPULAR</div>
-                )}
-                <div className="p-8">
-                  <div className="text-6xl mb-4 text-center">{plan.icon}</div>
-                  <h3 className="text-2xl font-bold text-gray-900 text-center mb-2">{plan.name}</h3>
-                  <div className="text-4xl font-bold text-primary-600 text-center mb-6">{plan.price}</div>
-                  <ul className="space-y-3 mb-8">
-                    {plan.features.map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-green-600 mt-1">✓</span>
-                        <span className="text-gray-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button className={`w-full py-3 rounded-lg font-semibold transition-all ${plan.popular ? 'bg-gradient-to-r from-primary-600 to-primary-700 text-white hover:shadow-lg' : 'bg-gray-100 text-gray-900 hover:bg-gray-200'}`}>
-                    Choose Plan
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="bg-white rounded-2xl p-8 shadow-xl mb-16">
-            <h2 className="text-3xl font-serif font-bold text-gray-900 mb-6 text-center">Application Form</h2>
-            <form className="max-w-2xl mx-auto space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">Full Name / Organization</label>
-                  <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" required />
-                </div>
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">Membership Type</label>
-                  <select className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" required>
-                    <option>Individual Artisan</option>
-                    <option>MSME/Vendor</option>
-                    <option>Corporate</option>
-                  </select>
-                </div>
-              </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">Email</label>
-                  <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" required />
-                </div>
-                <div>
-                  <label className="block text-gray-700 font-semibold mb-2">Phone</label>
-                  <input type="tel" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none" required />
-                </div>
-              </div>
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">Address</label>
-                <textarea rows="3" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 outline-none resize-none" required></textarea>
-              </div>
-              <button type="submit" className="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 text-white rounded-lg font-semibold text-lg hover:shadow-xl transition-all">
-                Submit Application
-              </button>
-            </form>
           </div>
         </div>
       </div>
