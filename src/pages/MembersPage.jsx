@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -157,9 +158,11 @@ const MembersPage = () => {
         >
           <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Join Our Community</h2>
           <p className="text-lg mb-8 opacity-90">Become a member and be part of India's textile transformation</p>
-          <button className="px-8 py-4 bg-white text-primary-700 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105">
-            Apply for Membership
-          </button>
+          <Link to="/membership">
+            <button className="px-8 py-4 bg-white text-primary-700 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105">
+              Apply for Membership
+            </button>
+          </Link>
         </motion.div>
       </div>
 
