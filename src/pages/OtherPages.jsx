@@ -3,12 +3,12 @@ import Footer from '../components/Footer';
 
 export const Media = () => {
   const mediaGallery = [
-    { type: "image", url: "https://images.unsplash.com/photo-1558769132-cb1aea1c8f7f?w=600", title: "Handloom Workshop" },
+    { type: "image", url: "https://images.unsplash.com/photo-1766065447157-6e7c6dd83e52?q=80&w=2128&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Handloom Workshop" },
     { type: "image", url: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600", title: "Textile Exhibition" },
     { type: "image", url: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600", title: "Artisan Training" },
     { type: "image", url: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600", title: "Trade Fair 2023" },
-    { type: "image", url: "https://images.unsplash.com/photo-1558769132-cb1aea1c8f7f?w=600", title: "Skill Development" },
-    { type: "image", url: "https://images.unsplash.com/photo-1617627143750-d86bc21e42bb?w=600", title: "Industry Meet" }
+    { type: "image", url: "https://images.unsplash.com/photo-1730382625230-3756013c515c?q=80&w=2041&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Skill Development" },
+    { type: "image", url: "https://images.unsplash.com/photo-1568992688065-536aad8a12f6?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", title: "Industry Meet" }
   ];
 
   const pressReleases = [

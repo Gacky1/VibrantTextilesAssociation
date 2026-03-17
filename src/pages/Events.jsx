@@ -9,7 +9,7 @@ const Events = () => {
       date: "15-18 March 2024",
       location: "Pragati Maidan, New Delhi",
       type: "Exhibition",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600",
+      image: "https://images.unsplash.com/photo-1719154717749-0d05f61a0588?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       desc: "India's largest textile exhibition showcasing traditional and modern textiles",
       highlights: ["500+ Exhibitors", "International Buyers", "Live Demonstrations", "B2B Meetings"]
     },
@@ -18,7 +18,7 @@ const Events = () => {
       date: "5-7 April 2024",
       location: "India Habitat Centre, Delhi",
       type: "Fair",
-      image: "https://images.unsplash.com/photo-1558769132-cb1aea1c8f7f?w=600",
+      image: "https://images.unsplash.com/photo-1627296345489-faf81a8f15ae?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
       desc: "Celebrating India's rich handloom heritage with artisan showcases",
       highlights: ["100+ Artisans", "Traditional Crafts", "Cultural Programs", "Direct Sales"]
     },
