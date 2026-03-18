@@ -37,16 +37,65 @@
   100% { transform: translate(0px, 0px) scale(1); }
 }
 
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 80px;
 }
 
 body {
   @apply text-gray-800 bg-gray-50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #c23d3d, #991b1b);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #991b1b, #6f2727);
 }
 
 .text-gradient {
-  @apply bg-gradient-to-r from-primary-600 to-primary-800 bg-clip-text text-transparent;
+  background: linear-gradient(135deg, #c23d3d 0%, #991b1b 50%, #eab308 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  background-size: 200% 200%;
+  animation: gradient 5s ease infinite;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+::selection {
+  background-color: #c23d3d;
+  color: white;
+}
+
+::-moz-selection {
+  background-color: #c23d3d;
+  color: white;
 }
 
 .animate-blob {

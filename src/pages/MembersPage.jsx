@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserTie, faNetworkWired, faChartBar, faGraduationCap, faBriefcase, faTrophy, faNewspaper, faHandshake, faLeaf, faBullhorn, faFlask, faUsers, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
@@ -36,21 +38,21 @@ const MembersPage = () => {
   ];
 
   const executiveMembers = [
-    { name: "Mr. Suresh Patel", role: "Handloom Development Head", icon: "🧵" },
-    { name: "Dr. Meena Singh", role: "Research & Innovation Lead", icon: "🔬" },
-    { name: "Mr. Vikram Joshi", role: "Skill Development Coordinator", icon: "📚" },
-    { name: "Ms. Anjali Desai", role: "Marketing & Communications", icon: "📢" },
-    { name: "Mr. Ramesh Gupta", role: "Industry Liaison Officer", icon: "🤝" },
-    { name: "Ms. Deepa Nair", role: "Sustainability Advisor", icon: "🌿" }
+    { name: "Mr. Suresh Patel", role: "Handloom Development Head", icon: faHandshake, gradient: 'from-purple-500 to-purple-600' },
+    { name: "Dr. Meena Singh", role: "Research & Innovation Lead", icon: faFlask, gradient: 'from-blue-500 to-blue-600' },
+    { name: "Mr. Vikram Joshi", role: "Skill Development Coordinator", icon: faGraduationCap, gradient: 'from-green-500 to-green-600' },
+    { name: "Ms. Anjali Desai", role: "Marketing & Communications", icon: faBullhorn, gradient: 'from-pink-500 to-pink-600' },
+    { name: "Mr. Ramesh Gupta", role: "Industry Liaison Officer", icon: faUsers, gradient: 'from-cyan-500 to-cyan-600' },
+    { name: "Ms. Deepa Nair", role: "Sustainability Advisor", icon: faLeaf, gradient: 'from-emerald-500 to-emerald-600' }
   ];
 
   const membershipBenefits = [
-    { icon: "🎯", title: "Networking", desc: "Connect with industry leaders and peers" },
-    { icon: "📊", title: "Market Insights", desc: "Access to exclusive research and reports" },
-    { icon: "🎓", title: "Training Programs", desc: "Subsidized skill development courses" },
-    { icon: "💼", title: "Business Support", desc: "Mentorship and consultancy services" },
-    { icon: "🏆", title: "Recognition", desc: "Awards and certifications" },
-    { icon: "📰", title: "Updates", desc: "Policy changes and industry news" }
+    { icon: faNetworkWired, title: "Networking", desc: "Connect with industry leaders and peers", gradient: 'from-blue-500 to-blue-600' },
+    { icon: faChartBar, title: "Market Insights", desc: "Access to exclusive research and reports", gradient: 'from-purple-500 to-purple-600' },
+    { icon: faGraduationCap, title: "Training Programs", desc: "Subsidized skill development courses", gradient: 'from-green-500 to-green-600' },
+    { icon: faBriefcase, title: "Business Support", desc: "Mentorship and consultancy services", gradient: 'from-primary-500 to-primary-600' },
+    { icon: faTrophy, title: "Recognition", desc: "Awards and certifications", gradient: 'from-accent-500 to-accent-600' },
+    { icon: faNewspaper, title: "Updates", desc: "Policy changes and industry news", gradient: 'from-cyan-500 to-cyan-600' }
   ];
 
   return (
@@ -58,48 +60,82 @@ const MembersPage = () => {
       <Navbar />
       
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-primary-700 via-primary-800 to-accent-700 text-white py-20 overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-96 h-96 bg-white rounded-full blur-3xl animate-blob"></div>
-          <div className="absolute bottom-20 right-20 w-96 h-96 bg-accent-300 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
+      <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 text-white py-32 overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="absolute top-0 left-0 w-96 h-96 bg-accent-500 rounded-full blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-400 rounded-full blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-accent-400 rounded-full blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 text-center">
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-4xl md:text-6xl font-serif font-bold mb-6">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.6 }}
+            className="inline-block mb-6 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg"
+          >
+            <span className="text-white text-sm font-bold tracking-widest uppercase">Our Leadership</span>
+          </motion.div>
+          
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.2 }}
+            className="text-5xl md:text-7xl font-serif font-bold mb-6"
+            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.3)' }}
+          >
             Our Members
           </motion.h1>
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="text-lg md:text-xl max-w-3xl mx-auto opacity-90">
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.4 }}
+            className="text-xl md:text-2xl max-w-4xl mx-auto text-white/90"
+          >
             Meet the dedicated team driving India's textile sector forward
           </motion.p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Board of Directors */}
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-gray-900 mb-12">Board of Directors</h2>
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
+              BOARD OF DIRECTORS
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900">Leadership Team</h2>
+          </div>
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {boardMembers.map((member, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all"
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
               >
-                <div className="relative h-64 overflow-hidden">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4 text-white">
-                    <h3 className="text-xl font-bold">{member.name}</h3>
-                    <p className="text-sm opacity-90">{member.position}</p>
+                <div className="relative h-80 overflow-hidden">
+                  <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+                  <div className="absolute bottom-6 left-6 right-6 text-white">
+                    <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
+                    <p className="text-sm text-accent-300 font-semibold">{member.position}</p>
+                  </div>
+                  <div className="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
+                    <FontAwesomeIcon icon={faUserTie} className="text-white text-xl" />
                   </div>
                 </div>
                 <div className="p-6">
-                  <p className="text-gray-600 text-sm mb-4">{member.bio}</p>
-                  <div className="space-y-1">
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.bio}</p>
+                  <div className="space-y-2">
                     {member.expertise.map((skill, i) => (
-                      <div key={i} className="text-xs text-primary-600 font-medium">• {skill}</div>
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
+                        <span className="text-xs text-gray-700 font-medium">{skill}</span>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -109,42 +145,66 @@ const MembersPage = () => {
         </div>
 
         {/* Executive Team */}
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-gray-900 mb-12">Executive Team</h2>
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
+              EXECUTIVE TEAM
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900">Department Heads</h2>
+          </div>
+          
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {executiveMembers.map((member, idx) => (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className="bg-gradient-to-br from-white to-primary-50 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all"
+                whileHover={{ y: -5, scale: 1.03 }}
+                className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all overflow-hidden"
               >
-                <div className="text-5xl mb-4">{member.icon}</div>
-                <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
-                <p className="text-sm text-primary-600 font-medium">{member.role}</p>
+                <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+                <div className="relative">
+                  <div className={`w-14 h-14 mb-4 bg-gradient-to-br ${member.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                    <FontAwesomeIcon icon={member.icon} className="text-white text-xl" />
+                  </div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
+                  <p className="text-sm text-gray-600 font-medium">{member.role}</p>
+                </div>
               </motion.div>
             ))}
           </div>
         </div>
 
         {/* Membership Benefits */}
-        <div className="mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-center text-gray-900 mb-12">Membership Benefits</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mb-20">
+          <div className="text-center mb-12">
+            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
+              MEMBER BENEFITS
+            </div>
+            <h2 className="text-4xl font-serif font-bold text-gray-900">Why Join Us?</h2>
+          </div>
+          
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {membershipBenefits.map((benefit, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all"
+                whileHover={{ y: -10, scale: 1.02 }}
+                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden"
               >
-                <div className="text-5xl mb-4">{benefit.icon}</div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{benefit.title}</h3>
-                <p className="text-gray-600">{benefit.desc}</p>
+                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.gradient} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+                <div className="relative">
+                  <div className={`w-16 h-16 mb-6 bg-gradient-to-br ${benefit.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all`}>
+                    <FontAwesomeIcon icon={benefit.icon} className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
+                  <p className="text-gray-600 leading-relaxed">{benefit.desc}</p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -152,17 +212,33 @@ const MembersPage = () => {
 
         {/* CTA Section */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-accent-600 to-primary-600 rounded-2xl p-12 text-center text-white shadow-2xl"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 rounded-3xl p-12 md:p-16 text-center text-white shadow-2xl overflow-hidden"
         >
-          <h2 className="text-3xl md:text-4xl font-serif font-bold mb-4">Join Our Community</h2>
-          <p className="text-lg mb-8 opacity-90">Become a member and be part of India's textile transformation</p>
-          <Link to="/membership">
-            <button className="px-8 py-4 bg-white text-primary-700 rounded-full font-bold text-lg shadow-lg hover:shadow-xl transition-all hover:scale-105">
-              Apply for Membership
-            </button>
-          </Link>
+          <div className="absolute inset-0">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500 rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400 rounded-full blur-3xl opacity-20"></div>
+          </div>
+          
+          <div className="relative">
+            <div className="w-20 h-20 mx-auto mb-6 bg-white/10 backdrop-blur-lg rounded-2xl flex items-center justify-center">
+              <FontAwesomeIcon icon={faUsers} className="text-white text-4xl" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Join Our Community</h2>
+            <p className="text-xl mb-10 text-white/90 max-w-2xl mx-auto">Become a member and be part of India's textile transformation</p>
+            <Link to="/membership">
+              <motion.button 
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-primary-700 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
+              >
+                Apply for Membership
+                <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-1 transition-transform" />
+              </motion.button>
+            </Link>
+          </div>
         </motion.div>
       </div>
 
