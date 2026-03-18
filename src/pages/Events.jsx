@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarAlt, faMapMarkerAlt, faUsers, faHandshake, faTrophy, faChartLine, faArrowRight, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import PageHero from '../components/PageHero';
 
 const Events = () => {
   const upcomingEvents = [
@@ -45,45 +46,13 @@ const Events = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 text-white py-32 overflow-hidden">
-        <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-96 h-96 bg-accent-500 rounded-full blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-400 rounded-full blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-accent-400 rounded-full blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
-        </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="inline-block mb-6 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg"
-          >
-            <span className="text-white text-sm font-bold tracking-widest uppercase">Connect & Collaborate</span>
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.2 }}
-            className="text-5xl md:text-7xl font-serif font-bold mb-6"
-            style={{ textShadow: '0 4px 20px rgba(0,0,0,0.3)' }}
-          >
-            Events & Fairs
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl max-w-4xl mx-auto text-white/90"
-          >
-            Connect, collaborate, and celebrate India's vibrant textile ecosystem
-          </motion.p>
-        </div>
-      </div>
+      <PageHero
+        eyebrow="Connect & Collaborate"
+        title="Events & Fairs"
+        subtitle="Connect, collaborate, and celebrate India's vibrant textile ecosystem"
+      />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Upcoming Events */}

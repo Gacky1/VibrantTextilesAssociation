@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBriefcase, faChartLine, faGlobe, faHandHoldingHeart, faIndustry, faShirt, faPalette, faHome, faFlask, faSeedling, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
+import PageHero from '../components/PageHero';
 
 const AboutTextile = () => {
   const segments = [
@@ -34,50 +35,15 @@ const AboutTextile = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-white">
       <Navbar />
-      
-      <div className="pt-20">
-        {/* Hero Section */}
-        <div className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 text-white py-32 overflow-hidden">
-          {/* Animated Background */}
-          <div className="absolute inset-0">
-            <div className="absolute top-0 left-0 w-96 h-96 bg-accent-500 rounded-full blur-3xl opacity-20 animate-blob"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-primary-400 rounded-full blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-            <div className="absolute top-1/2 left-1/2 w-96 h-96 bg-accent-400 rounded-full blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
-          </div>
-          
-          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6 }}
-              className="inline-block mb-6 px-6 py-3 bg-white/10 backdrop-blur-lg rounded-full border border-white/20 shadow-lg"
-            >
-              <span className="text-white text-sm font-bold tracking-widest uppercase">India's Textile Heritage</span>
-            </motion.div>
-            
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ delay: 0.2 }}
-              className="text-5xl md:text-7xl font-serif font-bold mb-6"
-              style={{ textShadow: '0 4px 20px rgba(0,0,0,0.3)' }}
-            >
-              About Indian Textiles
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              transition={{ delay: 0.4 }} 
-              className="text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed text-white/90"
-            >
-              One of India's oldest and most diverse sectors, spanning traditional handlooms to modern industrial textiles
-            </motion.p>
-          </div>
-        </div>
+      <PageHero
+        eyebrow="India's Textile Heritage"
+        title="About Indian Textiles"
+        subtitle="One of India's oldest and most diverse sectors, spanning traditional handlooms to modern industrial textiles"
+      />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           {/* Overview Cards */}
           <div className="grid md:grid-cols-3 gap-8 mb-20">
             <motion.div 
@@ -242,7 +208,6 @@ const AboutTextile = () => {
               ))}
             </div>
           </div>
-        </div>
       </div>
 
       <Footer />
