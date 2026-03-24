@@ -1,21 +1,46 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers, faArrowRight, faChevronDown, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { supabase } from '../lib/supabase';
 
-const stats = [
-  { value: '500+', label: 'Active Members' },
-  { value: '10+', label: 'Years Experience' },
-  { value: '50+', label: 'Annual Events' },
-  { value: '20+', label: 'States Covered' },
+const defaultStats = [
+  { value: '7,500+', label: 'Members' },
+  { value: '28+', label: 'States' },
+  { value: '25+', label: 'Years' },
+  { value: '₹2.4T', label: 'Industry Value' },
 ];
+
+const defaultContent = {
+  eyebrow: "Empowering India's Textile Industry",
+  headline_line1: 'Weaving the Future of',
+  headline_line2: 'Indian Textiles',
+  subtitle: "Uniting artisans, manufacturers, and policymakers to build a world-class textile ecosystem.",
+};
 
 const Hero = () => {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const [content, setContent] = useState(defaultContent);
+  const [stats, setStats] = useState(defaultStats);
+
+  useEffect(() => {
+    supabase.from('site_content').select('*').eq('section', 'hero').then(({ data }) => {
+      if (!data?.length) return;
+      const map = {};
+      data.forEach(r => { map[r.key] = r.value; });
+      setContent(prev => ({ ...prev, ...map }));
+      setStats([
+        { value: map.stat1_value || defaultStats[0].value, label: map.stat1_label || defaultStats[0].label },
+        { value: map.stat2_value || defaultStats[1].value, label: map.stat2_label || defaultStats[1].label },
+        { value: map.stat3_value || defaultStats[2].value, label: map.stat3_label || defaultStats[2].label },
+        { value: map.stat4_value || defaultStats[3].value, label: map.stat4_label || defaultStats[3].label },
+      ]);
+    });
+  }, []);
 
   return (
     <motion.section

@@ -1,21 +1,28 @@
 import { motion, useInView } from 'framer-motion';
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faArrowRight } from '@fortawesome/free-solid-svg-icons';
-
-const placeholderMembers = [
-  { id: 1, name: 'Member Name', designation: 'Chairperson' },
-  { id: 2, name: 'Member Name', designation: 'Vice Chairperson' },
-  { id: 3, name: 'Member Name', designation: 'Secretary' },
-  { id: 4, name: 'Member Name', designation: 'Treasurer' },
-  { id: 5, name: 'Member Name', designation: 'Board Member' },
-  { id: 6, name: 'Member Name', designation: 'Board Member' },
-];
+import { supabase } from '../lib/supabase';
 
 const Members = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    supabase
+      .from('members')
+      .select('*')
+      .eq('is_active', true)
+      .order('sort_order')
+      .limit(6)
+      .then(({ data }) => {
+        setMembers(data || []);
+        setLoading(false);
+      });
+  }, []);
 
   return (
     <section id="members" className="relative py-28 md:py-36 bg-[#0d0d1a] overflow-hidden">
@@ -63,39 +70,53 @@ const Members = () => {
 
         {/* Member Cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
-          {placeholderMembers.map((member, i) => (
-            <motion.div
-              key={member.id}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="group relative rounded-[20px] overflow-hidden cursor-default border border-white/8 hover:border-white/20 transition-all duration-300"
-              style={{ background: 'rgba(255,255,255,0.04)' }}
-            >
-              {/* Avatar area */}
-              <div className="aspect-[4/3] flex items-center justify-center relative overflow-hidden"
-                style={{ background: 'linear-gradient(135deg, rgba(229,46,34,0.1), rgba(245,158,11,0.05))' }}>
-                {/* Radial gradient bg */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: 'radial-gradient(circle at center, rgba(229,46,34,0.15), transparent 70%)' }} />
-                {/* Avatar circle */}
+          {loading
+            ? Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="rounded-[20px] overflow-hidden border border-white/8 animate-pulse" style={{ background: 'rgba(255,255,255,0.04)' }}>
+                  <div className="aspect-[4/3] bg-white/5" />
+                  <div className="p-5 space-y-2">
+                    <div className="h-4 bg-white/10 rounded mx-auto w-2/3" />
+                    <div className="h-3 bg-white/5 rounded mx-auto w-1/2" />
+                  </div>
+                </div>
+              ))
+            : members.map((member, i) => (
                 <motion.div
-                  whileHover={{ scale: 1.08 }}
-                  className="w-28 h-28 rounded-full border-2 border-white/15 group-hover:border-primary-500/40 transition-all duration-300 flex items-center justify-center relative z-10"
-                  style={{ background: 'rgba(255,255,255,0.06)' }}
+                  key={member.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={isInView ? { opacity: 1, y: 0 } : {}}
+                  transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
+                  className="group relative rounded-[20px] overflow-hidden cursor-default border border-white/8 hover:border-white/20 transition-all duration-300"
+                  style={{ background: 'rgba(255,255,255,0.04)' }}
                 >
-                  <FontAwesomeIcon icon={faUserTie} className="text-5xl text-white/40 group-hover:text-white/60 transition-colors duration-300" />
+                  {/* Avatar area */}
+                  <div className="aspect-[4/3] flex items-center justify-center relative overflow-hidden"
+                    style={{ background: 'linear-gradient(135deg, rgba(229,46,34,0.1), rgba(245,158,11,0.05))' }}>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: 'radial-gradient(circle at center, rgba(229,46,34,0.15), transparent 70%)' }} />
+                    {member.image_url ? (
+                      <img src={member.image_url} alt={member.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    ) : (
+                      <motion.div
+                        whileHover={{ scale: 1.08 }}
+                        className="w-28 h-28 rounded-full border-2 border-white/15 group-hover:border-primary-500/40 transition-all duration-300 flex items-center justify-center relative z-10"
+                        style={{ background: 'rgba(255,255,255,0.06)' }}
+                      >
+                        <FontAwesomeIcon icon={faUserTie} className="text-5xl text-white/40 group-hover:text-white/60 transition-colors duration-300" />
+                      </motion.div>
+                    )}
+                  </div>
+                  {/* Info */}
+                  <div className="p-5 text-center">
+                    <h3 className="text-white font-bold text-lg mb-1">{member.name}</h3>
+                    <p className="text-accent-400 font-medium text-sm">{member.designation}</p>
+                    {member.bio && <p className="text-white/30 text-xs mt-2 line-clamp-2">{member.bio}</p>}
+                  </div>
                 </motion.div>
-              </div>
-
-              {/* Info */}
-              <div className="p-5 text-center">
-                <h3 className="text-white font-bold text-lg mb-1">{member.name}</h3>
-                <p className="text-accent-400 font-medium text-sm">{member.designation}</p>
-              </div>
-            </motion.div>
-          ))}
+              ))
+          }
         </div>
 
         {/* CTA */}
