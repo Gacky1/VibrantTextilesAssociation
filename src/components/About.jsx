@@ -34,8 +34,8 @@ const About = () => {
         <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-accent-50 to-transparent opacity-50" />
       </div>
 
-      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-        <div className="grid lg:grid-cols-2 gap-16 xl:gap-24 items-center">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
 
           {/* === LEFT: Visual === */}
           <motion.div
@@ -44,40 +44,45 @@ const About = () => {
             animate={isInView ? 'visible' : 'hidden'}
             className="relative order-2 lg:order-1"
           >
-            {/* Main card */}
-            <motion.div variants={itemVars} className="relative">
-              <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-[28px] border border-gray-100 shadow-[0_20px_80px_rgba(0,0,0,0.08)] p-10 overflow-hidden">
-                {/* Inner accent line */}
-                <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-600 rounded-t-[28px]" />
+            {/* Glossy Visual Container */}
+            <motion.div variants={itemVars} className="relative group">
+              <div className="absolute -inset-4 bg-gradient-to-tr from-primary-500/20 to-accent-400/20 rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              
+              <div className="relative glass-ultra rounded-[32px] border border-white/40 p-10 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.1)]">
+                <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
+                <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-primary-600 via-accent-400 to-primary-800" />
+                
                 <img
                   src={logo}
                   alt="Vibrant Textiles Association"
-                  className="w-full h-auto object-contain"
+                  className="w-full h-auto object-contain brightness-110 drop-shadow-2xl"
                 />
               </div>
 
-              {/* Floating stat 1 */}
+              {/* Floating interactive stat 1 */}
               <motion.div
+                whileHover={{ scale: 1.1, y: -5 }}
                 variants={{
-                  hidden: { opacity: 0, scale: 0.7 },
-                  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.4 } },
+                  hidden: { opacity: 0, scale: 0.7, x: 20 },
+                  visible: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.6, delay: 0.5 } },
                 }}
-                className="absolute -bottom-6 -right-6 bg-gradient-to-br from-primary-600 to-primary-800 text-white rounded-2xl px-6 py-4 shadow-2xl"
+                className="absolute -bottom-8 -right-8 glass-ultra rounded-2xl px-6 py-5 shadow-2xl border border-white/50 backdrop-blur-3xl group/stat1"
               >
-                <div className="text-4xl font-bold font-serif">10+</div>
-                <div className="text-xs text-primary-200 font-medium mt-0.5">Years Experience</div>
+                <div className="text-4xl font-serif font-black text-primary-600 group-hover/stat1:scale-110 transition-transform">10+</div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-gray-500 mt-1">Years of Excellence</div>
               </motion.div>
 
-              {/* Floating stat 2 */}
+              {/* Floating interactive stat 2 */}
               <motion.div
+                whileHover={{ scale: 1.1, y: -5 }}
                 variants={{
-                  hidden: { opacity: 0, scale: 0.7 },
-                  visible: { opacity: 1, scale: 1, transition: { duration: 0.5, delay: 0.55 } },
+                  hidden: { opacity: 0, scale: 0.7, x: -20 },
+                  visible: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.6, delay: 0.7 } },
                 }}
-                className="absolute -top-6 -left-6 bg-gradient-to-br from-accent-500 to-accent-700 text-white rounded-2xl px-6 py-4 shadow-2xl"
+                className="absolute -top-10 -left-6 glass-ultra rounded-2xl px-6 py-5 shadow-2xl border border-white/50 backdrop-blur-3xl group/stat2"
               >
-                <div className="text-4xl font-bold font-serif">500+</div>
-                <div className="text-xs text-accent-100 font-medium mt-0.5">Active Members</div>
+                <div className="text-4xl font-serif font-black text-accent-500 group-hover/stat2:scale-110 transition-transform">500+</div>
+                <div className="text-[10px] font-black uppercase tracking-widest text-gray-500 mt-1">Industry Partners</div>
               </motion.div>
             </motion.div>
           </motion.div>
@@ -87,59 +92,57 @@ const About = () => {
             variants={containerVars}
             initial="hidden"
             animate={isInView ? 'visible' : 'hidden'}
-            className="order-1 lg:order-2 space-y-8"
+            className="order-1 lg:order-2 space-y-10"
           >
-            {/* Badge */}
+            {/* Refined Badge */}
             <motion.div variants={itemVars}>
-              <span className="section-badge">
-                <span className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                Who We Are
+              <span className="px-5 py-2 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[11px] font-black uppercase tracking-[0.2em] inline-flex items-center gap-2">
+                <span className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-pulse" />
+                Vibrant Textiles Association
               </span>
             </motion.div>
 
-            {/* Heading */}
-            <motion.h2 variants={itemVars} className="section-heading text-[clamp(2.2rem,5vw,3.8rem)] text-gray-900">
-              About{' '}
-              <span className="text-gradient">Vibrant Textiles</span>
+            {/* Editorial Heading */}
+            <motion.h2 variants={itemVars} className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] text-gray-900 leading-[1.05] font-black">
+              Redefining the <br />
+              <span className="text-gradient italic font-medium">Textile Paradigm</span>
             </motion.h2>
 
-            {/* Text */}
-            <motion.div variants={itemVars} className="space-y-4 text-gray-500 text-[17px] leading-relaxed">
+            {/* Elegant Copy */}
+            <motion.div variants={itemVars} className="space-y-6 text-gray-500 text-[18px] leading-relaxed font-medium max-w-xl">
               <p>
-                Vibrant Textiles is a <span className="text-gray-800 font-medium">non-profit association</span> committed to the growth, development, and enrichment of India's textile and handloom ecosystem. We work as a facilitator, supporter, and bridge between artisans, vendors, MSMEs, industry stakeholders, academic institutions, and government bodies.
+                Vibrant Textiles is a <span className="text-gray-900 font-bold border-b-2 border-primary-200">non-profit catalyst</span> dedicated to the modernization and global expansion of India's textile heritage.
               </p>
               <p>
-                We focus on <span className="text-gray-800 font-medium">capacity building, skill development, policy support</span>, industry collaboration, and sustainable growth—while preserving India's rich textile heritage.
+                We bridge the gap between tradition and technology, fostering a sustainable ecosystem for <span className="text-gray-900 font-bold italic">artisans, MSMEs, and industry pioneers</span>.
               </p>
             </motion.div>
 
-            {/* Pillars grid */}
-            <motion.div variants={itemVars} className="grid grid-cols-2 gap-3">
+            {/* Interactive Pillar Grid */}
+            <motion.div variants={itemVars} className="grid grid-cols-2 gap-4">
               {pillars.map((p) => (
-                <div
+                <motion.div
                   key={p.label}
-                  className={`${p.bg} rounded-xl p-4 flex items-center gap-3 border border-white transition-all hover:shadow-md hover:-translate-y-1 duration-300 cursor-default`}
+                  whileHover={{ y: -5, boxShadow: '0 15px 35px rgba(0,0,0,0.06)' }}
+                  className={`${p.bg}/40 rounded-2xl p-5 flex items-center gap-4 border border-white/60 transition-all duration-300 backdrop-blur-sm cursor-pointer group`}
                 >
-                  <div className={`w-10 h-10 bg-gradient-to-br ${p.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm`}>
-                    <FontAwesomeIcon icon={p.icon} className="text-white text-base" />
+                  <div className={`w-11 h-11 bg-gradient-to-br ${p.color} rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:rotate-6 transition-transform`}>
+                    <FontAwesomeIcon icon={p.icon} className="text-white text-[17px]" />
                   </div>
-                  <span className="font-semibold text-gray-800 text-sm">{p.label}</span>
-                </div>
+                  <span className="font-black text-gray-800 text-[13px] uppercase tracking-wider">{p.label}</span>
+                </motion.div>
               ))}
             </motion.div>
 
-            {/* CTA */}
-            <motion.div variants={itemVars}>
+            {/* Action */}
+            <motion.div variants={itemVars} className="pt-4">
               <Link to="/about-textile">
                 <motion.button
-                  whileHover={{ x: 4 }}
-                  className="flex items-center gap-2 text-primary-600 font-bold text-[15px] group"
+                  whileHover={{ x: 10 }}
+                  className="flex items-center gap-4 text-primary-600 font-black text-[15px] group uppercase tracking-widest"
                 >
-                  Learn more about us
-                  <FontAwesomeIcon
-                    icon={faArrowRight}
-                    className="text-sm group-hover:translate-x-1 transition-transform"
-                  />
+                  Explore our journey
+                  <div className="w-10 h-[2px] bg-primary-600 group-hover:w-16 transition-all" />
                 </motion.button>
               </Link>
             </motion.div>

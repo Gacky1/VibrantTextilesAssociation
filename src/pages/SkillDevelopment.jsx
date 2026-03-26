@@ -87,17 +87,24 @@ const SkillDevelopment = () => {
         subtitle="Empowering artisans and professionals with industry-relevant skills for sustainable growth"
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Benefits Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              WHY CHOOSE US
-            </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Program Benefits</h2>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-24 relative overflow-hidden">
+        {/* Ambient Background Decor */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-50/50 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-40 left-0 w-80 h-80 bg-accent-50/30 rounded-full blur-[120px] pointer-events-none" />
+
+        {/* Benefits Section: Why Choose Us */}
+        <div className="mb-32 relative z-10">
+          <div className="text-center mb-20 space-y-4">
+            <span className="text-primary-600 font-black text-[11px] uppercase tracking-[0.4em]">Excellence</span>
+            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
+              Program <span className="text-gradient italic font-medium">Advantages</span>
+            </h2>
+            <p className="text-gray-500 text-lg max-w-2xl mx-auto font-medium leading-relaxed">
+              Our training infrastructure is designed to bridge the gap between traditional craftsmanship and modern industry standards.
+            </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit, idx) => (
               <motion.div
                 key={idx}
@@ -105,78 +112,92 @@ const SkillDevelopment = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden"
+                whileHover={{ y: -10 }}
+                className="group relative"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${benefit.gradient} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
-                <div className="relative">
-                  <div className={`w-16 h-16 mb-6 bg-gradient-to-br ${benefit.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all`}>
-                    <FontAwesomeIcon icon={benefit.icon} className="text-white text-2xl" />
+                <div className={`absolute -inset-4 bg-gradient-to-br ${benefit.gradient} rounded-[40px] blur-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-700`} />
+                
+                <div className="relative glass-ultra rounded-[32px] border border-white/60 p-10 h-full flex flex-col items-center text-center overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
+                  <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
+                  
+                  <div className={`w-20 h-20 mb-8 bg-gradient-to-br ${benefit.gradient} rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
+                    <FontAwesomeIcon icon={benefit.icon} className="text-white text-3xl" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                  <p className="text-gray-600 leading-relaxed">{benefit.desc}</p>
+                  
+                  <h3 className="text-2xl font-serif font-black text-gray-900 mb-4">{benefit.title}</h3>
+                  <p className="text-gray-500 text-base font-medium leading-relaxed">{benefit.desc}</p>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Programs Section */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              TRAINING PROGRAMS
-            </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Our Courses</h2>
+        {/* Programs Section: Featured Courses */}
+        <div className="mb-32 relative z-10">
+          <div className="text-center mb-20 space-y-4">
+            <span className="text-accent-500 font-black text-[11px] uppercase tracking-[0.4em]">Curated Learning</span>
+            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
+              Training <span className="text-gradient italic font-medium">Verticals</span>
+            </h2>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
             {programs.map((program, idx) => (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
+                whileHover={{ y: -12 }}
+                className="group glass-ultra rounded-[40px] overflow-hidden border border-white/60 shadow-[0_32px_80px_rgba(0,0,0,0.06)] flex flex-col relative"
               >
-                <div className={`relative bg-gradient-to-br ${program.gradient} p-8 text-white overflow-hidden`}>
-                  <div className={`absolute inset-0 bg-gradient-to-br ${program.bgGradient} opacity-0 group-hover:opacity-20 transition-opacity`}></div>
-                  <div className="relative">
-                    <div className="w-16 h-16 mb-4 bg-white/20 backdrop-blur-md rounded-2xl flex items-center justify-center">
-                      <FontAwesomeIcon icon={program.icon} className="text-white text-3xl" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-4">{program.title}</h3>
-                    <div className="flex flex-wrap gap-3 text-sm">
-                      <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
-                        <FontAwesomeIcon icon={faClock} />
-                        <span>{program.duration}</span>
-                      </div>
-                      <div className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-3 py-1 rounded-full">
-                        <FontAwesomeIcon icon={faChartLine} />
-                        <span>{program.level}</span>
-                      </div>
-                    </div>
-                  </div>
+                <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
+                
+                <div className={`relative bg-gradient-to-br ${program.gradient} p-12 text-white overflow-hidden`}>
+                   {/* Visual Depth */}
+                   <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -mr-16 -mt-16" />
+                   <div className="absolute bottom-0 left-0 w-24 h-24 bg-black/10 rounded-full blur-2xl -ml-12 -mb-12" />
+
+                   <div className="relative z-10">
+                     <div className="w-16 h-16 mb-6 bg-white/20 backdrop-blur-xl border border-white/30 rounded-2xl flex items-center justify-center shadow-xl group-hover:rotate-12 transition-transform duration-500">
+                       <FontAwesomeIcon icon={program.icon} className="text-white text-2xl" />
+                     </div>
+                     <h3 className="text-2xl font-serif font-black mb-4 leading-tight">{program.title}</h3>
+                     <div className="flex flex-wrap gap-3">
+                       <div className="flex items-center gap-2 bg-black/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">
+                         <FontAwesomeIcon icon={faClock} />
+                         <span>{program.duration}</span>
+                       </div>
+                       <div className="flex items-center gap-2 bg-black/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/10">
+                         <FontAwesomeIcon icon={faChartLine} />
+                         <span>{program.level}</span>
+                       </div>
+                     </div>
+                   </div>
                 </div>
-                <div className="p-8">
-                  <p className="text-gray-600 mb-6 leading-relaxed">{program.desc}</p>
-                  <div className="space-y-3 mb-6">
+
+                <div className="p-10 flex flex-col flex-grow relative z-10">
+                  <p className="text-gray-500 text-base font-medium mb-8 leading-relaxed italic">"{program.desc}"</p>
+                  
+                  <div className="space-y-4 mb-10">
+                    <p className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Core Modules</p>
                     {program.features.map((feature, i) => (
                       <div key={i} className="flex items-center gap-3">
-                        <FontAwesomeIcon icon={faCheckCircle} className={`text-lg bg-gradient-to-br ${program.gradient} bg-clip-text text-transparent`} />
-                        <span className="text-gray-700 font-medium">{feature}</span>
+                        <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-br ${program.gradient}`} />
+                        <span className="text-gray-700 text-sm font-bold tracking-tight">{feature}</span>
                       </div>
                     ))}
                   </div>
+
                   <motion.button 
-                    whileHover={{ scale: 1.05, x: 5 }}
-                    whileTap={{ scale: 0.95 }}
-                    className={`group/btn w-full flex items-center justify-center gap-3 px-6 py-4 bg-gradient-to-r ${program.gradient} text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all`}
+                    whileHover={{ scale: 1.02, y: -2 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`group/btn mt-auto relative w-full flex items-center justify-center gap-4 px-8 py-5 bg-gradient-to-r ${program.gradient} text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-xl overflow-hidden`}
                   >
-                    Enroll Now
-                    <FontAwesomeIcon icon={faArrowRight} className="group-hover/btn:translate-x-1 transition-transform" />
+                    <div className="absolute inset-0 bg-white translate-y-full group-hover/btn:translate-y-0 opacity-10 transition-transform duration-500" />
+                    <span className="relative z-10">Enroll Program</span>
+                    <FontAwesomeIcon icon={faArrowRight} className="relative z-10 group-hover/btn:translate-x-2 transition-transform" />
                   </motion.button>
                 </div>
               </motion.div>
@@ -184,30 +205,41 @@ const SkillDevelopment = () => {
           </div>
         </div>
 
-        {/* CTA Section */}
+        {/* CTA: Heroic Engagement */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative bg-gradient-to-br from-accent-500 via-accent-600 to-accent-700 rounded-3xl p-12 md:p-16 text-center text-white shadow-2xl overflow-hidden"
+          className="relative rounded-[48px] p-16 md:p-32 text-center overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
         >
-          <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl opacity-10"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-500 rounded-full blur-3xl opacity-10"></div>
+          {/* Animated Mesh Background */}
+          <div className="absolute inset-0 bg-[#050508]">
+            <div className="absolute inset-0 bg-mesh-gradient animate-mesh-slow opacity-40" />
+            <div className="absolute inset-0 noise-overlay opacity-[0.05]" />
           </div>
           
-          <div className="relative">
-            <div className="w-20 h-20 mx-auto mb-6 bg-white/10 backdrop-blur-lg rounded-2xl flex items-center justify-center">
+          <div className="relative z-10 space-y-12">
+            <div className="w-24 h-24 mx-auto bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl flex items-center justify-center shadow-2xl">
               <FontAwesomeIcon icon={faChalkboardTeacher} className="text-white text-4xl" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Ready to Upgrade Your Skills?</h2>
-            <p className="text-xl mb-10 text-white/90 max-w-2xl mx-auto">Join thousands of artisans and professionals transforming their careers</p>
+            <div className="space-y-6">
+              <h2 className="font-serif text-[clamp(2.5rem,6vw,5rem)] text-white leading-tight font-black">
+                Ready to Upgrade <br />
+                <span className="text-gradient italic font-medium">Your Skills?</span>
+              </h2>
+              <p className="text-white/50 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+                Join thousands of artisans and professionals transforming their careers through our industry-leading certification programs.
+              </p>
+            </div>
+
             <motion.button 
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="px-10 py-5 bg-white text-accent-700 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
+              className="group relative inline-flex items-center gap-6 px-14 py-7 bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(255,255,255,0.1)] transition-all"
             >
-              Apply for Training
+              <div className="absolute inset-0 bg-primary-50 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              <span className="relative font-black text-primary-900 text-base uppercase tracking-widest italic">Apply for Training</span>
+              <FontAwesomeIcon icon={faArrowRight} className="relative text-primary-600 transition-transform group-hover:translate-x-2" />
             </motion.button>
           </div>
         </motion.div>

@@ -38,45 +38,42 @@ const Members = () => {
         />
       </div>
 
-      <div ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div ref={ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative overflow-hidden">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-20"
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-24"
         >
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ delay: 0.1 }}
-            className="mb-5"
+            className="mb-6"
           >
-            <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs font-bold tracking-widest uppercase text-accent-300 border border-accent-500/30 bg-accent-500/10">
-              <span className="w-1.5 h-1.5 bg-accent-400 rounded-full animate-pulse" />
-              Our Leadership
+            <span className="px-5 py-2 rounded-full border border-accent-500/30 bg-accent-500/10 text-accent-300 text-[11px] font-black uppercase tracking-[0.3em] inline-flex items-center gap-2">
+              <span className="w-1.5 h-1.5 bg-accent-500 rounded-full animate-pulse" />
+              Visionary Leadership
             </span>
           </motion.div>
-          <h2 className="section-heading text-[clamp(2.2rem,5vw,3.8rem)] text-white mb-5">
-            Board of{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-300 to-primary-300">
-              Members
-            </span>
+          <h2 className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] text-white leading-[1.05] font-black mb-6">
+            Board of <span className="text-gradient italic font-medium">Distinction</span>
           </h2>
-          <p className="text-white/50 text-lg max-w-2xl mx-auto leading-relaxed">
-            Leadership driving excellence in India's textile sector
+          <p className="text-white/40 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+            Meet the architects of the VTA ecosystem dedicated to industrial excellence.
           </p>
         </motion.div>
 
-        {/* Member Cards */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-16">
+        {/* Executive Profile Cards */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {loading
-            ? Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="rounded-[20px] overflow-hidden border border-white/8 animate-pulse" style={{ background: 'rgba(255,255,255,0.04)' }}>
-                  <div className="aspect-[4/3] bg-white/5" />
-                  <div className="p-5 space-y-2">
-                    <div className="h-4 bg-white/10 rounded mx-auto w-2/3" />
-                    <div className="h-3 bg-white/5 rounded mx-auto w-1/2" />
+            ? Array.from({ length: 3 }).map((_, i) => (
+                <div key={i} className="rounded-[32px] overflow-hidden border border-white/5 animate-pulse" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                  <div className="aspect-[4/5] bg-white/5" />
+                  <div className="p-8 space-y-4">
+                    <div className="h-4 bg-white/10 rounded-full w-2/3 mx-auto" />
+                    <div className="h-3 bg-white/5 rounded-full w-1/2 mx-auto" />
                   </div>
                 </div>
               ))
@@ -85,55 +82,64 @@ const Members = () => {
                   key={member.id}
                   initial={{ opacity: 0, y: 50 }}
                   animate={isInView ? { opacity: 1, y: 0 } : {}}
-                  transition={{ delay: i * 0.1, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                  className="group relative rounded-[20px] overflow-hidden cursor-default border border-white/8 hover:border-white/20 transition-all duration-300"
-                  style={{ background: 'rgba(255,255,255,0.04)' }}
+                  transition={{ delay: i * 0.1, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative rounded-[32px] overflow-hidden border border-white/5 hover:border-white/20 transition-all duration-500"
+                  style={{ background: 'rgba(255,255,255,0.03)' }}
                 >
-                  {/* Avatar area */}
-                  <div className="aspect-[4/3] flex items-center justify-center relative overflow-hidden"
-                    style={{ background: 'linear-gradient(135deg, rgba(229,46,34,0.1), rgba(245,158,11,0.05))' }}>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                      style={{ background: 'radial-gradient(circle at center, rgba(229,46,34,0.15), transparent 70%)' }} />
+                  <div className="absolute inset-0 noise-overlay opacity-[0.02]" />
+                  
+                  {/* Executive Portrait */}
+                  <div className="aspect-[4/5] relative overflow-hidden bg-white/5">
                     {member.image_url ? (
                       <img src={member.image_url} alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        className="w-full h-full object-cover grayscale-[0.4] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700" />
                     ) : (
-                      <motion.div
-                        whileHover={{ scale: 1.08 }}
-                        className="w-28 h-28 rounded-full border-2 border-white/15 group-hover:border-primary-500/40 transition-all duration-300 flex items-center justify-center relative z-10"
-                        style={{ background: 'rgba(255,255,255,0.06)' }}
-                      >
-                        <FontAwesomeIcon icon={faUserTie} className="text-5xl text-white/40 group-hover:text-white/60 transition-colors duration-300" />
-                      </motion.div>
+                      <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-white/5 to-white/10">
+                        <FontAwesomeIcon icon={faUserTie} className="text-7xl text-white/10 group-hover:scale-110 group-hover:text-primary-500/20 transition-all duration-700" />
+                      </div>
                     )}
+                    
+                    {/* Portrait Overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d1a] via-transparent to-transparent opacity-60" />
+                    <div className="absolute inset-0 bg-primary-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   </div>
-                  {/* Info */}
-                  <div className="p-5 text-center">
-                    <h3 className="text-white font-bold text-lg mb-1">{member.name}</h3>
-                    <p className="text-accent-400 font-medium text-sm">{member.designation}</p>
-                    {member.bio && <p className="text-white/30 text-xs mt-2 line-clamp-2">{member.bio}</p>}
+
+                  {/* Profile info */}
+                  <div className="relative z-10 p-8 text-center text-white">
+                    <h3 className="text-2xl font-black font-serif italic mb-1 group-hover:text-primary-300 transition-colors uppercase tracking-tight">
+                        {member.name}
+                    </h3>
+                    <p className="text-accent-400 font-black text-[11px] uppercase tracking-[0.2em] mb-4">
+                        {member.designation}
+                    </p>
+                    <div className="w-10 h-0.5 bg-white/10 mx-auto group-hover:w-20 group-hover:bg-primary-500 transition-all duration-500" />
+                    
+                    <div className="max-h-0 opacity-0 group-hover:max-h-20 group-hover:opacity-100 transition-all duration-500 overflow-hidden pt-4">
+                      <p className="text-white/40 text-xs font-medium leading-relaxed italic">
+                        {member.bio || "Visionary industry leader dedicated to the VTA mission."}
+                      </p>
+                    </div>
                   </div>
                 </motion.div>
               ))
           }
         </div>
 
-        {/* CTA */}
+        {/* Global Action */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.8, duration: 0.6 }}
+          transition={{ delay: 0.6, duration: 0.7 }}
           className="text-center"
         >
           <Link to="/members">
             <motion.button
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-900 rounded-full font-bold text-base shadow-2xl hover:shadow-white/20 hover:shadow-[0_20px_60px_rgba(255,255,255,0.15)] transition-all duration-300"
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-10 py-5 bg-white text-gray-900 rounded-2xl font-black text-[14px] shadow-2xl hover:shadow-primary-500/20 transition-all duration-500 uppercase tracking-widest"
             >
-              View All Members
-              <FontAwesomeIcon icon={faArrowRight} className="text-sm text-primary-600" />
+              Consult the Board
+              <FontAwesomeIcon icon={faArrowRight} className="ml-3 text-primary-600" />
             </motion.button>
           </Link>
         </motion.div>

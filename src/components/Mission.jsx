@@ -1,7 +1,7 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBullseye, faHandshake, faLightbulb, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faBullseye, faHandshake, faLightbulb, faChartLine, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const missions = [
   {
@@ -69,42 +69,46 @@ const Mission = () => {
         </motion.div>
 
         {/* Bento-style grid */}
-        <div className="grid md:grid-cols-2 gap-5">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {missions.map((m, i) => (
             <motion.div
               key={m.title}
               initial={{ opacity: 0, y: 40 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.12, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ y: -6, transition: { duration: 0.3 } }}
-              className="group relative bg-white rounded-[24px] p-8 border border-gray-100 shadow-[0_4px_24px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.1)] transition-all duration-400 overflow-hidden cursor-default flex flex-col min-h-[240px]"
+              transition={{ delay: i * 0.1, duration: 0.6 }}
+              whileHover={{ y: -8 }}
+              className={`group relative bg-white rounded-[32px] p-8 border border-gray-100 shadow-[0_10px_40px_rgba(0,0,0,0.03)] hover:shadow-[0_40px_80px_rgba(0,0,0,0.08)] transition-all duration-500 overflow-hidden flex flex-col min-h-[280px] ${
+                i === 0 ? 'lg:col-span-2' : ''
+              }`}
             >
-              {/* Subtle hover gradient overlay */}
-              <div
-                className="absolute inset-0 opacity-0 group-hover:opacity-[0.04] transition-opacity duration-500 rounded-[24px]"
-                style={{ background: `radial-gradient(circle at 30% 30%, ${m.accent}, transparent 70%)` }}
+              {/* Animated corner glow */}
+              <div 
+                className="absolute -top-24 -right-24 w-48 h-48 rounded-full blur-[60px] opacity-0 group-hover:opacity-20 transition-opacity duration-700"
+                style={{ background: m.accent }}
               />
 
-              {/* Icon + title row */}
-              <div className="flex items-center gap-4 mb-5">
-                <div className={`w-12 h-12 bg-gradient-to-br ${m.grad} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                  <FontAwesomeIcon icon={m.icon} className="text-white text-[18px]" />
+              {/* Icon + context */}
+              <div className="relative z-10 flex flex-col h-full">
+                <div className={`w-14 h-14 bg-gradient-to-br ${m.grad} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 mb-8`}>
+                  <FontAwesomeIcon icon={m.icon} className="text-white text-xl" />
                 </div>
-                <h3
-                  className="text-xl font-bold transition-colors duration-300"
-                  style={{ color: isInView ? m.accent : '#111' }}
-                >
-                  {m.title}
-                </h3>
+                
+                <h3 className="text-2xl font-black text-gray-900 mb-4 font-serif italic tracking-tight">{m.title}</h3>
+                
+                <p className="text-gray-500 leading-relaxed text-[16px] font-medium group-hover:text-gray-700 transition-colors">
+                  {m.text}
+                </p>
+
+                <div className="mt-auto pt-6 flex items-center gap-2 text-primary-600 font-black text-[11px] uppercase tracking-widest opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                  Read philosophy
+                  <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
+                </div>
               </div>
 
-              {/* Text */}
-              <p className="text-gray-500 leading-relaxed text-[15.5px] flex-grow relative z-10">{m.text}</p>
-
-              {/* Corner accent */}
-              <div
-                className="absolute -bottom-8 -right-8 w-32 h-32 rounded-full opacity-0 group-hover:opacity-10 transition-opacity duration-500 blur-2xl"
-                style={{ background: m.accent }}
+              {/* Background accent line */}
+              <div 
+                className="absolute bottom-0 left-0 h-1 bg-gradient-to-r transition-all duration-500 w-0 group-hover:w-full"
+                style={{ backgroundImage: `linear-gradient(to right, ${m.accent}, transparent)` }}
               />
             </motion.div>
           ))}

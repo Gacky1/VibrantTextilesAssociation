@@ -26,18 +26,22 @@ const Research = () => {
       <Navbar />
       <PageHero
         eyebrow="Innovation & Insights"
-        title="Research & Innovation"
-        subtitle="Driving textile sector growth through evidence-based insights"
+        title="Research & Discovery"
+        subtitle="Pioneering the future of textiles through evidence-based research and transformative insights."
       />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Research Focus Areas */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              RESEARCH AREAS
-            </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Our Focus Areas</h2>
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-24 relative overflow-hidden">
+        {/* Ambient Background Decor */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-50/50 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-40 left-0 w-80 h-80 bg-accent-50/30 rounded-full blur-[120px] pointer-events-none" />
+
+        {/* Research Focus Areas: Interactive Service Cards */}
+        <div className="mb-32 relative z-10">
+          <div className="text-center mb-20 space-y-4">
+            <span className="text-primary-600 font-black text-[11px] uppercase tracking-[0.4em]">Inquiry</span>
+            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
+              Strategic <span className="text-gradient italic font-medium">Focus Areas</span>
+            </h2>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -48,19 +52,27 @@ const Research = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -10, scale: 1.02 }}
-                className="group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all overflow-hidden"
+                whileHover={{ y: -12 }}
+                className="group relative h-full"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${area.bgGradient} opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-                <div className="relative">
-                  <div className={`w-16 h-16 mb-6 bg-gradient-to-br ${area.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all`}>
+                {/* Substrate Glow */}
+                <div className={`absolute -inset-2 bg-gradient-to-br ${area.gradient} rounded-[40px] blur-2xl opacity-0 group-hover:opacity-10 transition-opacity duration-700`} />
+                
+                <div className="relative glass-ultra rounded-[32px] border border-white/60 p-10 h-full flex flex-col overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.04)]">
+                  <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
+                  
+                  <div className={`w-16 h-16 mb-8 bg-gradient-to-br ${area.gradient} rounded-2xl flex items-center justify-center shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
                     <FontAwesomeIcon icon={area.icon} className="text-white text-2xl" />
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-3">{area.title}</h3>
-                  <p className="text-gray-600 mb-4 leading-relaxed">{area.desc}</p>
-                  <div className={`inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r ${area.gradient} text-white rounded-full text-sm font-bold`}>
-                    <FontAwesomeIcon icon={faFlask} />
-                    {area.projects} Active Projects
+                  
+                  <h3 className="text-2xl font-serif font-black text-gray-900 mb-4">{area.title}</h3>
+                  <p className="text-gray-500 text-base font-medium leading-relaxed mb-8">{area.desc}</p>
+                  
+                  <div className="mt-auto">
+                    <div className={`inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r ${area.gradient} text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-lg`}>
+                      <FontAwesomeIcon icon={faFlask} />
+                      {area.projects} Active Projects
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -68,16 +80,16 @@ const Research = () => {
           </div>
         </div>
 
-        {/* Recent Publications */}
-        <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              PUBLICATIONS
-            </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Recent Publications</h2>
+        {/* Recent Publications: Sleek Editorial List */}
+        <div className="mb-32 relative z-10">
+          <div className="text-center mb-20 space-y-4">
+            <span className="text-accent-500 font-black text-[11px] uppercase tracking-[0.4em]">Scholarship</span>
+            <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
+              Latest <span className="text-gradient italic font-medium">Publications</span>
+            </h2>
           </div>
           
-          <div className="space-y-6">
+          <div className="space-y-6 max-w-5xl mx-auto">
             {publications.map((pub, idx) => (
               <motion.div 
                 key={idx}
@@ -85,53 +97,74 @@ const Research = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: idx * 0.1 }}
-                whileHover={{ x: 10 }}
-                className="group bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all"
+                whileHover={{ x: 12, scale: 1.01 }}
+                className="group relative glass-ultra rounded-[32px] p-8 md:p-10 border border-white/60 shadow-[0_20px_60px_rgba(0,0,0,0.03)] cursor-pointer overflow-hidden"
               >
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-                  <div className="flex items-start gap-6 flex-1">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${pub.gradient} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 transition-transform`}>
-                      <FontAwesomeIcon icon={pub.icon} className="text-white text-2xl" />
-                    </div>
-                    <div>
-                      <div className={`inline-block px-4 py-1 bg-gradient-to-r ${pub.gradient} text-white rounded-full text-sm font-bold mb-3`}>
+                <div className="absolute inset-0 noise-overlay opacity-[0.02]" />
+                
+                <div className="relative z-10 flex flex-col md:flex-row md:items-center gap-8">
+                  <div className={`w-20 h-20 bg-gradient-to-br ${pub.gradient} rounded-[24px] flex items-center justify-center flex-shrink-0 shadow-2xl group-hover:rotate-6 transition-transform duration-500`}>
+                    <FontAwesomeIcon icon={pub.icon} className="text-white text-3xl" />
+                  </div>
+                  
+                  <div className="flex-1 space-y-4">
+                    <div className="flex items-center gap-4">
+                      <div className={`px-4 py-1.5 bg-gradient-to-r ${pub.gradient} text-white rounded-full text-[10px] font-black uppercase tracking-widest shadow-md`}>
                         {pub.type}
                       </div>
-                      <h3 className="text-2xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">{pub.title}</h3>
+                      <div className="text-gray-400 font-black text-[10px] uppercase tracking-widest">{pub.year}</div>
                     </div>
+                    <h3 className="font-serif text-2xl md:text-3xl font-black text-gray-900 leading-tight group-hover:text-primary-700 transition-colors">
+                      {pub.title}
+                    </h3>
                   </div>
-                  <div className="text-gray-500 font-semibold text-lg">{pub.year}</div>
+
+                  <div className="flex items-center gap-4">
+                     <div className="w-12 h-[1px] bg-primary-100 group-hover:w-20 transition-all duration-700" />
+                     <FontAwesomeIcon icon={faArrowRight} className="text-primary-300 group-hover:text-primary-600 transition-colors" />
+                  </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* CTA Section */}
+        {/* CTA Section: Heroic Engagement */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="relative bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 rounded-3xl p-12 md:p-16 text-center text-white shadow-2xl overflow-hidden"
+          className="relative rounded-[48px] p-16 md:p-32 text-center overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.2)]"
         >
-          <div className="absolute inset-0">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-500 rounded-full blur-3xl opacity-20"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary-400 rounded-full blur-3xl opacity-20"></div>
+          {/* Animated Mesh Background */}
+          <div className="absolute inset-0 bg-[#050508]">
+            <div className="absolute inset-0 bg-mesh-gradient animate-mesh-slow opacity-40 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]" />
+            <div className="absolute inset-0 noise-overlay opacity-[0.05]" />
           </div>
           
-          <div className="relative">
-            <div className="w-20 h-20 mx-auto mb-6 bg-white/10 backdrop-blur-lg rounded-2xl flex items-center justify-center">
+          <div className="relative z-10 space-y-12">
+            <div className="w-24 h-24 mx-auto bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl flex items-center justify-center shadow-2xl">
               <FontAwesomeIcon icon={faLightbulb} className="text-white text-4xl" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Collaborate With Us</h2>
-            <p className="text-xl mb-10 text-white/90 max-w-2xl mx-auto">Partner in research projects and contribute to textile innovation</p>
+            
+            <div className="space-y-6">
+              <h2 className="font-serif text-[clamp(2.5rem,6vw,5rem)] text-white leading-tight font-black">
+                Collaborate <br />
+                <span className="text-gradient italic font-medium">With Us</span>
+              </h2>
+              <p className="text-white/50 text-xl font-medium max-w-2xl mx-auto leading-relaxed">
+                Partner with us on pioneering research projects and contribute to the evolution of the global textile industry.
+              </p>
+            </div>
+
             <motion.button 
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
-              className="group inline-flex items-center gap-3 px-10 py-5 bg-white text-primary-700 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl transition-all"
+              className="group relative inline-flex items-center gap-6 px-14 py-7 bg-white rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(255,255,255,0.1)] transition-all"
             >
-              Submit Research Proposal
-              <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-1 transition-transform" />
+              <div className="absolute inset-0 bg-primary-50 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+              <span className="relative font-black text-primary-900 text-base uppercase tracking-widest italic">Submit Research Proposal</span>
+              <FontAwesomeIcon icon={faArrowRight} className="relative text-primary-600 transition-transform group-hover:translate-x-2" />
             </motion.button>
           </div>
         </motion.div>
