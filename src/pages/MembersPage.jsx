@@ -1,51 +1,59 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserTie, faNetworkWired, faChartBar, faGraduationCap, faBriefcase, faTrophy, faNewspaper, faHandshake, faLeaf, faBullhorn, faFlask, faUsers, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import * as solidIcons from '@fortawesome/free-solid-svg-icons';
+import { faUserTie, faNetworkWired, faChartBar, faBriefcase, faTrophy, faNewspaper, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 
 const MembersPage = () => {
-  const boardMembers = [
-    {
-      name: "Dr. Rajesh Kumar",
-      position: "Chairperson",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400",
-      bio: "30+ years in textile industry, Former Director of National Institute of Fashion Technology",
-      expertise: ["Policy Making", "Industry Relations", "Strategic Planning"]
-    },
-    {
-      name: "Mrs. Priya Sharma",
-      position: "Vice Chairperson",
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400",
-      bio: "Renowned textile designer and entrepreneur with international recognition",
-      expertise: ["Design Innovation", "Export Management", "Brand Development"]
-    },
-    {
-      name: "Mr. Anil Verma",
-      position: "Secretary",
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400",
-      bio: "Legal expert specializing in textile trade and compliance",
-      expertise: ["Legal Affairs", "Compliance", "Documentation"]
-    },
-    {
-      name: "Ms. Kavita Reddy",
-      position: "Treasurer",
-      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400",
-      bio: "Chartered Accountant with expertise in textile sector finance",
-      expertise: ["Financial Planning", "Audit", "Fund Management"]
-    }
-  ];
+  const [boardMembers, setBoardMembers] = useState([]);
+  const [executiveMembers, setExecutiveMembers] = useState([]);
+  const [content, setContent] = useState({
+    page_eyebrow: 'Our Leadership',
+    page_title: 'Our Members',
+    page_subtitle: 'Meet the dedicated team driving India\'s textile sector forward',
+    board_badge: 'BOARD OF DIRECTORS',
+    board_heading: 'Leadership Team',
+    exec_badge: 'EXECUTIVE TEAM',
+    exec_heading: 'Department Heads'
+  });
+  const [loading, setLoading] = useState(true);
 
-  const executiveMembers = [
-    { name: "Mr. Suresh Patel", role: "Handloom Development Head", icon: faHandshake, gradient: 'from-purple-500 to-purple-600' },
-    { name: "Dr. Meena Singh", role: "Research & Innovation Lead", icon: faFlask, gradient: 'from-blue-500 to-blue-600' },
-    { name: "Mr. Vikram Joshi", role: "Skill Development Coordinator", icon: faGraduationCap, gradient: 'from-green-500 to-green-600' },
-    { name: "Ms. Anjali Desai", role: "Marketing & Communications", icon: faBullhorn, gradient: 'from-pink-500 to-pink-600' },
-    { name: "Mr. Ramesh Gupta", role: "Industry Liaison Officer", icon: faUsers, gradient: 'from-cyan-500 to-cyan-600' },
-    { name: "Ms. Deepa Nair", role: "Sustainability Advisor", icon: faLeaf, gradient: 'from-emerald-500 to-emerald-600' }
-  ];
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      // Fetch members
+      const { data: membersData } = await supabase
+        .from('members')
+        .select('*')
+        .eq('is_active', true)
+        .order('sort_order', { ascending: true });
+        
+      if (membersData) {
+        setBoardMembers(membersData.filter(m => m.category === 'board'));
+        setExecutiveMembers(membersData.filter(m => m.category === 'executive'));
+      }
+
+      // Fetch site content
+      const { data: contentData } = await supabase
+        .from('site_content')
+        .select('key, value')
+        .eq('section', 'members');
+        
+      if (contentData) {
+        const contentMap = {};
+        contentData.forEach(item => { contentMap[item.key] = item.value; });
+        setContent(prev => ({ ...prev, ...contentMap }));
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+  // The static membershipBenefits array remains here since it wasn't requested to be dynamic, but can be moved later if needed.
 
   const membershipBenefits = [
     { icon: faNetworkWired, title: "Networking", desc: "Connect with industry leaders and peers", gradient: 'from-blue-500 to-blue-600' },
@@ -60,9 +68,9 @@ const MembersPage = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <PageHero
-        eyebrow="Our Leadership"
-        title="Our Members"
-        subtitle="Meet the dedicated team driving India's textile sector forward"
+        eyebrow={content.page_eyebrow}
+        title={content.page_title}
+        subtitle={content.page_subtitle}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -70,9 +78,9 @@ const MembersPage = () => {
         <div className="mb-20">
           <div className="text-center mb-12">
             <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              BOARD OF DIRECTORS
+              {content.board_badge}
             </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Leadership Team</h2>
+            <h2 className="text-4xl font-serif font-bold text-gray-900">{content.board_heading}</h2>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -87,11 +95,11 @@ const MembersPage = () => {
                 className="group bg-white rounded-3xl overflow-hidden shadow-xl hover:shadow-2xl transition-all"
               >
                 <div className="relative h-80 overflow-hidden">
-                  <img src={member.image} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                  <img src={member.image_url} alt={member.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-6 left-6 right-6 text-white">
                     <h3 className="text-2xl font-bold mb-1">{member.name}</h3>
-                    <p className="text-sm text-accent-300 font-semibold">{member.position}</p>
+                    <p className="text-sm text-accent-300 font-semibold">{member.designation}</p>
                   </div>
                   <div className="absolute top-6 right-6 w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center">
                     <FontAwesomeIcon icon={faUserTie} className="text-white text-xl" />
@@ -100,7 +108,7 @@ const MembersPage = () => {
                 <div className="p-6">
                   <p className="text-gray-600 text-sm mb-4 leading-relaxed">{member.bio}</p>
                   <div className="space-y-2">
-                    {member.expertise.map((skill, i) => (
+                    {(member.expertise || []).map((skill, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 bg-primary-500 rounded-full"></div>
                         <span className="text-xs text-gray-700 font-medium">{skill}</span>
@@ -117,13 +125,17 @@ const MembersPage = () => {
         <div className="mb-20">
           <div className="text-center mb-12">
             <div className="inline-block mb-4 px-5 py-2 bg-gradient-to-r from-primary-500 to-primary-600 text-white rounded-full text-sm font-bold tracking-wider shadow-lg">
-              EXECUTIVE TEAM
+              {content.exec_badge}
             </div>
-            <h2 className="text-4xl font-serif font-bold text-gray-900">Department Heads</h2>
+            <h2 className="text-4xl font-serif font-bold text-gray-900">{content.exec_heading}</h2>
           </div>
           
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {executiveMembers.map((member, idx) => (
+            {executiveMembers.map((member, idx) => {
+              // Safety fallback for icon resolution since string is stored in DB
+              const iconObj = solidIcons[member.icon] || solidIcons.faUserTie;
+              
+              return (
               <motion.div
                 key={idx}
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -133,16 +145,17 @@ const MembersPage = () => {
                 whileHover={{ y: -5, scale: 1.03 }}
                 className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all overflow-hidden"
               >
-                <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient || 'from-gray-500 to-gray-600'} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
                 <div className="relative">
-                  <div className={`w-14 h-14 mb-4 bg-gradient-to-br ${member.gradient} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
-                    <FontAwesomeIcon icon={member.icon} className="text-white text-xl" />
+                  <div className={`w-14 h-14 mb-4 bg-gradient-to-br ${member.gradient || 'from-gray-500 to-gray-600'} rounded-xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
+                    <FontAwesomeIcon icon={iconObj} className="text-white text-xl" />
                   </div>
                   <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
-                  <p className="text-sm text-gray-600 font-medium">{member.role}</p>
+                  <p className="text-sm text-gray-600 font-medium">{member.designation}</p>
                 </div>
               </motion.div>
-            ))}
+              );
+            })}
           </div>
         </div>
 

@@ -40,6 +40,19 @@ const sections = [
       { key: 'hours', label: 'Working Hours', placeholder: 'e.g. Mon–Fri: 9AM–6PM' },
     ],
   },
+  {
+    key: 'members',
+    label: '👥 Members Page Info',
+    fields: [
+      { key: 'page_eyebrow', label: 'Page Eyebrow', placeholder: 'e.g. Our Leadership' },
+      { key: 'page_title', label: 'Page Title', placeholder: 'e.g. Our Members' },
+      { key: 'page_subtitle', label: 'Page Subtitle', placeholder: 'e.g. Meet the dedicated team...' },
+      { key: 'board_badge', label: 'Board Badge Text', placeholder: 'e.g. BOARD OF DIRECTORS' },
+      { key: 'board_heading', label: 'Board Heading', placeholder: 'e.g. Leadership Team' },
+      { key: 'exec_badge', label: 'Executive Badge Text', placeholder: 'e.g. EXECUTIVE TEAM' },
+      { key: 'exec_heading', label: 'Executive Heading', placeholder: 'e.g. Department Heads' },
+    ],
+  },
 ];
 
 const AdminContent = () => {
