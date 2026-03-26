@@ -19,6 +19,7 @@ import AdminEvents from './admin/AdminEvents';
 import AdminMedia from './admin/AdminMedia';
 import AdminPress from './admin/AdminPress';
 import AdminContent from './admin/AdminContent';
+import AdminApplications from './admin/AdminApplications';
 import ProtectedRoute from './admin/ProtectedRoute';
 
 function App() {
@@ -54,6 +55,7 @@ function App() {
           <Route path="events" element={<AdminEvents />} />
           <Route path="media" element={<AdminMedia />} />
           <Route path="press" element={<AdminPress />} />
+          <Route path="applications" element={<AdminApplications />} />
           <Route path="content" element={<AdminContent />} />
         </Route>
       </Routes>

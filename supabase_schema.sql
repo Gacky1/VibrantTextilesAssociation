@@ -3,6 +3,26 @@
 -- Paste this in: Supabase Dashboard → SQL Editor → Run
 -- =============================================
 
+-- Membership forms responses
+create table if not exists membership_applications (
+  id uuid primary key default gen_random_uuid(),
+  category text not null, -- 'government', 'industry', 'support'
+  org_name text not null,
+  org_type text, -- for industry sub-sector or support type
+  org_address text not null,
+  state text,
+  partnering_interest text,
+  decision_maker text not null,
+  designation text,
+  phone text not null,
+  email text not null,
+  additional_info text,
+  status text default 'pending',
+  created_at timestamptz default now()
+);
+-- Paste this in: Supabase Dashboard → SQL Editor → Run
+-- =============================================
+
 -- Members table
 create table if not exists members (
   id uuid primary key default gen_random_uuid(),
@@ -111,6 +131,7 @@ alter table press_releases enable row level security;
 alter table missions enable row level security;
 alter table focus_areas enable row level security;
 alter table site_content enable row level security;
+alter table membership_applications enable row level security;
 
 -- Allow anyone to read
 create policy "Public read members" on members for select using (true);
@@ -120,6 +141,7 @@ create policy "Public read press" on press_releases for select using (true);
 create policy "Public read missions" on missions for select using (true);
 create policy "Public read focus_areas" on focus_areas for select using (true);
 create policy "Public read site_content" on site_content for select using (true);
+create policy "Public can insert membership apps" on membership_applications for insert with check (true);
 
 -- Allow authenticated (admin) users to do everything
 create policy "Auth all members" on members for all using (auth.role() = 'authenticated');
@@ -129,6 +151,7 @@ create policy "Auth all press" on press_releases for all using (auth.role() = 'a
 create policy "Auth all missions" on missions for all using (auth.role() = 'authenticated');
 create policy "Auth all focus_areas" on focus_areas for all using (auth.role() = 'authenticated');
 create policy "Auth all site_content" on site_content for all using (auth.role() = 'authenticated');
+create policy "Auth all membership apps" on membership_applications for all using (auth.role() = 'authenticated');
 
 -- Storage bucket for images (run manually in Storage tab → New Bucket → 'cms-images' → Public)
 -- Or run:

@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { supabase } from '../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -80,36 +81,36 @@ const GovernmentForm = () => (
   <>
     <div>
       <Label icon={faBuilding}>Organization Name *</Label>
-      <input type="text" required placeholder="e.g. Ministry of Textiles" className={inp} />
+      <input type="text" name="org_name" required placeholder="e.g. Ministry of Textiles" className={inp} />
     </div>
     <div>
       <Label icon={faMapMarkerAlt}>Organization Address *</Label>
-      <textarea required rows="3" placeholder="Full address including city and PIN code" className={`${inp} resize-none`} />
+      <textarea name="org_address" required rows="3" placeholder="Full address including city and PIN code" className={`${inp} resize-none`} />
     </div>
     <div>
       <Label icon={faGlobe}>State *</Label>
-      <select required className={sel}>
+      <select name="state" required className={sel}>
         <option value="">Select State</option>
         {indianStates.map(s => <option key={s}>{s}</option>)}
       </select>
     </div>
     <div>
       <Label icon={faUser}>Decision Maker Name *</Label>
-      <input type="text" required placeholder="Full name of decision maker" className={inp} />
+      <input type="text" name="decision_maker" required placeholder="Full name of decision maker" className={inp} />
     </div>
     <div className="grid md:grid-cols-2 gap-4">
       <div>
         <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" required placeholder="+91 XXXXX XXXXX" className={inp} />
+        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
       </div>
       <div>
         <Label icon={faEnvelope}>Email Address *</Label>
-        <input type="email" required placeholder="official@org.gov.in" className={inp} />
+        <input type="email" name="email" required placeholder="official@org.gov.in" className={inp} />
       </div>
     </div>
     <div>
       <Label icon={faBriefcase}>Additional Information</Label>
-      <textarea rows="3" placeholder="Any additional context you'd like to share" className={`${inp} resize-none`} />
+      <textarea name="additional_info" rows="3" placeholder="Any additional context you'd like to share" className={`${inp} resize-none`} />
     </div>
   </>
 );
@@ -118,11 +119,11 @@ const IndustryForm = () => (
   <>
     <div>
       <Label icon={faBuilding}>Company Name *</Label>
-      <input type="text" required placeholder="Your company or trade name" className={inp} />
+      <input type="text" name="org_name" required placeholder="Your company or trade name" className={inp} />
     </div>
     <div>
       <Label icon={faBriefcase}>Sub-Sector *</Label>
-      <select required className={sel}>
+      <select name="org_type" required className={sel}>
         <option value="">Select Sub-Sector</option>
         <option>Handloom & Traditional Textiles</option>
         <option>Powerloom & Mechanized Textiles</option>
@@ -134,11 +135,11 @@ const IndustryForm = () => (
     </div>
     <div>
       <Label icon={faMapMarkerAlt}>Head Office Address *</Label>
-      <textarea required rows="3" placeholder="Complete address of head office" className={`${inp} resize-none`} />
+      <textarea name="org_address" required rows="3" placeholder="Complete address of head office" className={`${inp} resize-none`} />
     </div>
     <div>
       <Label icon={faGlobe}>Partnering Interest *</Label>
-      <select required className={sel}>
+      <select name="partnering_interest" required className={sel}>
         <option value="">Select Area of Interest</option>
         <option>Skill Development</option>
         <option>Market Linkage</option>
@@ -151,26 +152,26 @@ const IndustryForm = () => (
     <div className="grid md:grid-cols-2 gap-4">
       <div>
         <Label icon={faUser}>Decision Maker Name *</Label>
-        <input type="text" required placeholder="Full name" className={inp} />
+        <input type="text" name="decision_maker" required placeholder="Full name" className={inp} />
       </div>
       <div>
         <Label icon={faBriefcase}>Designation *</Label>
-        <input type="text" required placeholder="e.g. Managing Director" className={inp} />
+        <input type="text" name="designation" required placeholder="e.g. Managing Director" className={inp} />
       </div>
     </div>
     <div className="grid md:grid-cols-2 gap-4">
       <div>
         <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" required placeholder="+91 XXXXX XXXXX" className={inp} />
+        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
       </div>
       <div>
         <Label icon={faEnvelope}>Email Address *</Label>
-        <input type="email" required placeholder="work@company.com" className={inp} />
+        <input type="email" name="email" required placeholder="work@company.com" className={inp} />
       </div>
     </div>
     <div>
       <Label icon={faBriefcase}>Additional Information</Label>
-      <textarea rows="3" placeholder="Any additional context" className={`${inp} resize-none`} />
+      <textarea name="additional_info" rows="3" placeholder="Any additional context" className={`${inp} resize-none`} />
     </div>
   </>
 );
@@ -179,7 +180,7 @@ const SupportForm = () => (
   <>
     <div>
       <Label icon={faBriefcase}>Organization Type *</Label>
-      <select required className={sel}>
+      <select name="org_type" required className={sel}>
         <option value="">Select Type</option>
         <option>NGO</option>
         <option>Training Institute</option>
@@ -191,36 +192,36 @@ const SupportForm = () => (
     </div>
     <div>
       <Label icon={faBuilding}>Organization Name *</Label>
-      <input type="text" required placeholder="Full organization name" className={inp} />
+      <input type="text" name="org_name" required placeholder="Full organization name" className={inp} />
     </div>
     <div>
       <Label icon={faMapMarkerAlt}>Organization Address *</Label>
-      <textarea required rows="3" placeholder="Full address including city and PIN code" className={`${inp} resize-none`} />
+      <textarea name="org_address" required rows="3" placeholder="Full address including city and PIN code" className={`${inp} resize-none`} />
     </div>
     <div>
       <Label icon={faGlobe}>State *</Label>
-      <select required className={sel}>
+      <select name="state" required className={sel}>
         <option value="">Select State</option>
         {indianStates.map(s => <option key={s}>{s}</option>)}
       </select>
     </div>
     <div>
       <Label icon={faUser}>Decision Maker Name *</Label>
-      <input type="text" required placeholder="Full name of decision maker" className={inp} />
+      <input type="text" name="decision_maker" required placeholder="Full name of decision maker" className={inp} />
     </div>
     <div className="grid md:grid-cols-2 gap-4">
       <div>
         <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" required placeholder="+91 XXXXX XXXXX" className={inp} />
+        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
       </div>
       <div>
         <Label icon={faEnvelope}>Email Address *</Label>
-        <input type="email" required placeholder="contact@org.in" className={inp} />
+        <input type="email" name="email" required placeholder="contact@org.in" className={inp} />
       </div>
     </div>
     <div>
       <Label icon={faBriefcase}>Additional Information</Label>
-      <textarea rows="3" placeholder="Any additional context" className={`${inp} resize-none`} />
+      <textarea name="additional_info" rows="3" placeholder="Any additional context" className={`${inp} resize-none`} />
     </div>
   </>
 );
@@ -242,12 +243,31 @@ const Membership = () => {
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 120);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setShowSuccess(true);
-    setSelectedCategory(null);
-    setTimeout(() => setShowSuccess(false), 6000);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
+    // Check required fields based on the built-in HTML validation, falling back to FormData collection
+    const formValues = new FormData(e.target);
+    const data = Object.fromEntries(formValues.entries());
+    
+    // Prepare the payload for Supabase
+    const payload = { ...data, category: selectedCategory };
+
+    try {
+      const { error } = await supabase
+        .from('membership_applications')
+        .insert([payload]);
+
+      if (error) throw error;
+      
+      setShowSuccess(true);
+      setSelectedCategory(null);
+      setTimeout(() => setShowSuccess(false), 6000);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      alert('Failed to submit application. Please try again.');
+    }
   };
 
   const filteredCategories = activeFilter === 'all'

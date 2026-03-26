@@ -8,6 +8,7 @@ const navItems = [
   { to: '/admin/events', label: 'Events', icon: '📅' },
   { to: '/admin/media', label: 'Media Gallery', icon: '🖼️' },
   { to: '/admin/press', label: 'Press & News', icon: '📰' },
+  { to: '/admin/applications', label: 'Applications', icon: '📝' },
   { to: '/admin/content', label: 'Site Content', icon: '✏️' },
 ];
 
