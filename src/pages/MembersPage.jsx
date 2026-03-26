@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
-import { faUserTie, faNetworkWired, faChartBar, faBriefcase, faTrophy, faNewspaper, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faUserTie, faNetworkWired, faChartBar, faBriefcase, faTrophy, faNewspaper, faArrowRight, faGraduationCap, faUsers } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
