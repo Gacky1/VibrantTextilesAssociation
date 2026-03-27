@@ -103,7 +103,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* scroll-behavior: smooth; -- Removed for Lenis compatibility */
   scroll-padding-top: 88px;
 }
 

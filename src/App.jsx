@@ -22,11 +22,14 @@ import AdminContent from './admin/AdminContent';
 import AdminApplications from './admin/AdminApplications';
 import ProtectedRoute from './admin/ProtectedRoute';
 
+import SmoothScroll from './components/SmoothScroll';
+
 function App() {
   return (
     <Router>
-      <ScrollToTop />
-      <Routes>
+      <SmoothScroll>
+        <ScrollToTop />
+        <Routes>
         {/* ── Public Routes ── */}
         <Route path="/" element={<Home />} />
         <Route path="/about-textile" element={<AboutTextile />} />
@@ -58,7 +61,8 @@ function App() {
           <Route path="applications" element={<AdminApplications />} />
           <Route path="content" element={<AdminContent />} />
         </Route>
-      </Routes>
+        </Routes>
+      </SmoothScroll>
     </Router>
   );
 }
