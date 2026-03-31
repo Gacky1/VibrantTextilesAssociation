@@ -5,6 +5,24 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 
+// Textile Images
+import apImg from '../assets/textiles/ap_textile.png';
+import assamImg from '../assets/textiles/assam_textile.png';
+import biharImg from '../assets/textiles/bihar_textile.png';
+import gujaratImg from '../assets/textiles/gujarat_textile.png';
+import karnatakaImg from '../assets/textiles/karnataka_textile.png';
+import keralaImg from '../assets/textiles/kerala_textile.png';
+import mpImg from '../assets/textiles/mp_textile.png';
+import maharashtraImg from '../assets/textiles/maharashtra_textile.png';
+import odishaImg from '../assets/textiles/odisha_textile.png';
+import rajasthanImg from '../assets/textiles/rajasthan_textile.png';
+import tnImg from '../assets/textiles/tn_textile.png';
+import upImg from '../assets/textiles/up_textile.png';
+import wbImg from '../assets/textiles/wb_textile.png';
+import hpImg from '../assets/textiles/hp_textile.png';
+import punjabImg from '../assets/textiles/punjab_textile.png';
+import delhiImg from '../assets/textiles/delhi_textile.png';
+
 const AboutTextile = () => {
   const segments = [
     { title: "Handloom & Traditional", icon: faHandHoldingHeart, desc: "Fabrics created manually by artisans", examples: "Khadi, Banarasi Silk, Ikat, Jamdani, Pashmina", gradient: 'from-purple-500 to-purple-600', bgGradient: 'from-purple-50 to-purple-100' },
@@ -16,22 +34,22 @@ const AboutTextile = () => {
   ];
 
   const states = [
-    { name: "Andhra Pradesh", textiles: "Pochampally Ikat, Gadwal Sarees" },
-    { name: "Assam", textiles: "Muga Silk, Eri Silk" },
-    { name: "Bihar", textiles: "Bhagalpuri (Tussar) Silk" },
-    { name: "Gujarat", textiles: "Bandhani, Cotton, Denim" },
-    { name: "Karnataka", textiles: "Mysore Silk, Ilkal Sarees" },
-    { name: "Kerala", textiles: "Kasavu Sarees" },
-    { name: "Madhya Pradesh", textiles: "Chanderi, Maheshwari" },
-    { name: "Maharashtra", textiles: "Denim, Cotton Fabrics" },
-    { name: "Odisha", textiles: "Sambalpuri Ikat, Bomkai" },
-    { name: "Rajasthan", textiles: "Block-prints, Leheriya" },
-    { name: "Tamil Nadu", textiles: "Cotton, Technical Textiles" },
-    { name: "Uttar Pradesh", textiles: "Banarasi Silk, Chikankari" },
-    { name: "West Bengal", textiles: "Jamdani, Baluchari, Tangail" },
-    { name: "Himachal Pradesh", textiles: "Kullu Woolens, Chamba Rumals" },
-    { name: "Punjab", textiles: "Cotton, Jute Yarn" },
-    { name: "Delhi", textiles: "Fashion Clothing" }
+    { name: "Andhra Pradesh", textiles: "Pochampally Ikat, Gadwal Sarees", image: apImg },
+    { name: "Assam", textiles: "Muga Silk, Eri Silk", image: assamImg },
+    { name: "Bihar", textiles: "Bhagalpuri (Tussar) Silk", image: biharImg },
+    { name: "Gujarat", textiles: "Bandhani, Cotton, Denim", image: gujaratImg },
+    { name: "Karnataka", textiles: "Mysore Silk, Ilkal Sarees", image: karnatakaImg },
+    { name: "Kerala", textiles: "Kasavu Sarees", image: keralaImg },
+    { name: "Madhya Pradesh", textiles: "Chanderi, Maheshwari", image: mpImg },
+    { name: "Maharashtra", textiles: "Denim, Cotton Fabrics", image: maharashtraImg },
+    { name: "Odisha", textiles: "Sambalpuri Ikat, Bomkai", image: odishaImg },
+    { name: "Rajasthan", textiles: "Block-prints, Leheriya", image: rajasthanImg },
+    { name: "Tamil Nadu", textiles: "Cotton, Technical Textiles", image: tnImg },
+    { name: "Uttar Pradesh", textiles: "Banarasi Silk, Chikankari", image: upImg },
+    { name: "West Bengal", textiles: "Jamdani, Baluchari, Tangail", image: wbImg },
+    { name: "Himachal Pradesh", textiles: "Kullu Woolens, Chamba Rumals", image: hpImg },
+    { name: "Punjab", textiles: "Cotton, Jute Yarn", image: punjabImg },
+    { name: "Delhi", textiles: "Fashion Clothing", image: delhiImg }
   ];
 
   return (
@@ -191,27 +209,50 @@ const AboutTextile = () => {
               </p>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
               {states.map((state, idx) => (
                 <motion.div 
                   key={idx} 
-                  initial={{ opacity: 0, scale: 0.95 }} 
-                  whileInView={{ opacity: 1, scale: 1 }}
+                  initial={{ opacity: 0, y: 30 }} 
+                  whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.05 }} 
-                  whileHover={{ y: -8, backgroundColor: 'rgba(255,255,255,1)', boxShadow: '0 20px 40px rgba(0,0,0,0.04)' }} 
-                  className="group bg-gray-50/50 rounded-2xl p-6 border border-gray-100 transition-all duration-300"
+                  whileHover={{ y: -10 }} 
+                  className="group bg-white rounded-[24px] border border-gray-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-all duration-500"
                 >
-                  <div className="flex items-start gap-4 mb-4">
-                    <div className="w-10 h-10 bg-white shadow-sm rounded-xl flex items-center justify-center flex-shrink-0 group-hover:bg-primary-500 group-hover:shadow-primary-200 transition-all duration-300">
-                      <FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <div>
-                      <h3 className="text-base font-black text-gray-900 group-hover:text-primary-600 transition-colors uppercase tracking-tight">{state.name}</h3>
-                      <div className="h-0.5 w-6 bg-primary-100 mt-1 group-hover:w-10 transition-all" />
+                  {/* Image Header with Zoom Effect */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={state.image} 
+                      alt={state.name} 
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-115"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                    
+                    {/* State Badge on Image */}
+                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
+                       <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
+                          <FontAwesomeIcon icon={faMapMarkerAlt} className="text-white text-xs" />
+                       </div>
+                       <span className="text-white font-black text-xs uppercase tracking-wider">{state.name}</span>
                     </div>
                   </div>
-                  <p className="text-[13px] text-gray-500 font-medium leading-relaxed group-hover:text-gray-700 transition-colors">{state.textiles}</p>
+
+                  {/* Content Area */}
+                  <div className="p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="h-0.5 w-8 bg-primary-500 group-hover:w-12 transition-all duration-500" />
+                      <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.2em]">Regional Specialty</span>
+                    </div>
+                    <p className="text-[14px] text-gray-600 font-bold leading-relaxed">{state.textiles}</p>
+                    
+                    {/* Hover Decoration */}
+                    <div className="mt-6 flex justify-end">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 transform group-hover:rotate-45">
+                        <FontAwesomeIcon icon={faBriefcase} className="text-[10px]" />
+                      </div>
+                    </div>
+                  </div>
                 </motion.div>
               ))}
             </div>
