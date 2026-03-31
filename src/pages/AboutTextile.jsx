@@ -1,262 +1,144 @@
-import { motion } from 'framer-motion';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBriefcase, faChartLine, faGlobe, faHandHoldingHeart, faIndustry, faShirt, faPalette, faHome, faFlask, faSeedling, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
+import { faHistory, faLightbulb, faGlobe, faArrowRight, faIndustry, faMicrochip, faRecycle, faAward } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 
-// Textile Images
-import apImg from '../assets/textiles/ap_textile.png';
-import assamImg from '../assets/textiles/assam_textile.png';
-import biharImg from '../assets/textiles/bihar_textile.png';
-import gujaratImg from '../assets/textiles/gujarat_textile.png';
-import karnatakaImg from '../assets/textiles/karnataka_textile.png';
-import keralaImg from '../assets/textiles/kerala_textile.png';
-import mpImg from '../assets/textiles/mp_textile.png';
-import maharashtraImg from '../assets/textiles/maharashtra_textile.png';
-import odishaImg from '../assets/textiles/odisha_textile.png';
-import rajasthanImg from '../assets/textiles/rajasthan_textile.png';
-import tnImg from '../assets/textiles/tn_textile.png';
-import upImg from '../assets/textiles/up_textile.png';
-import wbImg from '../assets/textiles/wb_textile.png';
-import hpImg from '../assets/textiles/hp_textile.png';
-import punjabImg from '../assets/textiles/punjab_textile.png';
-import delhiImg from '../assets/textiles/delhi_textile.png';
-
 const AboutTextile = () => {
-  const segments = [
-    { title: "Handloom & Traditional", icon: faHandHoldingHeart, desc: "Fabrics created manually by artisans", examples: "Khadi, Banarasi Silk, Ikat, Jamdani, Pashmina", gradient: 'from-purple-500 to-purple-600', bgGradient: 'from-purple-50 to-purple-100' },
-    { title: "Powerloom & Mechanized", icon: faIndustry, desc: "Mechanized looms for mass production", examples: "Cotton fabrics, polyester, denim", gradient: 'from-blue-500 to-blue-600', bgGradient: 'from-blue-50 to-blue-100' },
-    { title: "Apparel & Garments", icon: faShirt, desc: "Ready-to-wear clothing", examples: "Fashion wear, uniforms, casual clothing", gradient: 'from-pink-500 to-pink-600', bgGradient: 'from-pink-50 to-pink-100' },
-    { title: "Home Textiles", icon: faHome, desc: "Fabrics for interiors and décor", examples: "Bedsheets, curtains, carpets", gradient: 'from-green-500 to-green-600', bgGradient: 'from-green-50 to-green-100' },
-    { title: "Technical & Industrial", icon: faFlask, desc: "Functional applications", examples: "Medical textiles, protective fabrics", gradient: 'from-cyan-500 to-cyan-600', bgGradient: 'from-cyan-50 to-cyan-100' },
-    { title: "Natural Fibres", icon: faSeedling, desc: "Raw materials", examples: "Cotton, silk, wool, jute, hemp", gradient: 'from-emerald-500 to-emerald-600', bgGradient: 'from-emerald-50 to-emerald-100' }
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const stats = [
+    { label: 'Ancient Rhythm', val: '5,000+', sub: 'Years of Heritage' },
+    { label: 'Global Registry', val: '120+', sub: 'Export Markets' },
+    { label: 'Artisan Hubs', val: '75+', sub: 'Strategic Nodes' },
+    { label: 'Elite Cert.', val: '15+', sub: 'Industrial Standards' }
   ];
 
-  const states = [
-    { name: "Andhra Pradesh", textiles: "Pochampally Ikat, Gadwal Sarees", image: apImg },
-    { name: "Assam", textiles: "Muga Silk, Eri Silk", image: assamImg },
-    { name: "Bihar", textiles: "Bhagalpuri (Tussar) Silk", image: biharImg },
-    { name: "Gujarat", textiles: "Bandhani, Cotton, Denim", image: gujaratImg },
-    { name: "Karnataka", textiles: "Mysore Silk, Ilkal Sarees", image: karnatakaImg },
-    { name: "Kerala", textiles: "Kasavu Sarees", image: keralaImg },
-    { name: "Madhya Pradesh", textiles: "Chanderi, Maheshwari", image: mpImg },
-    { name: "Maharashtra", textiles: "Denim, Cotton Fabrics", image: maharashtraImg },
-    { name: "Odisha", textiles: "Sambalpuri Ikat, Bomkai", image: odishaImg },
-    { name: "Rajasthan", textiles: "Block-prints, Leheriya", image: rajasthanImg },
-    { name: "Tamil Nadu", textiles: "Cotton, Technical Textiles", image: tnImg },
-    { name: "Uttar Pradesh", textiles: "Banarasi Silk, Chikankari", image: upImg },
-    { name: "West Bengal", textiles: "Jamdani, Baluchari, Tangail", image: wbImg },
-    { name: "Himachal Pradesh", textiles: "Kullu Woolens, Chamba Rumals", image: hpImg },
-    { name: "Punjab", textiles: "Cotton, Jute Yarn", image: punjabImg },
-    { name: "Delhi", textiles: "Fashion Clothing", image: delhiImg }
+  const segments = [
+    { title: 'The Handloom Legacy', icon: faHistory, desc: 'Preserving the tactile heartbeat of ancient craftsmanship through rhythmic precision.', color: 'from-primary-600 to-primary-800' },
+    { title: 'Digital Evolution', icon: faMicrochip, desc: 'Integrating high-end automation with traditional depth for the modern revolutionary.', color: 'from-accent-500 to-accent-700' },
+    { title: 'Sustainable Core', icon: faRecycle, desc: 'Pioneering organic chemistry and circular economy protocols in every thread.', color: 'from-emerald-500 to-emerald-700' },
+    { title: 'Global Distinction', icon: faAward, desc: 'Achieving export excellence and global recognition for the Indian aesthetic.', color: 'from-blue-600 to-blue-800' }
   ];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div ref={containerRef} className="min-h-screen bg-dark-950 selection:bg-primary-500/20 selection:text-white">
       <Navbar />
       <PageHero
-        eyebrow="India's Textile Heritage"
-        title="About Indian Textiles"
-        subtitle="One of India's oldest and most diverse sectors, spanning traditional handlooms to modern industrial textiles"
+        eyebrow="The Chronicle"
+        title="Tactile Deep-Dive"
+        subtitle="Decoding the rhythmic DNA of India's textile civilization."
       />
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 py-24 relative">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100/30 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-40 left-0 w-72 h-72 bg-accent-100/20 rounded-full blur-[80px] pointer-events-none" />
-
-        {/* Overview Stats: High-Impact Glass Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-32 relative z-10">
-          {[
-            { icon: faBriefcase, val: "2.3%", label: "of India's GDP", sub: "45M+ direct employment", color: "text-primary-600", glow: "from-primary-500/20" },
-            { icon: faChartLine, val: "$225B", label: "Market Size (2025)", sub: "$350B by 2030 target", color: "text-accent-500", glow: "from-accent-500/20" },
-            { icon: faGlobe, val: "$36B", label: "Annual Exports", sub: "Global export pioneer", color: "text-emerald-600", glow: "from-emerald-500/20" }
-          ].map((stat, idx) => (
-            <motion.div
-              key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.15, duration: 0.8 }}
-              whileHover={{ y: -12 }}
-              className="group relative"
-            >
-              <div className={`absolute -inset-4 bg-gradient-to-tr ${stat.glow} to-transparent rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
-              
-              <div className="relative glass-ultra rounded-[32px] border border-white/60 p-10 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.06)] h-full flex flex-col items-center text-center">
-                <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
-                
-                <div className="w-20 h-20 mb-8 glass-premium rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 border border-white/40">
-                  <FontAwesomeIcon icon={stat.icon} className={`${stat.color} text-3xl`} />
-                </div>
-                
-                <h3 className={`font-serif text-5xl font-black ${stat.color} mb-3 tracking-tighter`}>{stat.val}</h3>
-                <p className="text-gray-900 font-black text-[13px] uppercase tracking-widest mb-2">{stat.label}</p>
-                <div className="h-0.5 w-10 bg-gray-100 group-hover:w-20 transition-all duration-500 mb-4" />
-                <p className="text-sm text-gray-400 font-medium">{stat.sub}</p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-          {/* Ecosystem: Re-imagined with Premium Glass Connectivity */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }} 
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="relative glass-ultra rounded-[40px] border border-white/60 p-12 lg:p-16 mb-32 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.06)]"
-          >
-            <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
-            <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary-50/30 to-transparent pointer-events-none" />
+      <div className="relative overflow-hidden">
+         <div className="absolute inset-0 noise-overlay opacity-20 pointer-events-none" />
+         
+         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-32 lg:py-52 relative z-10">
             
-            <div className="relative z-10 grid lg:grid-cols-12 gap-16 items-center">
-              <div className="lg:col-span-5 space-y-8">
-                <span className="px-5 py-2 rounded-full bg-primary-50 border border-primary-100 text-primary-700 text-[11px] font-black uppercase tracking-[0.2em] inline-flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-primary-600 rounded-full animate-pulse" />
-                  Ecosystem
-                </span>
-                <h2 className="font-serif text-[clamp(2.5rem,4vw,3.5rem)] text-gray-900 leading-tight font-black">
-                  The Fabric of <br />
-                  <span className="text-gradient italic font-medium">Indian Industry</span>
-                </h2>
-                <p className="text-gray-500 text-lg leading-relaxed font-medium">
-                  A multi-layered infrastructure spanning raw material procurement to global retail logistics, defining the backbone of our economy.
-                </p>
-              </div>
-
-              <div className="lg:col-span-7 grid sm:grid-cols-2 gap-4">
-                {[
-                  { icon: faSeedling, text: "Fibres & Yarn", desc: "Foundational materials" },
-                  { icon: faShirt, text: "Garments", desc: "Finished apparel" },
-                  { icon: faPalette, text: "Handloom", desc: "Artisanal excellence" },
-                  { icon: faHome, text: "Furnishings", desc: "Interior solutions" },
-                  { icon: faFlask, text: "Technical", desc: "Industrial textiles" },
-                  { icon: faHandHoldingHeart, text: "Sustainable", desc: "Eco-conscious future" }
-                ].map((item, idx) => (
-                  <motion.div 
-                    key={idx}
-                    whileHover={{ y: -5, boxShadow: '0 15px 35px rgba(0,0,0,0.06)' }}
-                    className="flex items-center gap-5 p-6 bg-white/40 rounded-2xl border border-white/60 backdrop-blur-sm group cursor-pointer"
-                  >
-                    <div className="w-12 h-12 bg-gradient-to-br from-primary-500 to-primary-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg group-hover:rotate-6 transition-transform">
-                      <FontAwesomeIcon icon={item.icon} className="text-white text-xl" />
-                    </div>
-                    <div>
-                      <div className="font-black text-gray-900 text-[13px] uppercase tracking-wider">{item.text}</div>
-                      <div className="text-[11px] text-gray-400 font-bold uppercase tracking-widest mt-0.5">{item.desc}</div>
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Key Segments: Modern Service Grid */}
-          <div className="mb-32">
-            <div className="text-center mb-16 space-y-4">
-              <span className="text-accent-500 font-black text-[11px] uppercase tracking-[0.4em]">Core Verticals</span>
-              <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
-                Pillars of <span className="text-gradient italic font-medium">Advancement</span>
-              </h2>
+            {/* ── Section 1: Industrial Stats ── */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-52">
+               {stats.map((stat, idx) => (
+                 <motion.div
+                   key={idx}
+                   initial={{ opacity: 0, y: 20 }}
+                   whileInView={{ opacity: 1, y: 0 }}
+                   transition={{ delay: idx * 0.1 }}
+                   className="group glass p-12 rounded-[40px] border-white/5 text-center space-y-6 hover:bg-white/5 transition-all"
+                 >
+                     <p className="text-primary-500 font-black text-[9px] uppercase tracking-[0.4em]">{stat.label}</p>
+                     <h3 className="font-brodies text-7xl text-white mb-4 tracking-tighter shadow-glow">{stat.val}</h3>
+                     <p className="text-white/20 text-xs font-medium italic tracking-widest uppercase">{stat.sub}</p>
+                 </motion.div>
+               ))}
             </div>
 
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {segments.map((segment, idx) => (
-                <motion.div 
-                  key={idx} 
-                  initial={{ opacity: 0, y: 30 }} 
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  whileHover={{ y: -15 }}
-                  className="group relative"
-                >
-                  <div className={`absolute -inset-4 bg-gradient-to-br ${segment.bgGradient} rounded-[40px] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
-                  
-                  <div className="relative glass-ultra rounded-[32px] border border-white/60 p-10 overflow-hidden shadow-[0_32px_80px_rgba(0,0,0,0.06)] h-full flex flex-col">
-                    <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
-                    
-                    <div className={`w-16 h-16 mb-8 bg-gradient-to-br ${segment.gradient} rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                      <FontAwesomeIcon icon={segment.icon} className="text-white text-2xl" />
-                    </div>
-                    
-                    <h3 className="text-2xl font-serif font-black text-gray-900 mb-4">{segment.title}</h3>
-                    <p className="text-gray-500 text-sm leading-relaxed font-medium mb-6 flex-grow">{segment.desc}</p>
-                    
-                    <div className="pt-6 border-t border-gray-100/50">
-                      <p className="text-[11px] font-black uppercase tracking-widest text-primary-600 mb-1">Key Examples</p>
-                      <p className="text-xs text-gray-400 font-bold">{segment.examples}</p>
-                    </div>
+            {/* ── Section 2: Core Segments ── */}
+            <div className="mb-52">
+               <div className="flex flex-col lg:flex-row items-baseline justify-between gap-12 mb-32 border-b border-white/5 pb-12">
+                  <div className="space-y-10 max-w-2xl">
+                     <span className="text-primary-500 font-black text-[10px] uppercase tracking-[0.5em] block mb-4">The Pillars</span>
+                     <h2 className="font-brodies text-6xl lg:text-8xl text-white leading-none tracking-tighter">
+                        Strategic <span className="text-primary-500 italic">Resonance</span>
+                     </h2>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                  <p className="text-white/30 text-xl font-medium leading-relaxed max-w-sm italic">
+                    "Expanding the boundaries of textile civilization through industrial inquiry."
+                  </p>
+               </div>
 
-          {/* Regional Diversity: Professional States Grid */}
-          <div className="mb-24">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16 border-b border-gray-100 pb-12">
-              <div className="max-w-2xl space-y-4">
-                <span className="text-primary-600 font-black text-[11px] uppercase tracking-[0.4em]">Geographic Excellence</span>
-                <h2 className="font-serif text-[clamp(2.5rem,5vw,4rem)] text-gray-900 leading-tight font-black">
-                  Textiles Across <br />
-                  <span className="text-gradient italic font-medium">Pan-India</span>
-                </h2>
-              </div>
-              <p className="text-gray-400 font-bold text-xs uppercase tracking-widest max-w-[200px] leading-relaxed">
-                Mapping the heritage of 16 key manufacturing states.
-              </p>
-            </div>
-
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {states.map((state, idx) => (
-                <motion.div 
-                  key={idx} 
-                  initial={{ opacity: 0, y: 30 }} 
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.05 }} 
-                  whileHover={{ y: -10 }} 
-                  className="group bg-white rounded-[24px] border border-gray-100/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)] overflow-hidden transition-all duration-500"
-                >
-                  {/* Image Header with Zoom Effect */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={state.image} 
-                      alt={state.name} 
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-115"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                    
-                    {/* State Badge on Image */}
-                    <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                       <div className="w-8 h-8 bg-white/20 backdrop-blur-md rounded-lg flex items-center justify-center border border-white/20">
-                          <FontAwesomeIcon icon={faMapMarkerAlt} className="text-white text-xs" />
+               <div className="grid md:grid-cols-2 gap-8">
+                  {segments.map((item, idx) => (
+                    <motion.div
+                      key={idx}
+                      whileHover={{ y: -10 }}
+                      className="group relative glass rounded-[48px] p-16 border-white/5 flex flex-col justify-between min-h-[400px] transition-all duration-700"
+                    >
+                       <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${item.color} opacity-5 group-hover:opacity-10 blur-[90px] transition-opacity`} />
+                       <div className="space-y-12 relative z-10">
+                          <div className={`w-20 h-20 bg-gradient-to-br ${item.color} rounded-[32px] flex items-center justify-center text-white text-3xl shadow-inner group-hover:rotate-12 transition-transform`}>
+                             <FontAwesomeIcon icon={item.icon} />
+                          </div>
+                          <div className="space-y-6">
+                             <h4 className="font-bold text-4xl text-white leading-tight tracking-tight">{item.title}</h4>
+                             <p className="text-white/40 text-lg font-medium leading-relaxed italic border-l border-white/10 pl-6">"{item.desc}"</p>
+                          </div>
                        </div>
-                       <span className="text-white font-black text-xs uppercase tracking-wider">{state.name}</span>
-                    </div>
+
+                       <div className="pt-10 flex items-center justify-between border-t border-white/10 mt-10 relative z-10">
+                          <span className="text-primary-500/80 font-black text-[10px] uppercase tracking-[0.4em]">Protocol Active</span>
+                          <FontAwesomeIcon icon={faArrowRight} className="text-white/10 group-hover:text-primary-500 group-hover:translate-x-4 transition-all" />
+                       </div>
+                    </motion.div>
+                  ))}
+               </div>
+            </div>
+
+            {/* ── Section 3: The Collaborative Threshold (Sleek CTA) ── */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              className="relative rounded-[80px] overflow-hidden group/cta"
+            >
+               <div className="absolute inset-0 bg-dark-900 border border-white/5">
+                  <div className="absolute inset-0 noise-overlay opacity-30" />
+                  <div className="absolute inset-0 bg-primary-600/5 transition-colors group-hover/cta:bg-primary-600/10 duration-1000" />
+               </div>
+
+               <div className="relative z-10 px-12 lg:px-32 py-32 lg:py-48 flex flex-col items-center text-center space-y-20 text-white">
+                  <div className="space-y-12">
+                     <div className="w-24 h-24 mx-auto glass rounded-[32px] flex items-center justify-center border-white/10 text-primary-500 text-4xl shadow-2xl backdrop-blur-3xl animate-pulse">
+                        <FontAwesomeIcon icon={faGlobe} />
+                     </div>
+                     <div className="space-y-12">
+                        <span className="text-primary-500 font-black text-[11px] uppercase tracking-[0.6em] block mb-6">The Collaborative Threshold</span>
+                        <h2 className="font-brodies text-6xl lg:text-8xl leading-[0.75] tracking-tighter">
+                           Forge <br /> <span className="text-primary-500 italic">Ambition</span>
+                        </h2>
+                        <p className="text-white/30 text-2xl lg:text-4xl font-medium max-w-3xl mx-auto leading-tight italic">
+                           "Partner with us to redefine the future of the global textile landscape."
+                        </p>
+                     </div>
                   </div>
 
-                  {/* Content Area */}
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="h-0.5 w-8 bg-primary-500 group-hover:w-12 transition-all duration-500" />
-                      <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.2em]">Regional Specialty</span>
-                    </div>
-                    <p className="text-[14px] text-gray-600 font-bold leading-relaxed">{state.textiles}</p>
-                    
-                    {/* Hover Decoration */}
-                    <div className="mt-6 flex justify-end">
-                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-primary-500 group-hover:text-white transition-all duration-300 transform group-hover:rotate-45">
-                        <FontAwesomeIcon icon={faBriefcase} className="text-[10px]" />
-                      </div>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="group relative px-16 py-8 bg-white rounded-3xl overflow-hidden shadow-[0_30px_70px_rgba(255,255,255,0.1)] flex items-center gap-8 text-dark-950"
+                  >
+                     <div className="absolute inset-0 bg-primary-600 translate-y-full group-hover:translate-y-0 transition-transform duration-500" />
+                     <span className="relative z-10 font-sans font-black text-[13px] uppercase tracking-[0.4em] group-hover:text-white transition-colors">Apply to the Collective</span>
+                     <FontAwesomeIcon icon={faArrowRight} className="relative z-10 group-hover:text-white transition-colors text-xl group-hover:translate-x-3 transition-transform" />
+                  </motion.button>
+               </div>
+            </motion.div>
+         </div>
       </div>
 
       <Footer />

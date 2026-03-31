@@ -5,21 +5,21 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBuilding, faEnvelope, faPhone, faUser, faMapMarkerAlt,
   faCheckCircle, faArrowRight, faArrowLeft, faXmark, faPaperPlane,
-  faBriefcase, faGlobe, faUsers, faRocket, faShieldHalved, faGraduationCap,
-  faChartLine, faAward, faUniversity, faIndustry, faHandshake, faGavel, 
+  faBriefcase, faGlobe, faUsers, faShieldHalved, faGraduationCap,
+  faAward, faUniversity, faIndustry, faHandshake, faGavel, 
   faClipboardList, faHeart, faUsersGear, faBuildingColumns
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 /* ─── Premium UI Constants ─── */
-const inp = 'w-full px-5 py-4 bg-white/50 border border-gray-200 rounded-2xl text-gray-800 placeholder-gray-400 text-sm font-medium focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 focus:bg-white transition-all duration-300 hover:border-gray-300 backdrop-blur-sm';
+const inp = 'w-full px-6 py-5 bg-white/5 border border-white/10 rounded-2xl text-white placeholder-white/20 text-sm font-bold focus:outline-none focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500/50 transition-all duration-300 backdrop-blur-xl';
 const sel = `${inp} appearance-none cursor-pointer`;
 
 const categories = [
   {
     id: 'government',
-    name: 'Government & Policy Bodies',
+    name: 'Policy Bodies',
     icon: faBuildingColumns,
     tagline: 'Departments, policy makers & regulatory bodies',
     gradient: 'from-blue-500 to-indigo-600',
@@ -32,7 +32,7 @@ const categories = [
   },
   {
     id: 'industry',
-    name: 'Industry & Corporate Partners',
+    name: 'Corporate Partners',
     icon: faIndustry,
     tagline: 'Manufacturers, exporters & corporates',
     gradient: 'from-primary-500 to-primary-700',
@@ -45,7 +45,7 @@ const categories = [
   },
   {
     id: 'support',
-    name: 'Support Organizations',
+    name: 'Support Orgs',
     icon: faHandshake,
     tagline: 'NGOs, training institutes & support bodies',
     gradient: 'from-amber-500 to-orange-600',
@@ -63,25 +63,25 @@ const benefits = [
     title: 'Global Network',
     desc: 'Connect with over 500+ industry leaders, policy makers, and international trade bodies.',
     icon: faUsers,
-    color: 'from-blue-500 to-cyan-500'
+    color: 'from-blue-500/20 to-blue-600/20'
   },
   {
     title: 'Policy Advocacy',
     desc: 'Get your voice heard at the highest levels of government and shape industry policies.',
     icon: faShieldHalved,
-    color: 'from-primary-500 to-rose-500'
+    color: 'from-primary-500/20 to-primary-600/20'
   },
   {
-    title: 'Skill Development',
+    title: 'Skill Dev',
     desc: 'Exclusive access to state-of-the-art training programs and technical workshops.',
     icon: faGraduationCap,
-    color: 'from-orange-500 to-amber-500'
+    color: 'from-accent-500/20 to-accent-600/20'
   },
   {
     title: 'Market Linkage',
     desc: 'Direct access to global trade fairs, B2B meets, and international market opportunities.',
     icon: faGlobe,
-    color: 'from-emerald-500 to-teal-500'
+    color: 'from-emerald-500/20 to-emerald-600/20'
   }
 ];
 
@@ -94,16 +94,15 @@ const indianStates = [
 ];
 
 const Label = ({ icon, children }) => (
-  <label className="flex items-center gap-2 text-gray-700 text-sm font-bold mb-2 ml-1">
-    <FontAwesomeIcon icon={icon} className="text-primary-500 text-[10px]" />
+  <label className="flex items-center gap-2 text-white/50 text-[10px] font-black uppercase tracking-widest mb-3 ml-1">
+    <FontAwesomeIcon icon={icon} className="text-primary-500" />
     {children}
   </label>
 );
 
-/* ─── Form Parts ─── */
 const GovernmentForm = () => (
-  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-    <div className="grid md:grid-cols-2 gap-6">
+  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="grid gap-8">
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faBuilding}>Organization Name *</Label>
         <input type="text" name="org_name" required placeholder="Ministry of Textiles" className={inp} />
@@ -120,8 +119,8 @@ const GovernmentForm = () => (
       <Label icon={faMapMarkerAlt}>Organization Address *</Label>
       <textarea name="org_address" required rows="3" placeholder="Full address including city and PIN code" className={`${inp} resize-none`} />
     </div>
-    <div className="divider opacity-50 my-2" />
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="h-px bg-white/5 my-4" />
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faUser}>Decision Maker Name *</Label>
         <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
@@ -131,7 +130,7 @@ const GovernmentForm = () => (
         <input type="text" name="designation" placeholder="e.g. Secretary" className={inp} />
       </div>
     </div>
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faPhone}>Contact Number *</Label>
         <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
@@ -145,8 +144,8 @@ const GovernmentForm = () => (
 );
 
 const IndustryForm = () => (
-  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-    <div className="grid md:grid-cols-2 gap-6">
+  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="grid gap-8">
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faBuilding}>Company Name *</Label>
         <input type="text" name="org_name" required placeholder="Your Textile Company" className={inp} />
@@ -173,8 +172,8 @@ const IndustryForm = () => (
         <option>Export Promotion</option>
       </select>
     </div>
-    <div className="divider opacity-50 my-2" />
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="h-px bg-white/5 my-4" />
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faUser}>Decision Maker Name *</Label>
         <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
@@ -192,8 +191,8 @@ const IndustryForm = () => (
 );
 
 const SupportForm = () => (
-  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-6">
-    <div className="grid md:grid-cols-2 gap-6">
+  <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="grid gap-8">
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faBriefcase}>Organization Type *</Label>
         <select name="org_type" required className={sel}>
@@ -209,7 +208,7 @@ const SupportForm = () => (
         <input type="text" name="org_name" required placeholder="Full Name" className={inp} />
       </div>
     </div>
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid md:grid-cols-2 gap-8">
       <div>
         <Label icon={faPhone}>Contact Number *</Label>
         <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
@@ -226,7 +225,6 @@ const formMap = { government: GovernmentForm, industry: IndustryForm, support: S
 
 const Membership = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
-  const [activeFilter, setActiveFilter] = useState('all');
   const [showSuccess, setShowSuccess] = useState(false);
   const formRef = useRef(null);
 
@@ -257,203 +255,162 @@ const Membership = () => {
     }
   };
 
-  const filteredCategories = activeFilter === 'all'
-    ? categories
-    : categories.filter(c => c.id === activeFilter);
-
   return (
-    <div className="min-h-screen bg-white selection:bg-primary-100 selection:text-primary-700">
+    <div className="min-h-screen bg-dark-950 selection:bg-primary-500/20 selection:text-white">
       <Navbar />
 
       {/* ── HIGH-IMPACT HERO ── */}
-      <section className="relative pt-32 pb-24 overflow-hidden bg-gray-900">
-        <div className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none noise-overlay" />
-        <div className="absolute inset-0 mesh-gradient-dark opacity-60" />
+      <section className="relative pt-44 lg:pt-60 pb-32 lg:pb-52 overflow-hidden bg-dark-900">
+        <div className="absolute inset-0 noise-overlay opacity-20 pointer-events-none" />
+        <div className="absolute inset-0 grain-overlay opacity-10 pointer-events-none" />
         
-        {/* Decorative Blobs */}
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl animate-blob" />
-        <div className="absolute top-1/2 -left-24 w-72 h-72 bg-amber-500/20 rounded-full blur-3xl animate-blob animation-delay-2000" />
+        {/* Floating Light Blobs */}
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-primary-600/5 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-accent-500/5 rounded-full blur-[160px] pointer-events-none" />
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+          <div className="flex flex-col items-center text-center max-w-5xl mx-auto space-y-12">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              initial={{ opacity: 0, letterSpacing: '0.1em' }}
+              animate={{ opacity: 1, letterSpacing: '0.6em' }}
+              className="text-primary-500 font-black text-[10px] uppercase tracking-[0.6em]"
             >
-              <span className="section-badge mb-6 px-4 py-2 text-xs font-black tracking-widest bg-white/10 text-white border-white/20 shadow-lg backdrop-blur-md">
-                <FontAwesomeIcon icon={faRocket} className="mr-2 text-primary-400" />
-                2026 ENROLLMENT OPEN
-              </span>
-              <h1 className="section-heading text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.05] mb-8 text-white">
-                Join India's Most <br className="hidden md:block"/>
-                <span className="text-gradient font-black italic">Influential</span> Network
-              </h1>
-              <p className="text-xl md:text-2xl text-gray-400 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-                Connect, innovate, and lead the textile revolution. Empowering stakeholders across the entire value chain.
-              </p>
-              
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <button 
-                  onClick={() => window.scrollTo({ top: 1200, behavior: 'smooth' })}
-                  className="btn-primary scale-110 px-10 py-5 group"
-                >
-                  Apply Now
-                  <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-1.5 transition-transform" />
-                </button>
+              The Legacy Enrollment
+            </motion.div>
+            
+            <motion.h1 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="font-brodies text-[clamp(2.5rem,8vw,7.5rem)] leading-[0.8] text-white tracking-tighter"
+            >
+              Join the <span className="text-primary-500 italic">Vibrant</span> Collective
+            </motion.h1>
+
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3 }}
+              className="text-white/40 text-lg lg:text-2xl max-w-3xl mx-auto leading-relaxed font-medium italic"
+            >
+              Connect with India's most influential textile visionary network. Empowering civilization through rhythmic innovation since 1998.
+            </motion.p>
+            
+            <motion.div 
+               initial={{ opacity: 0, y: 20 }}
+               animate={{ opacity: 1, y: 0 }}
+               transition={{ delay: 0.5 }}
+               className="flex flex-wrap items-center justify-center gap-12"
+            >
                 <div className="flex -space-x-4">
                   {[1,2,3,4].map(i => (
-                    <div key={i} className="w-12 h-12 rounded-full border-4 border-gray-800 bg-gray-700 overflow-hidden shadow-lg">
-                      <img src={`https://i.pravatar.cc/150?u=${i+10}`} alt="Member" className="w-full h-full object-cover" />
+                    <div key={i} className="w-14 h-14 rounded-full border-[3px] border-dark-900 bg-dark-700 overflow-hidden shadow-2xl relative grayscale hover:grayscale-0 transition-all cursor-pointer">
+                      <img src={`https://i.pravatar.cc/150?u=${i+20}`} alt="Leader" className="w-full h-full object-cover" />
                     </div>
                   ))}
-                  <div className="w-12 h-12 rounded-full border-4 border-gray-800 bg-primary-600 text-white flex items-center justify-center text-[10px] font-bold shadow-lg">
-                    500+
-                  </div>
                 </div>
-              </div>
+                <div className="flex flex-col items-start leading-none gap-2">
+                   <span className="text-white font-brodies text-4xl">2,400+</span>
+                   <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/30">Industry Visionaries</span>
+                </div>
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* ── WHY JOIN SECTION ── */}
-      <section className="py-24 bg-gray-50/50 relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="section-heading text-4xl text-gray-900 mb-4">Why Vibrant Textiles?</h2>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary-500 to-amber-500 mx-auto rounded-full" />
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {benefits.map((b, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="glass-premium p-8 rounded-[32px] hover-lift group"
-              >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${b.color} text-white flex items-center justify-center text-2xl shadow-lg mb-6 group-hover:scale-110 transition-transform`}>
-                  <FontAwesomeIcon icon={b.icon} />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{b.title}</h3>
-                <p className="text-gray-500 text-sm leading-relaxed">{b.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── NETWORK SHOWCASE ── */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-end justify-between gap-6 mb-16">
-            <div className="max-w-xl">
-              <span className="text-primary-600 font-bold uppercase tracking-widest text-xs mb-3 block">Real Impact</span>
-              <h2 className="section-heading text-5xl text-gray-900 mb-6">Our Diverse Network</h2>
-              <p className="text-gray-500 text-lg">A powerful ecosystem of policy makers, manufacturers, and support organizations.</p>
-            </div>
-            {/* Filter */}
-            <div className="flex bg-gray-100 p-1.5 rounded-2xl">
-              {['all', 'government', 'industry', 'support'].map(f => (
-                <button
-                  key={f}
-                  onClick={() => setActiveFilter(f)}
-                  className={`px-6 py-3 rounded-xl text-sm font-bold capitalize transition-all duration-300 ${
-                    activeFilter === f ? 'bg-white text-primary-600 shadow-sm' : 'text-gray-500 hover:text-gray-800'
-                  }`}
-                >
-                  {f === 'all' ? 'Every Member' : f}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-16">
-            {filteredCategories.map((cat, idx) => (
-              <motion.div
-                key={cat.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex items-center gap-4 mb-8">
-                   <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${cat.gradient} text-white flex items-center justify-center text-xl shadow-md`}>
-                    <FontAwesomeIcon icon={cat.icon} className="transform -rotate-12" />
-                   </div>
-                   <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{cat.name}</h3>
-                   <div className="flex-1 h-[2px] bg-gray-100 ml-4" />
-                </div>
-
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                  {cat.members.map((m, mIdx) => (
-                    <motion.div
-                      key={mIdx}
-                      whileHover={{ scale: 1.03 }}
-                      className="group p-8 border border-gray-100 rounded-[28px] bg-white hover:bg-gray-50 transition-all duration-500 relative overflow-hidden"
-                    >
-                      <div className="absolute -right-4 -top-4 w-24 h-24 bg-gray-100/50 rounded-full blur-2xl group-hover:bg-primary-500/10 transition-colors" />
-                      <div className="flex items-start justify-between mb-6">
-                        <div className="w-14 h-14 bg-gray-50 rounded-2xl flex items-center justify-center text-2xl group-hover:rotate-12 transition-transform shadow-inner text-gray-600">
-                          <FontAwesomeIcon icon={m.icon} />
-                        </div>
-                        <span className={`text-[10px] font-black tracking-widest uppercase py-1 px-3 rounded-full border border-gray-200 group-hover:border-primary-200 group-hover:text-primary-600`}>
-                          {m.type}
-                        </span>
-                      </div>
-                      <h4 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">{m.name}</h4>
-                      <p className="text-gray-400 text-xs mt-3 flex items-center gap-2">
-                        <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
-                        Active Partnership
-                      </p>
-                    </motion.div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
+      <section className="relative py-32 lg:py-52 bg-dark-950 overflow-hidden">
+        <div className="absolute inset-0 noise-overlay opacity-[0.03] pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-24 items-center mb-32">
+             <div className="space-y-10">
+                <span className="text-primary-500 font-black text-[10px] uppercase tracking-[0.5em] block mb-4">Network Genesis</span>
+                <h2 className="font-brodies text-6xl lg:text-8xl text-white leading-[0.9]">Why the Collective?</h2>
+                <p className="text-white/40 text-xl font-medium leading-relaxed">We provide more than collaboration. We provide the resonance required to bridge legacy with the pulse of modern industry.</p>
+             </div>
+             <div className="grid grid-cols-2 gap-4">
+                {benefits.map((b, idx) => (
+                  <motion.div
+                    key={idx}
+                    whileHover={{ y: -10, rotate: idx % 2 === 0 ? 2 : -2 }}
+                    className={`glass rounded-[40px] p-8 border-white/5 space-y-6 ${idx % 2 === 1 ? 'mt-12' : ''}`}
+                  >
+                    <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${b.color} flex items-center justify-center text-white text-xl shadow-inner`}>
+                      <FontAwesomeIcon icon={b.icon} />
+                    </div>
+                    <div className="space-y-2">
+                      <h3 className="text-white font-brodies text-2xl">{b.title}</h3>
+                      <p className="text-white/30 text-xs font-medium leading-relaxed">{b.desc}</p>
+                    </div>
+                  </motion.div>
+                ))}
+             </div>
           </div>
         </div>
       </section>
 
       {/* ── STEP 1: CHOOSE CATEGORY ── */}
       {!selectedCategory && (
-        <section className="py-32 bg-gray-900 relative overflow-hidden">
-          <div className="absolute inset-0 mesh-gradient-dark opacity-40 pointer-events-none" />
+        <section className="py-32 lg:py-52 bg-dark-950 relative overflow-hidden border-t border-white/5">
+          <div className="absolute inset-0 noise-overlay opacity-10 pointer-events-none" />
           
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center mb-20">
-              <span className="section-badge bg-white/10 text-white border-white/20 mb-6 font-bold">Step 01 — Identify Yourself</span>
-              <h2 className="section-heading text-5xl md:text-6xl text-white mb-6">Ready to lead the future?</h2>
-              <p className="text-gray-400 text-xl max-w-2xl mx-auto">Select your sector to unlock customized benefits and tools tailored for your growth.</p>
+          <div className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+            <div className="text-center mb-32 space-y-8">
+               <motion.span 
+                 initial={{ opacity: 0, y: 10 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 className="text-primary-500 font-black text-[11px] uppercase tracking-[0.6em] block"
+               >
+                 Protocol Phase 01
+               </motion.span>
+               <h2 className="font-brodies text-6xl lg:text-8xl text-white leading-none tracking-tighter">
+                  Identify <span className="text-primary-500 italic">Access</span>
+               </h2>
+               <p className="text-white/30 text-xl lg:text-3xl max-w-2xl mx-auto italic font-medium leading-relaxed">
+                 "Select your operational domain to begin the verification sequence."
+               </p>
             </div>
-
-            <div className="grid lg:grid-cols-3 gap-8">
+ 
+            <div className="grid lg:grid-cols-3 gap-12">
               {categories.map((cat, idx) => (
-                <motion.div
-                  key={cat.id}
-                  initial={{ opacity: 0, y: 40 }}
+                <motion.div 
+                  key={cat.id} 
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
+                  className="group relative"
                 >
                   <button
                     onClick={() => handleCategorySelect(cat.id)}
-                    className="w-full text-left group relative bg-gray-800/40 border border-white/10 p-10 rounded-[40px] hover:bg-white transition-all duration-500 hover:scale-[1.02]"
+                    className="w-full text-left glass rounded-[60px] p-16 border-white/5 bg-dark-900/40 hover:bg-dark-900/80 transition-all duration-700 relative overflow-hidden h-[540px] flex flex-col group/card border shadow-2xl hover:border-primary-500/30"
                   >
-                    <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${cat.gradient} opacity-20 blur-3xl group-hover:opacity-40`} />
+                    {/* Dynamic Glow */}
+                    <div className={`absolute -top-32 -right-32 w-80 h-80 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover/card:opacity-[0.15] blur-[120px] transition-opacity duration-1000`} />
                     
-                    <div className="mb-8 block transition-transform group-hover:scale-125 group-hover:rotate-12 duration-500 text-5xl text-white group-hover:text-primary-600">
-                      <FontAwesomeIcon icon={cat.icon} />
+                    <div className="space-y-12 relative z-10 flex-1">
+                       <div className={`w-28 h-28 rounded-[40px] bg-dark-800 border border-white/5 flex items-center justify-center text-5xl text-white group-hover/card:scale-110 group-hover/card:rotate-12 transition-all duration-700 shadow-inner relative overflow-hidden`}>
+                          <div className={`absolute inset-0 bg-gradient-to-br ${cat.gradient} opacity-0 group-hover/card:opacity-100 transition-opacity duration-700`} />
+                          <FontAwesomeIcon icon={cat.icon} className="relative z-10" />
+                       </div>
+                       
+                       <div className="space-y-6">
+                          <h3 className="font-bold text-3xl lg:text-5xl text-white leading-[0.9] tracking-tighter uppercase group-hover/card:text-primary-500 transition-colors">
+                             {cat.name}
+                          </h3>
+                          <div className="w-12 h-1 bg-white/5 group-hover/card:w-24 group-hover/card:bg-primary-500 transition-all duration-700" />
+                          <p className="text-white/40 text-xl lg:text-2xl font-medium leading-relaxed italic group-hover/card:text-white/80 transition-all delay-75">
+                            "{cat.tagline}"
+                          </p>
+                       </div>
                     </div>
-                    <h3 className="text-3xl font-black text-white group-hover:text-gray-900 mb-4 transition-colors">{cat.name}</h3>
-                    <p className="text-gray-400 group-hover:text-gray-500 mb-10 text-lg leading-relaxed">{cat.tagline}</p>
                     
-                    <div className={`flex items-center gap-3 font-black text-xs uppercase tracking-[0.2em] ${cat.id === 'industry' ? 'text-primary-500' : 'text-amber-500'} group-hover:translate-x-3 transition-transform`}>
-                      Get Started
-                      <FontAwesomeIcon icon={faArrowRight} />
+                    <div className="mt-auto pt-12 flex items-center justify-between relative z-10 border-t border-white/5">
+                       <span className="text-white font-black text-[13px] uppercase tracking-[0.5em] group-hover/card:text-primary-500 transition-all">
+                         Validate Access
+                       </span>
+                       <div className="w-16 h-16 rounded-full border border-white/5 flex items-center justify-center text-white/20 group-hover/card:text-primary-500 group-hover/card:border-primary-500/50 group-hover/card:translate-x-4 transition-all duration-700">
+                          <FontAwesomeIcon icon={faArrowRight} className="text-xl" />
+                       </div>
                     </div>
                   </button>
                 </motion.div>
@@ -466,77 +423,72 @@ const Membership = () => {
       {/* ── STEP 2: APPLICATION FORM ── */}
       <AnimatePresence>
         {selectedCategory && (
-          <section ref={formRef} className="py-32 bg-gray-50 relative">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <section ref={formRef} className="py-32 lg:py-52 bg-dark-950 relative border-t border-white/5">
+            <div className="max-w-5xl mx-auto px-6 lg:px-12 relative z-10">
               <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white rounded-[48px] shadow-2xl border border-gray-100 overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                className="glass rounded-[60px] border-white/5 overflow-hidden shadow-[0_40px_120px_rgba(0,0,0,0.5)]"
               >
-                {/* Form Header */}
-                <div className={`bg-gradient-to-br ${activeCat?.gradient} px-12 py-12 relative overflow-hidden text-white`}>
-                   <div className="absolute -right-12 -top-12 w-64 h-64 bg-white/10 rounded-full blur-3xl" />
-                   <div className="relative flex items-center justify-between">
-                      <div className="flex items-center gap-6">
-                        <span className="text-5xl p-5 bg-white/10 rounded-[32px] backdrop-blur-md border border-white/20">
+                <div className="relative px-12 lg:px-20 py-20 bg-dark-900/50 border-b border-white/5 overflow-hidden">
+                   <div className={`absolute top-0 right-0 w-80 h-80 bg-gradient-to-br ${activeCat?.gradient} opacity-10 blur-[100px]`} />
+                   
+                   <div className="relative flex flex-col md:flex-row items-center justify-between gap-12">
+                      <div className="flex items-center gap-10">
+                        <div className="w-24 h-24 glass rounded-[36px] flex items-center justify-center text-4xl border-white/10 text-primary-500">
                            <FontAwesomeIcon icon={activeCat?.icon} />
-                        </span>
-                        <div>
-                           <p className="text-white/60 text-xs font-black uppercase tracking-[0.3em] mb-2">Step 2 of 2 — Secure Application</p>
-                           <h2 className="text-4xl font-black">{activeCat?.name}</h2>
+                        </div>
+                        <div className="space-y-3">
+                           <span className="text-primary-500 font-black text-[10px] uppercase tracking-[0.5em]">Phase 02 — Application</span>
+                           <h2 className="font-brodies text-5xl text-white">{activeCat?.name}</h2>
                         </div>
                       </div>
                       <button 
                         onClick={() => setSelectedCategory(null)}
-                        className="w-14 h-14 flex items-center justify-center rounded-2xl bg-white/10 hover:bg-white text-white hover:text-primary-600 transition-all border border-white/20"
+                        className="w-16 h-16 glass rounded-2xl flex items-center justify-center text-white/20 hover:text-white border-white/10 hover:bg-white/5 transition-all"
                       >
                         <FontAwesomeIcon icon={faXmark} className="text-xl" />
                       </button>
                    </div>
                 </div>
 
-                {/* Form Body */}
-                <div className="p-12">
-                   <div className="flex items-start gap-4 p-6 bg-gray-900 rounded-3xl mb-12">
-                      <div className="w-10 h-10 rounded-full bg-primary-500 flex items-center justify-center text-white flex-shrink-0 animate-pulse-slow text-xs">
-                        <FontAwesomeIcon icon={faAward} />
+                <div className="px-12 lg:px-20 py-20 space-y-16">
+                   <div className="flex items-start gap-6 p-8 bg-white/5 rounded-[32px] border border-white/5">
+                      <div className="w-12 h-12 rounded-2xl bg-primary-500 flex items-center justify-center text-white shadow-xl animate-pulse">
+                        <FontAwesomeIcon icon={faShieldHalved} />
                       </div>
-                      <p className="text-gray-400 text-sm leading-relaxed mt-1">
-                        You're applying for <span className="text-white font-bold">Elite Membership</span>. Please provide accurate details. Our review board typically responds within 72 hours.
-                      </p>
+                      <div className="space-y-1">
+                         <span className="text-white font-brodies text-xl">Verification protocol active.</span>
+                         <p className="text-white/30 text-xs font-medium italic">Our board reviews each application based on legacy resonance and innovation output.</p>
+                      </div>
                    </div>
 
-                   <form onSubmit={handleSubmit} className="space-y-8">
+                   <form onSubmit={handleSubmit} className="space-y-12">
                       {FormComponent && <FormComponent />}
                       
-                      <div className="pt-10 flex flex-col sm:flex-row gap-4">
+                      <div className="pt-12 flex flex-col md:flex-row gap-6">
                         <button
                           type="button"
                           onClick={() => setSelectedCategory(null)}
-                          className="px-8 py-5 rounded-2xl border-2 border-gray-100 text-gray-500 font-black text-xs uppercase tracking-widest hover:bg-gray-50 hover:border-gray-200 transition-all flex items-center justify-center gap-3"
+                          className="px-10 py-6 rounded-[24px] border border-white/10 text-white/40 font-black text-[11px] uppercase tracking-widest hover:bg-white/5 transition-all flex items-center justify-center gap-4 group"
                         >
-                          <FontAwesomeIcon icon={faArrowLeft} />
-                          Back
+                          <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-2 transition-transform" />
+                          Genesis
                         </button>
                         <motion.button
                           type="submit"
                           whileHover={{ scale: 1.02 }}
                           whileTap={{ scale: 0.98 }}
-                          className={`flex-1 py-5 rounded-2xl font-black text-xs uppercase tracking-[0.25em] text-white bg-gradient-to-r ${activeCat?.gradient} shadow-2xl hover:shadow-${activeCat?.accent}-500/40 transition-all flex items-center justify-center gap-4`}
+                          className="flex-1 py-6 rounded-[24px] font-black text-[11px] uppercase tracking-[0.4em] text-white bg-primary-600 shadow-[0_20px_50px_rgba(229,46,34,0.3)] hover:bg-primary-500 transition-all flex items-center justify-center gap-5"
                         >
-                          <FontAwesomeIcon icon={faPaperPlane} />
-                          Validate & Submit Application
+                          <FontAwesomeIcon icon={faPaperPlane} className="text-[10px]" />
+                          Submit Application
                         </motion.button>
                       </div>
                    </form>
                 </div>
               </motion.div>
-              
-              <p className="text-center text-gray-400 text-xs mt-12 flex items-center justify-center gap-3">
-                <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 text-lg" />
-                256-bit Encrypted Connection • Private Data Policy • GDPR Compliant
-              </p>
             </div>
           </section>
         )}
@@ -544,21 +496,20 @@ const Membership = () => {
 
       <Footer />
 
-      {/* Success Toast */}
       <AnimatePresence>
         {showSuccess && (
           <motion.div
             initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.5 }}
-            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[60] glass-premium bg-emerald-500 text-white border-none px-10 py-6 rounded-[32px] shadow-[0_20px_60px_rgba(16,185,129,0.3)] flex items-center gap-5"
+            className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] glass bg-emerald-500 text-white border-none px-12 py-8 rounded-[40px] shadow-[0_20px_80px_rgba(16,185,129,0.3)] flex items-center gap-6"
           >
-            <div className="w-12 h-12 bg-white/20 rounded-2xl flex items-center justify-center text-2xl">
+            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-3xl">
               <FontAwesomeIcon icon={faCheckCircle} />
             </div>
-            <div>
-              <p className="font-black uppercase tracking-widest text-[10px] mb-1 opacity-80">Application Received</p>
-              <h4 className="text-lg font-bold">Welcome to the Network!</h4>
+            <div className="space-y-1">
+              <p className="font-black uppercase tracking-[0.4em] text-[10px] opacity-60">Success Received</p>
+              <h4 className="font-brodies text-2xl">The Collective Awaits.</h4>
             </div>
           </motion.div>
         )}

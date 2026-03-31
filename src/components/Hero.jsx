@@ -2,224 +2,180 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUsers, faArrowRight, faChevronDown, faCircleCheck, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faArrowRight, faUserPlus, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { supabase } from '../lib/supabase';
+import heroImg from '../assets/hero_showcase.png';
 
 const defaultStats = [
-  { value: '7,500+', label: 'Members' },
-  { value: '28+', label: 'States' },
-  { value: '25+', label: 'Years' },
-  { value: '₹2.4T', label: 'Industry Value' },
+  { value: '7.5k', label: 'Members', color: 'from-primary-500 to-primary-600' },
+  { value: '28+', label: 'States Reach', color: 'from-accent-400 to-accent-600' },
+  { value: '₹2.4T', label: 'Ind. Value', color: 'from-emerald-500 to-emerald-600' },
 ];
 
-const defaultContent = {
-  eyebrow: "Empowering India's Textile Industry",
-  headline_line1: 'Weaving the Future of',
-  headline_line2: 'Indian Textiles',
-  subtitle: "Uniting artisans, manufacturers, and policymakers to build a world-class textile ecosystem.",
-};
-
 const Hero = () => {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
-  const [content, setContent] = useState(defaultContent);
-  const [stats, setStats] = useState(defaultStats);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
 
-  useEffect(() => {
-    supabase.from('site_content').select('*').eq('section', 'hero').then(({ data }) => {
-      if (!data?.length) return;
-      const map = {};
-      data.forEach(r => { map[r.key] = r.value; });
-      setContent(prev => ({ ...prev, ...map }));
-      setStats([
-        { value: map.stat1_value || defaultStats[0].value, label: map.stat1_label || defaultStats[0].label },
-        { value: map.stat2_value || defaultStats[1].value, label: map.stat2_label || defaultStats[1].label },
-        { value: map.stat3_value || defaultStats[2].value, label: map.stat3_label || defaultStats[2].label },
-        { value: map.stat4_value || defaultStats[3].value, label: map.stat4_label || defaultStats[3].label },
-      ]);
-    });
-  }, []);
+  const textY = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const imageY = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   return (
-    <motion.section
-      ref={ref}
-      id="home"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#050508]"
+    <section 
+      ref={containerRef}
+      className="relative min-h-screen bg-dark-900 overflow-hidden flex items-center justify-center p-6 lg:p-12"
     >
-      {/* === MODERN BACKGROUND LAYER === */}
-      <div className="absolute inset-0 overflow-hidden">
-        {/* Animated Mesh Orbs */}
-        <motion.div
-          animate={{ 
-            scale: [1, 1.2, 1], 
-            x: [0, 50, 0], 
-            y: [0, -30, 0],
-            rotate: [0, 45, 0]
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] bg-primary-600/20 rounded-full blur-[120px]"
-        />
-        <motion.div
-          animate={{ 
-            scale: [1, 1.3, 1], 
-            x: [0, -40, 0], 
-            y: [0, 60, 0],
-            rotate: [0, -30, 0]
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-          className="absolute -bottom-[20%] -right-[10%] w-[70%] h-[70%] bg-accent-500/15 rounded-full blur-[140px]"
-        />
-        <motion.div
-          animate={{ 
-            scale: [0.8, 1.1, 0.8], 
-            opacity: [0.1, 0.2, 0.1] 
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[50%] h-[50%] bg-primary-900/10 rounded-full blur-[100px]"
-        />
-      </div>
+      {/* Background Micro-Textures */}
+      <div className="absolute inset-0 noise-overlay opacity-20 pointer-events-none" />
+      <div className="absolute inset-0 grain-overlay opacity-10 pointer-events-none" />
+      
+      {/* Animated Orbs */}
+      <div className="absolute top-1/4 -left-1/4 w-1/2 h-1/2 bg-primary-600/10 rounded-full blur-[160px] animate-blob" />
+      <div className="absolute bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-accent-500/10 rounded-full blur-[160px] animate-blob animation-delay-2000" />
 
-      {/* Noise + Grid Overlays */}
-      <div className="absolute inset-0 noise-overlay opacity-[0.08]" />
-      <div 
-        className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)',
-          backgroundSize: '40px 40px'
-        }}
-      />
-
-      {/* Deep Gradient Fade */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#050508]" />
-
-      {/* === HERO CONTENT === */}
-      <motion.div
-        style={{ opacity }}
-        className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 pt-40 pb-20"
-      >
-        <div className="flex flex-col items-center text-center">
-          {/* Tagline Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 30, letterSpacing: '0.1em' }}
-            animate={{ opacity: 1, y: 0, letterSpacing: '0.4em' }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-10"
-          >
-            <span className="px-5 py-2 rounded-full border border-white/10 bg-white/5 text-[11px] font-black text-accent-400 uppercase tracking-[0.4em] backdrop-blur-md">
-              India's Grand Textile Legacy
-            </span>
-          </motion.div>
-
-          {/* Editorial Headline */}
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-10 relative"
-          >
-            <span className="absolute -top-12 left-1/2 -translate-x-1/2 text-white/5 text-[12vw] font-black select-none pointer-events-none uppercase tracking-widest leading-none">
-              VIBRANT
-            </span>
-            <h1 className="font-serif text-[clamp(3.5rem,10vw,8rem)] text-white leading-[0.9] italic font-medium">
-              Weaving the
-            </h1>
-            <h1 className="font-serif text-[clamp(3.5rem,12vw,10rem)] leading-[0.9] font-black mt-2">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-primary-400">
+      <div className="max-w-7xl w-full mx-auto grid lg:grid-cols-12 gap-12 lg:gap-20 items-center relative z-10">
+        
+        {/* LEFT COMPOSITION: Typography & CTA */}
+        <motion.div 
+          style={{ y: textY, opacity }}
+          className="lg:col-span-7 space-y-10"
+        >
+          <div className="space-y-4">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="flex items-center gap-3"
+            >
+              <div className="h-[1px] w-12 bg-primary-500" />
+              <span className="text-primary-500 font-black text-[11px] uppercase tracking-[0.5em]">Global Textile Pioneer</span>
+            </motion.div>
+            
+            <h1 className="flex flex-col">
+              <motion.span 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.2 }}
+                className="text-white text-[clamp(3rem,8vw,6rem)] font-black leading-[0.95] tracking-tighter"
+              >
+                Weaving the
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 1.2, delay: 0.4 }}
+                className="font-brodies text-primary-500 text-[clamp(4.5rem,12vw,9.5rem)] leading-[0.75] -mt-2 -ml-2"
+              >
                 Future
-              </span>
-              <span className="text-white"> together</span>
+              </motion.span>
+              <motion.span 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, delay: 0.6 }}
+                className="text-white/60 text-[clamp(2rem,6vw,4rem)] font-light italic mt-4"
+              >
+                of Indian Industry
+              </motion.span>
             </h1>
-          </motion.div>
+          </div>
 
-          {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-white/60 text-[clamp(1.1rem,2vw,1.4rem)] font-medium max-w-2xl mx-auto leading-relaxed mb-14 tracking-wide"
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.8 }}
+            className="text-white/50 text-xl font-medium max-w-xl leading-relaxed tracking-wide"
           >
-            A collective vision to position the Indian textile industry as a global leader through <span className="text-white italic">innovation</span> and <span className="text-white italic">heritage</span>.
+            A collective vision uniting <span className="text-white">artisans</span>, <span className="text-white">manufacturers</span>, and <span className="text-white">policymakers</span> to define the global standard of sustainability and excellence.
           </motion.p>
 
-          {/* Premium Actions */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-28"
+            transition={{ duration: 1, delay: 1 }}
+            className="flex flex-wrap gap-6 items-center"
           >
             <Link to="/membership">
               <motion.button
                 whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-10 py-5 bg-gradient-to-br from-primary-500 to-primary-800 text-white rounded-2xl font-black text-[15px] tracking-wider shadow-[0_20px_60px_rgba(229,46,34,0.4)] transition-all duration-500 overflow-hidden"
+                className="px-10 py-5 bg-primary-600 text-white rounded-2xl font-black text-[15px] tracking-[0.1em] shadow-[0_20px_50px_rgba(229,46,34,0.3)] relative overflow-hidden group"
               >
                 <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 ease-in-out skew-x-12" />
-                <span className="relative z-10 flex items-center gap-3">
-                  <FontAwesomeIcon icon={faUserPlus || faUsers} />
-                  JOIN THE MOVEMENT
-                  <FontAwesomeIcon icon={faArrowRight} className="text-sm transition-transform duration-300 group-hover:translate-x-1" />
+                <span className="relative z-10 flex items-center gap-3 uppercase">
+                   Apply membership
+                   <FontAwesomeIcon icon={faArrowRight} />
                 </span>
               </motion.button>
             </Link>
-
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-              className="px-10 py-5 bg-white/5 backdrop-blur-xl text-white rounded-2xl font-bold text-[15px] border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 tracking-wider"
-            >
-              OUR LEGACY
-            </motion.button>
+            
+            <button className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
+              <div className="w-14 h-14 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:text-dark-900 transition-all duration-500">
+                <FontAwesomeIcon icon={faPlay} className="text-sm ml-1" />
+              </div>
+              <span className="font-extrabold text-xs uppercase tracking-[0.3em]">Watch Legacy</span>
+            </button>
           </motion.div>
+        </motion.div>
 
-          {/* Stats Bento Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 60 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.8 }}
-            className="w-full max-w-5xl"
+        {/* RIGHT COMPOSITION: Asymmetrical Visuals */}
+        <div className="lg:col-span-5 relative mt-20 lg:mt-0">
+          <motion.div 
+            style={{ y: imageY }}
+            className="relative"
           >
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {stats.map((stat, i) => (
+            {/* Visual Frame */}
+            <div className="relative rounded-[40px] overflow-hidden border border-white/10 shadow-2xl z-10 glass">
+               <img src={heroImg} alt="Textile Showcase" className="w-full h-full object-cover scale-110" />
+               <div className="absolute inset-0 bg-gradient-to-t from-dark-900 via-transparent to-transparent opacity-60" />
+            </div>
+            
+            {/* Overlapping Element */}
+            <motion.div
+              animate={{ rotate: [0, 5, 0], y: [0, 20, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-12 -right-12 w-48 h-48 rounded-3xl overflow-hidden shadow-2xl border border-white/20 z-20 hidden md:block"
+            >
+               <img src={heroImg} alt="Detail" className="w-full h-full object-cover grayscale brightness-50" />
+               <div className="absolute inset-0 flex items-center justify-center p-6 text-center">
+                  <span className="text-white text-[10px] font-black uppercase tracking-widest leading-tight">Master Craftsmanship Since 1998</span>
+               </div>
+            </motion.div>
+
+            {/* Asymmetrical Floating Stats */}
+            <div className="absolute -bottom-10 -left-10 z-30 space-y-4">
+              {defaultStats.map((stat, i) => (
                 <motion.div
-                  key={stat.label}
-                  whileHover={{ y: -5, backgroundColor: 'rgba(255,255,255,0.08)' }}
-                  className="glass-ultra rounded-3xl p-6 border border-white/10 flex flex-col items-center justify-center transition-all duration-300"
+                  key={i}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 1.2 + (i * 0.2) }}
+                  whileHover={{ x: 10 }}
+                  className="glass-pill px-6 py-4 border-white/20 flex items-center gap-4 shadow-2xl"
                 >
-                  <div className="text-4xl font-serif font-black text-white mb-2 tracking-tighter italic">
-                    {stat.value}
-                  </div>
-                  <div className="text-[10px] font-black text-accent-400 uppercase tracking-[0.2em]">
-                    {stat.label}
+                  <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${stat.color} shadow-lg shadow-primary-500/50`} />
+                  <div className="flex flex-col">
+                    <span className="text-dark-900 font-black text-xl leading-none tracking-tighter italic">{stat.value}</span>
+                    <span className="text-gray-400 font-black text-[9px] uppercase tracking-widest">{stat.label}</span>
                   </div>
                 </motion.div>
               ))}
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.4 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 cursor-pointer z-10"
-        onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
+      {/* Decorative Signature */}
+      <motion.div 
+        animate={{ opacity: [0.03, 0.08, 0.03] }}
+        transition={{ duration: 5, repeat: Infinity }}
+        className="absolute bottom-10 right-10 text-white/5 pointer-events-none select-none"
       >
-        <span className="text-white/40 text-xs font-medium tracking-widest uppercase">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          className="w-6 h-9 border-2 border-white/25 rounded-full flex items-start justify-center pt-1.5"
-        >
-          <div className="w-1.5 h-1.5 bg-white/60 rounded-full" />
-        </motion.div>
+        <span className="font-brodies text-[15vw] leading-none">Loom</span>
       </motion.div>
-    </motion.section>
+    </section>
   );
 };
 

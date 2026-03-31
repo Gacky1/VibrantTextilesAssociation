@@ -1,157 +1,146 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGraduationCap, faIndustry, faLandmark, faSeedling, faCircleCheck, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faGraduationCap, faIndustry, faLandmark, faSeedling, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 const focusAreas = [
   {
     id: 1,
     title: 'Skill Development & Training',
     icon: faGraduationCap,
-    accent: '#8b5cf6',
-    grad: 'from-violet-500 to-purple-700',
-    points: [
-      'Workshops and training programs for artisans, vendors, and professionals',
-      'Bridging traditional handloom skills with modern textile technologies',
-      'Vocational courses aligned with government skill initiatives',
-    ],
+    desc: 'Empowering artisans with government-aligned vocational courses and heritage mastery.',
+    grad: 'from-primary-500 to-primary-700',
+    points: ['Artisan Workshops', 'Modern Tech Integration', 'Vocational Certification'],
   },
   {
     id: 2,
-    title: 'Vendor & Industry Support',
+    title: 'Industry Support',
     icon: faIndustry,
-    accent: '#3b82f6',
-    grad: 'from-blue-500 to-blue-700',
-    points: [
-      'Resources, mentorship, and guidance for textile vendors and MSMEs',
-      'Market linkages and industry collaborations for business growth',
-      'Adoption of modern production and quality standards',
-    ],
+    desc: 'Strategic resources and market linkages for MSMEs and textile vendors.',
+    grad: 'from-accent-500 to-accent-600',
+    points: ['Market Linkage', 'Strategic Mentorship'],
   },
   {
     id: 3,
-    title: 'Government & Policy Collaboration',
+    title: 'Policy Collaboration',
     icon: faLandmark,
-    accent: '#e52e22',
-    grad: 'from-primary-500 to-primary-700',
-    points: [
-      'Representing stakeholder interests in policy-making',
-      'Awareness and adoption of government grants and subsidies',
-      'Streamlined compliance, certifications, and regulations',
-    ],
+    desc: 'Representing stakeholder interests in national policy-making and regulatory compliance.',
+    grad: 'from-dark-500 to-dark-700',
+    points: ['Grants Support', 'Trade Policy Advocacy'],
   },
   {
     id: 4,
-    title: 'Sustainability & Heritage Preservation',
+    title: 'Heritage Preservation',
     icon: faSeedling,
-    accent: '#10b981',
-    grad: 'from-emerald-500 to-green-700',
-    points: [
-      'Promoting eco-friendly and ethical textile practices',
-      'Preserving and reviving traditional handloom techniques',
-      'Innovation while respecting cultural heritage',
-    ],
-  },
+    desc: 'Sustainable innovation while preserving traditional handloom and weaving techniques.',
+    grad: 'from-accent-400 to-accent-600',
+    points: ['Eco-friendly Dyeing', 'Craft Revival'],
+  }
 ];
 
 const FocusAreas = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: '-80px' });
+  const isInView = useInView(ref, { once: true, margin: '-100px' });
 
   return (
-    <section id="focus" className="relative py-28 md:py-36 bg-white overflow-hidden">
-      {/* Background accent */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-purple-50/60 to-transparent" />
-        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-blue-50/60 to-transparent" />
-      </div>
+    <section id="focus" className="relative py-32 lg:py-48 bg-[#090912] overflow-hidden">
+      {/* Background Textures */}
+      <div className="absolute inset-0 noise-overlay opacity-[0.15] pointer-events-none" />
+      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:60px_60px] pointer-events-none" />
+      
+      {/* Decorative Glows */}
+      <div className="absolute top-1/4 -left-20 w-[500px] h-[500px] bg-primary-600/5 rounded-full blur-[120px] animate-pulse" />
+      <div className="absolute bottom-1/4 -right-20 w-[500px] h-[500px] bg-accent-500/5 rounded-full blur-[120px]" />
 
-      <div ref={ref} className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-12 relative">
-        {/* Header */}
-        <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="text-center mb-24"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={isInView ? { opacity: 1, scale: 1 } : {}}
-            transition={{ delay: 0.1 }}
-            className="mb-6"
-          >
-            <span className="px-5 py-2 rounded-full bg-gray-900 text-white text-[11px] font-black uppercase tracking-[0.2em] inline-flex items-center gap-2">
-              Our Expertise
-            </span>
-          </motion.div>
-          <h2 className="font-serif text-[clamp(2.5rem,6vw,4.5rem)] text-gray-900 leading-[1.05] font-black mb-6">
-            Strategic <span className="text-gradient font-medium italic">Focus Areas</span>
-          </h2>
-          <p className="text-gray-500 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-            Architecting the future of Indian textiles through precision and innovation.
-          </p>
-        </motion.div>
+      <div ref={ref} className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* Header Section: Clean & Vertical Hierarchy */}
+        <div className="max-w-4xl mb-24 space-y-8">
+           <motion.div
+             initial={{ opacity: 0, x: -20 }}
+             animate={isInView ? { opacity: 1, x: 0 } : {}}
+             className="flex items-center gap-4"
+           >
+              <div className="h-px w-12 bg-primary-500/50" />
+              <span className="text-primary-500 font-black text-[11px] uppercase tracking-[0.6em]">The Strategic Core</span>
+           </motion.div>
+           
+           <motion.h2 
+             initial={{ opacity: 0, y: 30 }}
+             animate={isInView ? { opacity: 1, y: 0 } : {}}
+             className="font-brodies text-[clamp(3.5rem,8vw,8rem)] text-white leading-[0.9] tracking-tighter"
+           >
+             Our Expertise <br /> <span className="text-primary-500 italic">Focus Verticals</span>
+           </motion.h2>
+           
+           <motion.p 
+             initial={{ opacity: 0 }}
+             animate={isInView ? { opacity: 1 } : {}}
+             transition={{ delay: 0.3 }}
+             className="text-white/50 text-xl lg:text-2xl font-medium leading-relaxed max-w-2xl italic border-l-2 border-primary-500/20 pl-8"
+           >
+             "Architecting the path where ancient craftsmanship meets industrial precision and sustainable global growth."
+           </motion.p>
+        </div>
 
-        {/* Modern Interactive Cards */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-10">
-          {focusAreas.map((area, i) => (
-            <motion.div
-              key={area.id}
-              initial={{ opacity: 0, y: 60 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="group relative flex flex-col"
-            >
-              {/* Card Container */}
-              <div className="relative glass-ultra rounded-[40px] border border-white p-10 lg:p-12 h-full overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.04)] hover:shadow-[0_40px_100px_rgba(0,0,0,0.1)] transition-all duration-700">
+        {/* Structured Grid Layout (2-Column) */}
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+           {focusAreas.map((area, idx) => (
+             <motion.div
+               key={area.id}
+               initial={{ opacity: 0, y: 30 }}
+               animate={isInView ? { opacity: 1, y: 0 } : {}}
+               transition={{ delay: idx * 0.1, duration: 0.8 }}
+               whileHover={{ y: -12 }}
+               className="group relative p-12 lg:p-16 rounded-[48px] bg-white/[0.02] border border-white/5 backdrop-blur-3xl overflow-hidden transition-all duration-500"
+             >
                 <div className="absolute inset-0 noise-overlay opacity-[0.03]" />
-                <div 
-                  className={`absolute top-0 left-0 h-2 bg-gradient-to-r ${area.grad} w-0 group-hover:w-full transition-all duration-700 ease-in-out`}
-                />
-
-                {/* Content */}
+                <div className={`absolute -top-24 -right-24 w-80 h-80 bg-gradient-to-br ${area.grad} opacity-[0.03] group-hover:opacity-[0.08] blur-[80px] transition-all duration-700`} />
+                
                 <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center gap-6 mb-10">
-                    <div className={`w-16 h-16 bg-gradient-to-br ${area.grad} rounded-2xl flex items-center justify-center flex-shrink-0 shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                      <FontAwesomeIcon icon={area.icon} className="text-white text-2xl" />
-                    </div>
-                    <h3 className="text-2xl lg:text-3xl font-black text-gray-900 font-serif leading-tight">{area.title}</h3>
-                  </div>
-
-                  <ul className="space-y-4 mb-10">
-                    {area.points.map((pt, j) => (
-                      <motion.li
-                        key={j}
-                        className="flex items-start gap-4 text-gray-500 text-[16px] leading-relaxed font-medium"
-                      >
-                        <div className="mt-1.5 w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 bg-gray-50 border border-gray-100 group-hover:border-primary-200 transition-colors">
-                            <FontAwesomeIcon icon={faCircleCheck} className="text-[10px] text-gray-300 group-hover:text-primary-500 transition-colors" />
-                        </div>
-                        {pt}
-                      </motion.li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-auto">
-                    <motion.button
-                      whileHover={{ x: 5 }}
-                      className="flex items-center gap-3 text-gray-900 font-black text-[12px] uppercase tracking-widest"
-                      style={{ color: area.accent }}
-                    >
-                      Learn more
-                      <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
-                    </motion.button>
-                  </div>
+                   {/* Icon Container */}
+                   <div className="flex items-start justify-between mb-12">
+                      <div className={`w-20 h-20 bg-gradient-to-br ${area.grad} rounded-3xl flex items-center justify-center text-white text-3xl shadow-xl shadow-black/20 group-hover:rotate-6 transition-transform duration-500`}>
+                         <FontAwesomeIcon icon={area.icon} />
+                      </div>
+                      <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-white/20 group-hover:border-primary-500/50 group-hover:text-primary-500 transition-all">
+                         <FontAwesomeIcon icon={faArrowRight} className="-rotate-45 group-hover:rotate-0 transition-transform" />
+                      </div>
+                   </div>
+                   
+                   {/* Text Block: Improved Scannability */}
+                   <div className="space-y-8 flex-grow">
+                      <div className="space-y-4">
+                         <h3 className="text-3xl lg:text-4xl font-bold text-white tracking-tight leading-none group-hover:text-primary-400 transition-colors">
+                           {area.title}
+                         </h3>
+                         <div className="h-0.5 w-12 bg-primary-600/30 group-hover:w-20 transition-all duration-500" />
+                      </div>
+                      
+                      <p className="text-white/60 text-lg lg:text-xl font-medium leading-relaxed italic">
+                        "{area.desc}"
+                      </p>
+                      
+                      {/* Sub-points for depth */}
+                      <div className="flex flex-wrap gap-3 pt-6">
+                         {area.points.map((pt, i) => (
+                           <span key={i} className="px-5 py-2 rounded-full bg-white/[0.03] border border-white/5 text-[10px] font-black uppercase tracking-widest text-primary-500/80">
+                              {pt}
+                           </span>
+                         ))}
+                      </div>
+                   </div>
+                   
+                   {/* Action (Teaser) */}
+                   <div className="mt-12 pt-12 border-t border-white/5 opacity-40 group-hover:opacity-100 transition-opacity">
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white flex items-center gap-4">
+                        The Protocol
+                        <div className="h-px w-8 bg-white/20" />
+                      </span>
+                   </div>
                 </div>
-
-                {/* Animated Background Orb */}
-                <div 
-                  className="absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[80px] opacity-0 group-hover:opacity-20 transition-all duration-700"
-                  style={{ background: area.accent }}
-                />
-              </div>
-            </motion.div>
-          ))}
+             </motion.div>
+           ))}
         </div>
       </div>
     </section>
