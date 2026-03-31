@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion'
 import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faUserPlus, faChevronDown } from '@fortawesome/free-solid-svg-icons';
-import logo from '../assets/LogoRectTransparent.png';
+import logo from '../assets/VTC TRANSPARENT.svg';
 
 const navItems = [
   { name: 'Home', path: '/' },

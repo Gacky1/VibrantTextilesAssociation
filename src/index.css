@@ -1,5 +1,6 @@
 @import 'tailwindcss';
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.cdnfonts.com/css/brodies');
 
 @theme {
   --color-primary-50: #fff1f0;
@@ -29,8 +30,9 @@
   --color-dark-700: #1a1a2e;
   --color-dark-600: #222240;
 
-  --font-family-sans: 'DM Sans', 'Inter', system-ui, sans-serif;
-  --font-family-serif: 'Playfair Display', Georgia, serif;
+  --font-family-sans: 'Poppins', system-ui, sans-serif;
+  --font-family-serif: 'Poppins', sans-serif;
+  --font-family-brodies: 'Brodies', serif;
 
   --animate-blob: blob 8s infinite;
   --animate-float: float 6s ease-in-out infinite;
@@ -108,7 +110,7 @@ html {
 }
 
 body {
-  font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+  font-family: var(--font-family-sans);
   color: #1a1a2e;
   background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -148,6 +150,10 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.font-brodies {
+  font-family: var(--font-family-brodies) !important;
 }
 
 /* Glass morphism utility classes */
@@ -323,8 +329,8 @@ body {
 }
 
 /* ===== SECTION STYLES ===== */
-.section-heading {
-  font-family: 'Playfair Display', serif;
+.section-heading, h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family-serif);
   font-weight: 800;
   line-height: 1.1;
   letter-spacing: -0.02em;

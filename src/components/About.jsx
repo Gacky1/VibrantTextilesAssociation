@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandshake, faIndustry, faLeaf, faUsers, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import logo from '../assets/LogoRectTransparent.png';
+import logo from '../assets/text_white.png';
 
 const pillars = [
   { icon: faHandshake, label: 'Collaboration', color: 'from-blue-500 to-cyan-500', bg: 'bg-blue-50' },
