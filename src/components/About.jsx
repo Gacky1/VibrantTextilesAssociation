@@ -57,7 +57,7 @@ const About = () => {
           <div className="relative">
             <div className="aspect-square bg-gray-100 rounded-2xl overflow-hidden shadow-sm border border-gray-200 p-12 flex items-center justify-center">
               <div className="text-center space-y-4">
-                <div className="text-6xl font-black text-primary-600/20">VTA</div>
+                <img src="/src/assets/VTC TRANSPARENT.svg" alt="VTA Logo" className="h-48 mx-auto opacity-80" />
                 <div className="text-sm font-bold uppercase tracking-widest text-gray-400">Established 1998</div>
                 <p className="text-gray-500 max-w-xs mx-auto text-sm italic">
                   "India's textiles are not just industry; they are the rhythmic pulse of our civilization's heartbeat."

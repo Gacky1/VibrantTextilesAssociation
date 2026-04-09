@@ -13,6 +13,7 @@ const Members = () => {
       .from('members')
       .select('*')
       .eq('is_active', true)
+      .in('category', ['board', 'executive'])
       .order('sort_order')
       .limit(6)
       .then(({ data }) => {
