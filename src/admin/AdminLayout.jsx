@@ -6,6 +6,8 @@ const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
   { to: '/admin/members', label: 'Members', icon: '👥' },
   { to: '/admin/events', label: 'Events', icon: '📅' },
+  { to: '/admin/skill-dev', label: 'Skill Dev', icon: '🎓' },
+  { to: '/admin/research', label: 'Research', icon: '🔬' },
   { to: '/admin/media', label: 'Media Gallery', icon: '🖼️' },
   { to: '/admin/press', label: 'Press & News', icon: '📰' },
   { to: '/admin/applications', label: 'Applications', icon: '📝' },

@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 
-const empty = { name: '', designation: '', bio: '', image_url: '', sort_order: 0, is_active: true };
+const empty = { 
+  name: '', 
+  designation: '', 
+  bio: '', 
+  image_url: '', 
+  sort_order: 0, 
+  is_active: true,
+  category: 'board' 
+};
 
 const AdminMembers = () => {
   const [members, setMembers] = useState([]);
@@ -10,6 +18,7 @@ const AdminMembers = () => {
   const [form, setForm] = useState(empty);
   const [saving, setSaving] = useState(false);
   const [imgFile, setImgFile] = useState(null);
+  const [activeTab, setActiveTab] = useState('council'); // 'council' or 'partners'
 
   const fetch = async () => {
     setLoading(true);
@@ -20,7 +29,11 @@ const AdminMembers = () => {
 
   useEffect(() => { fetch(); }, []);
 
-  const openAdd = () => { setForm(empty); setImgFile(null); setModal(true); };
+  const openAdd = () => { 
+    setForm({ ...empty, category: activeTab === 'council' ? 'board' : 'academic' }); 
+    setImgFile(null); 
+    setModal(true); 
+  };
   const openEdit = (m) => { setForm(m); setImgFile(null); setModal(true); };
 
   const uploadImage = async () => {
@@ -40,9 +53,11 @@ const AdminMembers = () => {
     if (image_url === null) { setSaving(false); return; }
     const payload = { ...form, image_url };
     if (form.id) {
-      await supabase.from('members').update(payload).eq('id', form.id);
+      const { error } = await supabase.from('members').update(payload).eq('id', form.id);
+      if (error) alert(error.message);
     } else {
-      await supabase.from('members').insert(payload);
+      const { error } = await supabase.from('members').insert(payload);
+      if (error) alert(error.message);
     }
     setSaving(false);
     setModal(false);
@@ -55,67 +70,102 @@ const AdminMembers = () => {
     fetch();
   };
 
+  const filteredMembers = members.filter(m => {
+    if (activeTab === 'council') return ['board', 'executive'].includes(m.category);
+    return ['academic', 'stakeholder', 'industry'].includes(m.category);
+  });
+
   const inp = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all';
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Members</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage leadership and board members</p>
+          <h1 className="text-2xl font-bold text-gray-900">Member Registry</h1>
+          <p className="text-gray-500 text-sm mt-0.5">Manage council leadership and industrial partners</p>
         </div>
         <button onClick={openAdd} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors shadow-sm">
-          + Add Member
+          + Add New Entry
+        </button>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex border-b border-gray-200 mb-6">
+        <button
+          onClick={() => setActiveTab('council')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all ${
+            activeTab === 'council' 
+            ? 'border-primary-600 text-primary-600' 
+            : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          Leadership Council
+        </button>
+        <button
+          onClick={() => setActiveTab('partners')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all ${
+            activeTab === 'partners' 
+            ? 'border-primary-600 text-primary-600' 
+            : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          Industrial & Academic Partners
         </button>
       </div>
 
       {/* Table */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         {loading ? (
-          <div className="p-12 text-center text-gray-400">Loading…</div>
-        ) : members.length === 0 ? (
+          <div className="p-12 text-center text-gray-400 font-medium">Synchronizing registry…</div>
+        ) : filteredMembers.length === 0 ? (
           <div className="p-12 text-center text-gray-400">
             <p className="text-4xl mb-3">👥</p>
-            <p className="font-medium">No members yet</p>
-            <p className="text-sm mt-1">Click "Add Member" to get started</p>
+            <p className="font-semibold">No entries in this segment</p>
+            <p className="text-sm mt-1">Switch tabs or add a new entry to the {activeTab === 'council' ? 'Council' : 'Partners'} list.</p>
           </div>
         ) : (
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-gray-50 border-b border-gray-100 font-bold uppercase tracking-wider text-[10px] text-gray-400">
               <tr>
-                <th className="text-left px-5 py-3.5 text-gray-500 font-semibold">Member</th>
-                <th className="text-left px-5 py-3.5 text-gray-500 font-semibold">Designation</th>
-                <th className="text-left px-5 py-3.5 text-gray-500 font-semibold">Order</th>
-                <th className="text-left px-5 py-3.5 text-gray-500 font-semibold">Status</th>
-                <th className="px-5 py-3.5" />
+                <th className="text-left px-6 py-4">Identity</th>
+                <th className="text-left px-6 py-4">Designation</th>
+                <th className="text-left px-6 py-4">Category</th>
+                <th className="text-left px-6 py-4">Order</th>
+                <th className="text-left px-6 py-4">Visibility</th>
+                <th className="px-6 py-4" />
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
-              {members.map(m => (
+              {filteredMembers.map(m => (
                 <tr key={m.id} className="hover:bg-gray-50 transition-colors">
-                  <td className="px-5 py-3.5">
+                  <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
                       {m.image_url ? (
-                        <img src={m.image_url} alt={m.name} className="w-9 h-9 rounded-full object-cover border border-gray-200" />
+                        <img src={m.image_url} alt={m.name} className="w-10 h-10 rounded-full object-cover border border-gray-200" />
                       ) : (
-                        <div className="w-9 h-9 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-sm">
+                        <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-600 font-bold text-sm">
                           {m.name?.[0]}
                         </div>
                       )}
-                      <span className="font-semibold text-gray-900">{m.name}</span>
+                      <span className="font-bold text-gray-900">{m.name}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-3.5 text-gray-600">{m.designation}</td>
-                  <td className="px-5 py-3.5 text-gray-500">{m.sort_order}</td>
-                  <td className="px-5 py-3.5">
-                    <span className={`px-2.5 py-1 rounded-full text-xs font-semibold ${m.is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                      {m.is_active ? 'Active' : 'Hidden'}
+                  <td className="px-6 py-4 text-gray-600 italic">"{m.designation}"</td>
+                  <td className="px-6 py-4">
+                    <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-gray-100 text-gray-500">
+                      {m.category}
                     </span>
                   </td>
-                  <td className="px-5 py-3.5">
+                  <td className="px-6 py-4 text-gray-500 font-mono">{m.sort_order}</td>
+                  <td className="px-6 py-4">
+                    <span className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-widest ${m.is_active ? 'bg-green-100 text-green-700' : 'bg-red-50 text-red-500'}`}>
+                      {m.is_active ? 'Public' : 'Hidden'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4">
                     <div className="flex items-center gap-2 justify-end">
-                      <button onClick={() => openEdit(m)} className="px-3 py-1.5 text-xs font-semibold text-blue-600 hover:bg-blue-50 rounded-lg transition-colors">Edit</button>
-                      <button onClick={() => handleDelete(m.id)} className="px-3 py-1.5 text-xs font-semibold text-red-500 hover:bg-red-50 rounded-lg transition-colors">Delete</button>
+                      <button onClick={() => openEdit(m)} className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-primary-600 hover:bg-primary-50 rounded-lg transition-colors">Modify</button>
+                      <button onClick={() => handleDelete(m.id)} className="px-3 py-1.5 text-[10px] font-black uppercase tracking-widest text-gray-300 hover:text-red-500 rounded-lg transition-colors">Delete</button>
                     </div>
                   </td>
                 </tr>
@@ -127,48 +177,76 @@ const AdminMembers = () => {
 
       {/* Modal */}
       {modal && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto">
-            <div className="flex items-center justify-between p-6 border-b border-gray-100">
-              <h2 className="font-bold text-gray-900">{form.id ? 'Edit Member' : 'Add Member'}</h2>
-              <button onClick={() => setModal(false)} className="text-gray-400 hover:text-gray-700 text-xl">✕</button>
+        <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-[32px] shadow-2xl w-full max-w-lg my-8">
+            <div className="flex items-center justify-between p-8 border-b border-gray-100">
+              <h2 className="text-xl font-bold text-gray-900">{form.id ? 'Edit Entry' : 'New Entry'}</h2>
+              <button onClick={() => setModal(false)} className="text-gray-400 hover:text-gray-900 text-xl transition-colors">✕</button>
             </div>
-            <form onSubmit={handleSave} className="p-6 space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+            <form onSubmit={handleSave} className="p-8 space-y-6">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Full Name *</label>
-                  <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="e.g. Dr. Rajesh Kumar" className={inp} />
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Legal Identity *</label>
+                  <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Full Name" className={inp} />
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Designation *</label>
-                  <input required value={form.designation} onChange={e => setForm({ ...form, designation: e.target.value })} placeholder="e.g. Chairperson" className={inp} />
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Official Designation *</label>
+                  <input required value={form.designation} onChange={e => setForm({ ...form, designation: e.target.value })} placeholder="Position" className={inp} />
                 </div>
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">Bio</label>
-                <textarea rows="3" value={form.bio || ''} onChange={e => setForm({ ...form, bio: e.target.value })} placeholder="Short biography…" className={`${inp} resize-none`} />
+                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Category Segment *</label>
+                <select 
+                  required 
+                  value={form.category} 
+                  onChange={e => setForm({ ...form, category: e.target.value })} 
+                  className={inp}
+                >
+                  <optgroup label="Leadership Council">
+                    <option value="board">Board of Directors</option>
+                    <option value="executive">Executive Team</option>
+                  </optgroup>
+                  <optgroup label="Registry Partners">
+                    <option value="academic">Academic Partnership</option>
+                    <option value="stakeholder">Stakeholder</option>
+                    <option value="industry">Industry Partnership</option>
+                  </optgroup>
+                </select>
               </div>
+
               <div>
-                <label className="block text-xs font-semibold text-gray-600 mb-1">Profile Photo</label>
-                {form.image_url && <img src={form.image_url} className="w-16 h-16 rounded-full object-cover mb-2 border" alt="current" />}
-                <input type="file" accept="image/*" onChange={e => setImgFile(e.target.files[0])} className="text-sm text-gray-600" />
-                <p className="text-xs text-gray-400 mt-1">Or paste a URL below</p>
-                <input value={form.image_url || ''} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." className={`${inp} mt-1`} />
+                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Narrative / Bio</label>
+                <textarea rows="3" value={form.bio || ''} onChange={e => setForm({ ...form, bio: e.target.value })} placeholder="Short professional summary…" className={`${inp} resize-none`} />
               </div>
-              <div className="grid grid-cols-2 gap-3">
+
+              <div>
+                <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Digital Portrait</label>
+                <div className="flex items-center gap-4 mb-4">
+                  {form.image_url && <img src={form.image_url} className="w-20 h-20 rounded-2xl object-cover border-2 border-gray-100" alt="current" />}
+                  <div className="flex-1">
+                    <input type="file" accept="image/*" onChange={e => setImgFile(e.target.files[0])} className="text-xs text-gray-500 w-full" />
+                    <p className="text-[10px] text-gray-300 mt-2 font-medium italic">High-res portrait recommended.</p>
+                  </div>
+                </div>
+                <input value={form.image_url || ''} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="Or paste external URL (https://…)" className={inp} />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 pt-4">
                 <div>
-                  <label className="block text-xs font-semibold text-gray-600 mb-1">Display Order</label>
+                  <label className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Sequence Order</label>
                   <input type="number" value={form.sort_order} onChange={e => setForm({ ...form, sort_order: +e.target.value })} className={inp} />
                 </div>
-                <div className="flex items-center gap-2 pt-5">
-                  <input type="checkbox" id="active" checked={form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked })} className="w-4 h-4 accent-primary-600" />
-                  <label htmlFor="active" className="text-sm text-gray-700 font-medium">Show on site</label>
+                <div className="flex items-center gap-3 pt-6">
+                  <input type="checkbox" id="active" checked={form.is_active} onChange={e => setForm({ ...form, is_active: e.target.checked })} className="w-5 h-5 accent-primary-600 rounded-lg cursor-pointer" />
+                  <label htmlFor="active" className="text-xs text-gray-700 font-bold uppercase tracking-widest cursor-pointer">Live Registry</label>
                 </div>
               </div>
-              <div className="flex gap-3 pt-2">
-                <button type="button" onClick={() => setModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50 transition-colors">Cancel</button>
-                <button type="submit" disabled={saving} className="flex-1 py-2.5 bg-primary-600 rounded-xl text-sm font-semibold text-white hover:bg-primary-700 disabled:opacity-60 transition-colors">
-                  {saving ? 'Saving…' : 'Save Member'}
+
+              <div className="flex gap-4 pt-6">
+                <button type="button" onClick={() => setModal(false)} className="flex-1 py-4 border border-gray-100 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-colors">Cancel</button>
+                <button type="submit" disabled={saving} className="flex-1 py-4 bg-primary-600 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white hover:bg-primary-700 disabled:opacity-60 transition-all shadow-lg shadow-primary-500/20">
+                  {saving ? 'Synchronizing…' : (form.id ? 'Push Update' : 'Initialize Entry')}
                 </button>
               </div>
             </form>

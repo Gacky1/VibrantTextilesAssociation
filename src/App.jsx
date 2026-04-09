@@ -20,6 +20,8 @@ import AdminMedia from './admin/AdminMedia';
 import AdminPress from './admin/AdminPress';
 import AdminContent from './admin/AdminContent';
 import AdminApplications from './admin/AdminApplications';
+import AdminSkillDevelopment from './admin/AdminSkillDevelopment';
+import AdminResearch from './admin/AdminResearch';
 import ProtectedRoute from './admin/ProtectedRoute';
 
 import SmoothScroll from './components/SmoothScroll';
@@ -58,6 +60,8 @@ function App() {
           <Route path="events" element={<AdminEvents />} />
           <Route path="media" element={<AdminMedia />} />
           <Route path="press" element={<AdminPress />} />
+          <Route path="skill-dev" element={<AdminSkillDevelopment />} />
+          <Route path="research" element={<AdminResearch />} />
           <Route path="applications" element={<AdminApplications />} />
           <Route path="content" element={<AdminContent />} />
         </Route>
