@@ -1,6 +1,11 @@
 import React, { useState, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faArrowRight, faExpandAlt, faTimes, faHistory, faAward, faMicrochip, faRecycle, faGlobe } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faSearch, faArrowRight, faExpandAlt, faTimes, 
+  faChartLine, faUsers, faGlobeAmericas, faShoppingBag,
+  faCrown, faCogs, faUserNinja, faHome, 
+  faFlask, faLeaf, faBolt 
+} from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
@@ -18,43 +23,144 @@ const AboutTextile = () => {
     );
   }, [searchQuery]);
 
-  const stats = [
-    { label: 'Ancient Rhythm', val: '5,000+', sub: 'Years of Heritage' },
-    { label: 'Global Registry', val: '120+', sub: 'Export Markets' },
-    { label: 'Artisan Hubs', val: '75+', sub: 'Strategic Nodes' },
-    { label: 'Elite Cert.', val: '15+', sub: 'Industrial Standards' }
+  const economicStats = [
+    { label: 'Economic Contribution', val: '~2.3%', sub: 'Of India\'s GDP' },
+    { label: 'Workforce Hub', val: '45M+', sub: 'Direct Employment' },
+    { label: 'Market Velocity', val: '$225B', sub: 'Projected Size 2025' },
+    { label: 'Global Presence', val: '$36B', sub: 'Annual Exports Value' }
+  ];
+
+  const industrySectors = [
+    {
+      title: "Handloom & Traditional",
+      description: "Fabrics and garments created manually by artisans with a deep focus on cultural preservation and artisan empowerment.",
+      examples: "Khadi, Banarasi Silk, Ikat, Jamdani, Pashmina",
+      icon: faCrown,
+      tag: "Heritage"
+    },
+    {
+      title: "Powerloom & Mechanized",
+      description: "Mechanized production for mass scale, driving efficiency, MSME support, and stringent quality control.",
+      examples: "Cotton fabrics, polyester, denim",
+      icon: faCogs,
+      tag: "Industrial"
+    },
+    {
+      title: "Apparel & Garments",
+      description: "Ready-to-wear clothing for domestic and global markets, focusing on skill development and export readiness.",
+      examples: "Fashion wear, uniforms, casual/formal clothing",
+      icon: faShoppingBag,
+      tag: "Fashion"
+    },
+    {
+      title: "Home Textiles & Furnishings",
+      description: "Fabrics engineered for interiors and décor, bridging market linkage with advanced design skill training.",
+      examples: "Bedsheets, curtains, carpets, upholstery",
+      icon: faHome,
+      tag: "Lifestyle"
+    },
+    {
+      title: "Technical & Industrial",
+      description: "High-performance engineered textiles for medical, protective, and functional industrial applications.",
+      examples: "Medical textiles, geotextiles, smart textiles",
+      icon: faFlask,
+      tag: "Innovation"
+    },
+    {
+      title: "Natural Fibres & Yarn",
+      description: "The raw soul of manufacturing with a focus on sustainable sourcing and vendor support quality.",
+      examples: "Cotton, silk, wool, jute, hemp",
+      icon: faLeaf,
+      tag: "Sustainability"
+    }
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">
       <Navbar />
       
       <PageHero
-        eyebrow="The Heritage Explorer"
-        title="Rhythmic Weaves of India"
-        subtitle="A premium deep-dive into the tactile DNA across 29 states and regions."
+        eyebrow="The Industrial Pulse"
+        title="India's Textile Civilization"
+        subtitle="A journey from the rhythmic handlooms of history to the mechanized titans of the modern era."
       />
 
       <div className="section-container pb-32">
-        {/* Statistics Section */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-32 -mt-12 relative z-10">
-          {stats.map((stat, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 text-center space-y-3 hover:shadow-md transition-shadow">
+        {/* Economic Significance Bar */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-32 -mt-12 relative z-10 px-4 md:px-0">
+          {economicStats.map((stat, idx) => (
+            <div key={idx} className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 text-center space-y-3 hover:shadow-md transition-shadow group">
               <p className="text-primary-600 font-bold text-[10px] uppercase tracking-widest">{stat.label}</p>
-              <h3 className="text-4xl font-black text-gray-900 tracking-tight">{stat.val}</h3>
+              <h3 className="text-4xl font-black text-gray-900 tracking-tight transition-transform group-hover:scale-105">{stat.val}</h3>
               <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">{stat.sub}</p>
             </div>
           ))}
         </div>
 
-        {/* Search and Discovery Section */}
-        <div className="mb-16 space-y-8">
+        {/* Industry Overview Section */}
+        <div className="max-w-4xl mx-auto mb-32 text-center space-y-8">
+          <div className="badge inline-flex">The Sector Overview</div>
+          <h2 className="text-4xl md:text-6xl font-black tracking-tight text-gray-900 leading-[1.1]">
+            A Legacy of <span className="text-primary-600 italic">Diversity</span> and Growth.
+          </h2>
+          <p className="text-gray-500 text-xl leading-relaxed italic">
+            "The textile industry is one of India’s oldest and most diverse sectors, spanning from traditional handlooms to modern industrial apparel manufacturing. It contributes significantly to economic growth while preserving our rich cultural DNA."
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 text-left">
+            <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
+              <h4 className="font-bold text-gray-900">GDP Contribution</h4>
+              <p className="text-sm text-gray-500">Contributing up to 13% of industrial output and consistently driving national economic metrics.</p>
+            </div>
+            <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
+              <h4 className="font-bold text-gray-900">Employment Node</h4>
+              <p className="text-sm text-gray-500">A primary employment engine providing livelihoods to over 45 million people directly across India.</p>
+            </div>
+            <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
+              <h4 className="font-bold text-gray-900">Global Launchpad</h4>
+              <p className="text-sm text-gray-500">Positioning India as a leading global exporter with strong growth targets reaching $350B by 2030.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Strategic Segments Section */}
+        <div className="mb-32 space-y-16">
+          <div className="text-center space-y-4">
+             <div className="badge">Structural Pillars</div>
+             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">Key Industry Segments</h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             {industrySectors.map((sector, idx) => (
+                <div key={idx} className="group p-10 bg-white border border-gray-100 rounded-[40px] hover:shadow-xl hover:border-transparent transition-all duration-500 space-y-8 relative overflow-hidden">
+                   <div className="absolute top-0 right-0 p-8 text-gray-50 group-hover:text-primary-50 transition-colors">
+                      <FontAwesomeIcon icon={sector.icon} className="text-7xl" />
+                   </div>
+                   <div className="relative z-10 space-y-6">
+                      <span className="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
+                         {sector.tag}
+                      </span>
+                      <h3 className="text-2xl font-bold text-gray-900">{sector.title}</h3>
+                      <p className="text-gray-500 text-sm leading-relaxed">
+                         {sector.description}
+                      </p>
+                      <div className="space-y-3 pt-4 border-t border-gray-100">
+                         <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Key Specializations</p>
+                         <p className="text-sm font-bold text-gray-700">{sector.examples}</p>
+                      </div>
+                   </div>
+                </div>
+             ))}
+          </div>
+        </div>
+
+        {/* Heritage Grid Introduction */}
+        <div className="mb-16 space-y-8 border-t border-gray-100 pt-32">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 border-b border-gray-100 pb-12">
             <div className="max-w-xl space-y-4">
-              <div className="badge">The Catalog</div>
-              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">Discovery Engine</h2>
+              <div className="badge">The Visual Registry</div>
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">Heritage Discovery Engine</h2>
               <p className="text-gray-500 text-lg leading-relaxed">
-                Explore the intricate craftsmanship that defines the Indian textile civilization. Search by state, technique, or fabric type.
+                Explore the intricate craftsmanship that defines the Indian textile civilization across its unique state identities.
               </p>
             </div>
             
@@ -62,7 +168,7 @@ const AboutTextile = () => {
               <FontAwesomeIcon icon={faSearch} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-600 transition-colors" />
               <input 
                 type="text"
-                placeholder="Search heritage..."
+                placeholder="Search heritage, states, or techniques..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-medium"
@@ -71,7 +177,7 @@ const AboutTextile = () => {
           </div>
         </div>
 
-        {/* Interactive Grid */}
+        {/* State-wise Heritage Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {filteredData.map((item, idx) => (
             <div 
@@ -114,13 +220,13 @@ const AboutTextile = () => {
 
         {filteredData.length === 0 && (
           <div className="py-32 text-center space-y-4">
-            <h3 className="text-2xl font-bold text-gray-900">No matches found for "{searchQuery}"</h3>
-            <p className="text-gray-500">Try searching for a state like "Gujarat" or a fabric like "Silk".</p>
+            <h3 className="text-2xl font-bold text-gray-900">No results matching "{searchQuery}"</h3>
+            <p className="text-gray-500 italic">Try searching for state names, silk varieties, or weaving techniques.</p>
             <button 
               onClick={() => setSearchQuery('')}
               className="text-primary-600 font-bold hover:underline"
             >
-              Clear search
+              Reset search
             </button>
           </div>
         )}
@@ -170,7 +276,6 @@ const AboutTextile = () => {
                   <p className="font-bold">{selectedState.famous.split(',')[0]}</p>
                 </div>
               </div>
-
             </div>
 
             {/* Right: Image */}
@@ -188,29 +293,6 @@ const AboutTextile = () => {
           </div>
         </div>
       )}
-
-      {/* CTA Section */}
-      <div className="section-container pb-32">
-        <div className="bg-gray-900 rounded-[40px] px-12 py-24 text-center space-y-12">
-          <div className="flex justify-center flex-wrap gap-4">
-             <div className="badge border-gray-700 bg-gray-800 text-primary-400">Conservation</div>
-             <div className="badge border-gray-700 bg-gray-800 text-primary-400">Industrial Revival</div>
-          </div>
-          <div className="space-y-6">
-            <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
-              Preserving the Rhythmic DNA
-            </h2>
-            <p className="text-gray-400 text-xl leading-relaxed max-w-2xl mx-auto italic">
-              "Every thread is a biological record of our civilization's journey through time and technique."
-            </p>
-          </div>
-
-          <button className="btn-primary inline-flex items-center gap-4 py-6 px-12 text-base">
-            Join the Heritage Network
-            <FontAwesomeIcon icon={faArrowRight} />
-          </button>
-        </div>
-      </div>
 
       <Footer />
     </div>

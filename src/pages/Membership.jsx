@@ -5,74 +5,16 @@ import {
   faBuilding, faEnvelope, faPhone, faUser, faMapMarkerAlt,
   faCheckCircle, faArrowRight, faArrowLeft, faXmark, faPaperPlane,
   faBriefcase, faGlobe, faUsers, faShieldHalved, faGraduationCap,
-  faAward, faUniversity, faIndustry, faHandshake, faGavel, 
-  faClipboardList, faHeart, faUsersGear, faBuildingColumns
+  faUniversity, faIndustry, faHandshake, faGavel, 
+  faClipboardList, faBuildingColumns, faUsersGear, faInfoCircle
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
 
-/* ─── Simplified UI Constants ─── */
+/* ─── UI Constants ─── */
 const inp = 'w-full px-4 py-3 bg-white border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 text-sm focus:outline-none focus:border-primary-500 transition-colors';
 const sel = `${inp} appearance-none cursor-pointer bg-no-repeat bg-[right_1rem_center]`;
-
-const categories = [
-  {
-    id: 'government',
-    name: 'Policy Bodies',
-    icon: faBuildingColumns,
-    tagline: 'Departments, policy makers & regulatory bodies',
-    color: 'text-blue-600',
-    bg: 'bg-blue-50'
-  },
-  {
-    id: 'industry',
-    name: 'Corporate Partners',
-    icon: faIndustry,
-    tagline: 'Manufacturers, exporters & corporates',
-    color: 'text-primary-600',
-    bg: 'bg-primary-50'
-  },
-  {
-    id: 'support',
-    name: 'Support Orgs',
-    icon: faHandshake,
-    tagline: 'NGOs, training institutes & support bodies',
-    color: 'text-orange-600',
-    bg: 'bg-orange-50'
-  },
-];
-
-const benefits = [
-  {
-    title: 'Global Network',
-    desc: 'Connect with over 500+ industry leaders and policy makers.',
-    icon: faUsers,
-    color: 'text-blue-600',
-    bg: 'bg-blue-50'
-  },
-  {
-    title: 'Policy Advocacy',
-    desc: 'Get your voice heard at the highest levels of government.',
-    icon: faShieldHalved,
-    color: 'text-primary-600',
-    bg: 'bg-primary-50'
-  },
-  {
-    title: 'Skill Dev',
-    desc: 'Access state-of-the-art training and technical workshops.',
-    icon: faGraduationCap,
-    color: 'text-orange-600',
-    bg: 'bg-orange-50'
-  },
-  {
-    title: 'Market Linkage',
-    desc: 'Access global trade fairs and B2B opportunities.',
-    icon: faGlobe,
-    color: 'text-emerald-600',
-    bg: 'bg-emerald-50'
-  }
-];
 
 const indianStates = [
   'Andhra Pradesh','Arunachal Pradesh','Assam', 'Bihar', 'Chhattisgarh', 'Goa', 'Gujarat',
@@ -89,145 +31,277 @@ const Label = ({ icon, children }) => (
   </label>
 );
 
-const GovernmentForm = () => (
-  <div className="grid gap-6">
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faBuilding}>Organization Name *</Label>
-        <input type="text" name="org_name" required placeholder="Ministry of Textiles" className={inp} />
-      </div>
-      <div>
-        <Label icon={faGlobe}>State *</Label>
-        <select name="state" required className={sel}>
-          <option value="">Select State</option>
-          {indianStates.map(s => <option key={s}>{s}</option>)}
-        </select>
-      </div>
+/* ─── Form Templates ─── */
+
+const AcademicInstituteForm = () => (
+  <div className="grid gap-6 animate-fade-in">
+    <div className="space-y-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">Training Institute Details</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faBuilding}>Name of the Organization *</Label>
+            <input type="text" name="org_name" required placeholder="Organization Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faGlobe}>State of Operation *</Label>
+            <select name="state" required className={sel}>
+              <option value="">Select State</option>
+              {indianStates.map(s => <option key={s}>{s}</option>)}
+            </select>
+          </div>
+       </div>
+       <div>
+          <Label icon={faMapMarkerAlt}>Address of the Organization (HO) *</Label>
+          <textarea name="org_address" required rows="2" placeholder="Full address of Head Office" className={`${inp} resize-none`} />
+       </div>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faGavel}>Constitution of the Organisation *</Label>
+            <select name="constitution" required className={sel}>
+              <option value="">Select Constitution</option>
+              <option>Trust</option>
+              <option>Society</option>
+              <option>Private Limited</option>
+              <option>Public Limited</option>
+              <option>Government Body</option>
+              <option>Partnership/LLP</option>
+            </select>
+          </div>
+          <div>
+            <Label icon={faBriefcase}>Line of Business Activity *</Label>
+            <select name="business_activity" required className={sel}>
+              <option value="">Select Activity</option>
+              <option>Skill Development</option>
+              <option>Vocational Training</option>
+              <option>Technical Research</option>
+              <option>Textile Design</option>
+              <option>Others</option>
+            </select>
+          </div>
+       </div>
     </div>
+
+    <div className="space-y-6 pt-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">The Decision Maker</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUser}>Name *</Label>
+            <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faPhone}>Contact Number *</Label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
+          </div>
+       </div>
+       <div>
+          <Label icon={faEnvelope}>Email ID *</Label>
+          <input type="email" name="email" required placeholder="email@organization.org" className={inp} />
+       </div>
+    </div>
+
     <div>
-      <Label icon={faMapMarkerAlt}>Organization Address *</Label>
-      <textarea name="org_address" required rows="2" placeholder="Full address" className={`${inp} resize-none`} />
+       <Label icon={faInfoCircle}>Additional Information</Label>
+       <textarea name="additional_info" rows="3" placeholder="Tell us more about your institute's mission..." className={`${inp} resize-none`} />
     </div>
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faUser}>Decision Maker Name *</Label>
-        <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
-      </div>
-      <div>
-        <Label icon={faBriefcase}>Designation</Label>
-        <input type="text" name="designation" placeholder="e.g. Secretary" className={inp} />
-      </div>
+  </div>
+);
+
+const AcademicUniversityForm = () => (
+  <div className="grid gap-6 animate-fade-in">
+    <div className="space-y-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">College/University Details</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUniversity}>Name of the College/University *</Label>
+            <input type="text" name="org_name" required placeholder="Institution Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faGlobe}>State of Operation *</Label>
+            <select name="state" required className={sel}>
+              <option value="">Select State</option>
+              {indianStates.map(s => <option key={s}>{s}</option>)}
+            </select>
+          </div>
+       </div>
+       <div>
+          <Label icon={faMapMarkerAlt}>Address of the College/University *</Label>
+          <textarea name="org_address" required rows="2" placeholder="Full campus address" className={`${inp} resize-none`} />
+       </div>
     </div>
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
-      </div>
-      <div>
-        <Label icon={faEnvelope}>Email Address *</Label>
-        <input type="email" name="email" required placeholder="official@gov.in" className={inp} />
-      </div>
+
+    <div className="space-y-6 pt-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">The Decision Maker</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUser}>Name *</Label>
+            <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faPhone}>Contact Number *</Label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
+          </div>
+       </div>
+       <div>
+          <Label icon={faEnvelope}>Email ID *</Label>
+          <input type="email" name="email" required placeholder="registrar@university.edu.in" className={inp} />
+       </div>
+    </div>
+
+    <div>
+       <Label icon={faInfoCircle}>Additional Information</Label>
+       <textarea name="additional_info" rows="3" placeholder="Any specific areas for academic collaboration?" className={`${inp} resize-none`} />
     </div>
   </div>
 );
 
 const IndustryForm = () => (
-  <div className="grid gap-6">
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faBuilding}>Company Name *</Label>
-        <input type="text" name="org_name" required placeholder="Your Textile Company" className={inp} />
-      </div>
-      <div>
-        <Label icon={faBriefcase}>Sub-Sector *</Label>
-        <select name="org_type" required className={sel}>
-          <option value="">Select Sub-Sector</option>
-          <option>Handloom & Traditional</option>
-          <option>Powerloom & Mechanized</option>
-          <option>Apparel & Garments</option>
-          <option>Technical Textiles</option>
-          <option>Yarn & Fiber</option>
-        </select>
-      </div>
+  <div className="grid gap-6 animate-fade-in">
+    <div className="space-y-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">Company Details</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faBuilding}>Name of the Company *</Label>
+            <input type="text" name="org_name" required placeholder="Enterprise Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faUsersGear}>Textile Sub Sector *</Label>
+            <select name="sub_sector" required className={sel}>
+              <option value="">Select Sub Sector</option>
+              <option>Spinning</option>
+              <option>Weaving & Knitting</option>
+              <option>Garmenting & Apparel</option>
+              <option>Technical Textiles</option>
+              <option>Handloom & Artisanal</option>
+              <option>Processing & Dyeing</option>
+              <option>Textile Machinery</option>
+              <option>Home Textiles</option>
+            </select>
+          </div>
+       </div>
+       <div>
+          <Label icon={faMapMarkerAlt}>Address of the Head Office *</Label>
+          <textarea name="org_address" required rows="2" placeholder="Full HQ address" className={`${inp} resize-none`} />
+       </div>
+       <div>
+          <Label icon={faHandshake}>Interested for Partnering in *</Label>
+          <select name="partnering_interest" required className={sel}>
+            <option value="">Select Partnering Interests</option>
+            <option>Skill Training & Placement</option>
+            <option>Apprenticeship Management</option>
+            <option>Research & Development</option>
+            <option>Market Linkage Solutions</option>
+            <option>Industry Standard Certifications</option>
+          </select>
+       </div>
     </div>
+
+    <div className="space-y-6 pt-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">The Decision Maker</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUser}>Name *</Label>
+            <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faBriefcase}>Designation *</Label>
+            <input type="text" name="designation" required placeholder="e.g. Managing Director" className={inp} />
+          </div>
+       </div>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faPhone}>Contact Number *</Label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
+          </div>
+          <div>
+            <Label icon={faEnvelope}>Email Address *</Label>
+            <input type="email" name="email" required placeholder="business@company.com" className={inp} />
+          </div>
+       </div>
+    </div>
+
     <div>
-      <Label icon={faGlobe}>Partnering Interest *</Label>
-      <select name="partnering_interest" required className={sel}>
-        <option value="">Select Area of Interest</option>
-        <option>Skill Development</option>
-        <option>Market Linkage</option>
-        <option>Technology Transfer</option>
-        <option>Export Promotion</option>
-      </select>
-    </div>
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faUser}>Decision Maker Name *</Label>
-        <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
-      </div>
-      <div>
-        <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
-      </div>
-    </div>
-    <div>
-      <Label icon={faEnvelope}>Email Address *</Label>
-      <input type="email" name="email" required placeholder="business@company.com" className={inp} />
+       <Label icon={faInfoCircle}>Additional Information</Label>
+       <textarea name="additional_info" rows="3" placeholder="Share your industry scale or specific needs..." className={`${inp} resize-none`} />
     </div>
   </div>
 );
 
-const SupportForm = () => (
-  <div className="grid gap-6">
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faBriefcase}>Organization Type *</Label>
-        <select name="org_type" required className={sel}>
-          <option value="">Select Type</option>
-          <option>NGO</option>
-          <option>Training Institute</option>
-          <option>Research Org</option>
-          <option>Cooperative</option>
-        </select>
-      </div>
-      <div>
-        <Label icon={faBuilding}>Organization Name *</Label>
-        <input type="text" name="org_name" required placeholder="Full Name" className={inp} />
-      </div>
+const StakeholderForm = () => (
+  <div className="grid gap-6 animate-fade-in">
+    <div className="space-y-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">Stakeholder Profile</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faBuilding}>Organization/Body Name *</Label>
+            <input type="text" name="org_name" required placeholder="Stakeholder Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faGlobe}>State *</Label>
+            <select name="state" required className={sel}>
+              <option value="">Select State</option>
+              {indianStates.map(s => <option key={s}>{s}</option>)}
+            </select>
+          </div>
+       </div>
+       <div>
+          <Label icon={faMapMarkerAlt}>Official Address *</Label>
+          <textarea name="org_address" required rows="2" placeholder="Full official address" className={`${inp} resize-none`} />
+       </div>
     </div>
-    <div className="grid md:grid-cols-2 gap-6">
-      <div>
-        <Label icon={faPhone}>Contact Number *</Label>
-        <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
-      </div>
-      <div>
-        <Label icon={faEnvelope}>Email Address *</Label>
-        <input type="email" name="email" required placeholder="contact@org.org" className={inp} />
-      </div>
+
+    <div className="space-y-6 pt-6">
+       <h4 className="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4">Contact Person</h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUser}>Name *</Label>
+            <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faPhone}>Contact Number *</Label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
+          </div>
+       </div>
+       <div>
+          <Label icon={faEnvelope}>Email ID *</Label>
+          <input type="email" name="email" required placeholder="contact@stakeholder.org" className={inp} />
+       </div>
+    </div>
+
+    <div>
+       <Label icon={faInfoCircle}>Purpose of Partnership</Label>
+       <textarea name="additional_info" rows="3" placeholder="Describe your interest in the textile value chain..." className={`${inp} resize-none`} />
     </div>
   </div>
 );
-
-const formMap = { government: GovernmentForm, industry: IndustryForm, support: SupportForm };
 
 const Membership = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [academicType, setAcademicType] = useState('institute');
   const [showSuccess, setShowSuccess] = useState(false);
   const formRef = useRef(null);
 
-  const activeCat = categories.find(c => c.id === selectedCategory);
-  const FormComponent = selectedCategory ? formMap[selectedCategory] : null;
+  const categories = [
+    { id: 'academic', name: 'Academic', icon: faGraduationCap, tagline: 'Training Institutes, Colleges & Universities' },
+    { id: 'stakeholder', name: 'Stakeholder', icon: faHandshake, tagline: 'Collaborators, NGOs & Policy Support' },
+    { id: 'industry', name: 'Industry', icon: faIndustry, tagline: 'Manufacturers, MSMEs & Corporate Titans' },
+  ];
 
   const handleCategorySelect = (id) => {
     setSelectedCategory(id);
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
   };
 
+  const handleAcademicTypeChange = (e) => setAcademicType(e.target.value);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formValues = new FormData(e.target);
     const data = Object.fromEntries(formValues.entries());
-    const payload = { ...data, category: selectedCategory };
+    const payload = { 
+      ...data, 
+      category: selectedCategory,
+      academic_sub_type: selectedCategory === 'academic' ? academicType : null 
+    };
 
     try {
       const { error } = await supabase.from('membership_applications').insert([payload]);
@@ -246,103 +320,94 @@ const Membership = () => {
     <div className="min-h-screen bg-white">
       <Navbar />
       <PageHero
-        eyebrow="The Legacy Enrollment"
+        eyebrow="Enrollment Protocol"
         title="Join the Collective"
-        subtitle="Connect with India's most influential textile visionary network. Empowering civilization through innovation since 1998."
+        subtitle="Bridging industrial strength with rhythmic heritage across India's vibrant textile value chain."
       />
 
       <div className="section-container py-24">
         
-        {/* Success Toast */}
+        {/* Success Alert */}
         {showSuccess && (
           <div className="mb-12 p-8 bg-emerald-50 border border-emerald-100 rounded-2xl flex items-center gap-6 animate-fade-in">
             <div className="w-12 h-12 bg-emerald-500 text-white rounded-xl flex items-center justify-center text-2xl">
               <FontAwesomeIcon icon={faCheckCircle} />
             </div>
             <div>
-              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 opacity-60">Success Received</p>
-              <h4 className="text-xl font-bold text-gray-900">Application Submitted. The Collective Awaits.</h4>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-emerald-600 opacity-60">Verified</p>
+              <h4 className="text-xl font-bold text-gray-900">Application Transmitted. Our board will reach out shortly.</h4>
             </div>
           </div>
         )}
 
-        {/* ── WHY JOIN SECTION ── */}
+        {/* ── Section: Active Members Overview ── */}
         <div className="mb-32">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-6">
-              <div className="badge">Network Genesis</div>
-              <h2 className="section-title text-left">Why the Collective?</h2>
-              <p className="text-gray-600 text-lg leading-relaxed">
-                We provide more than collaboration. We provide the resonance required to bridge legacy with the pulse of modern industry. Partner with us to scale your impact.
-              </p>
-              <div className="flex -space-x-3 pt-4">
-                {[1,2,3,4].map(i => (
-                  <img 
-                    key={i} 
-                    src={`https://i.pravatar.cc/100?u=${i+20}`} 
-                    className="w-12 h-12 rounded-full border-4 border-white shadow-sm"
-                    alt="Member"
-                  />
-                ))}
-                <div className="w-12 h-12 rounded-full bg-gray-100 border-4 border-white flex items-center justify-center text-[10px] font-bold text-gray-500">
-                  +2k
+          <div className="text-center mb-16 space-y-4">
+            <div className="badge">Network Overview</div>
+            <h2 className="section-title">Active Members</h2>
+            <p className="section-subtitle mx-auto">
+              Our ecosystem is built on the synergy of academic prowess, stakeholder collaboration, and industrial scale.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {categories.map((cat) => (
+              <div key={cat.id} className="p-10 bg-gray-50 rounded-[40px] border border-gray-100 space-y-6">
+                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-600 text-2xl">
+                  <FontAwesomeIcon icon={cat.icon} />
+                </div>
+                <div className="space-y-4">
+                  <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{cat.name}</h3>
+                  <p className="text-gray-500 text-sm leading-relaxed italic">"{cat.tagline}"</p>
+                  <ul className="text-xs text-gray-400 space-y-2 pt-4">
+                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Verified Participation</li>
+                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Strategic Council Access</li>
+                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Industrial Revival Projects</li>
+                  </ul>
                 </div>
               </div>
-            </div>
-            <div className="grid sm:grid-cols-2 gap-4">
-              {benefits.map((b, idx) => (
-                <div
-                  key={idx}
-                  className="card p-8 group hover:border-primary-200 transition-colors"
-                >
-                  <div className={`w-12 h-12 rounded-xl ${b.bg} ${b.color} flex items-center justify-center text-xl mb-6 shadow-sm`}>
-                    <FontAwesomeIcon icon={b.icon} />
-                  </div>
-                  <h3 className="text-gray-900 font-bold text-lg mb-2">{b.title}</h3>
-                  <p className="text-gray-500 text-xs leading-relaxed">{b.desc}</p>
-                </div>
-              ))}
-            </div>
+            ))}
           </div>
         </div>
 
-        {/* ── STEP 1: CHOOSE CATEGORY ── */}
+        {/* ── Section: Inviting Membership ── */}
         {!selectedCategory && (
-          <div className="mb-32 bg-gray-50 border border-gray-100 rounded-[40px] p-12 lg:p-24">
-            <div className="text-center mb-16 space-y-4">
-              <div className="badge">Protocol Phase 01</div>
-              <h2 className="section-title">Identify Your Domain</h2>
-              <p className="section-subtitle mx-auto">
-                Select your operational domain to begin the verification sequence.
+          <div className="mb-32 bg-gray-900 rounded-[50px] p-12 lg:p-24 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600 opacity-10 rounded-full blur-[100px] -mr-32 -mt-32" />
+            
+            <div className="text-center mb-16 space-y-4 relative z-10">
+              <div className="badge border-gray-700 bg-gray-800 text-primary-400">Join the Collective</div>
+              <h2 className="text-4xl md:text-5xl font-black text-white tracking-tight">Inviting for Membership</h2>
+              <p className="text-gray-400 text-lg max-w-2xl mx-auto italic">
+                Choose your domain to generate the appropriate application sequence.
               </p>
             </div>
   
-            <div className="grid lg:grid-cols-3 gap-8">
+            <div className="grid lg:grid-cols-3 gap-8 relative z-10">
               {categories.map((cat) => (
                 <button
                   key={cat.id}
                   onClick={() => handleCategorySelect(cat.id)}
-                  className="card group text-left p-12 hover:border-primary-300 transition-all flex flex-col h-full bg-white"
+                  className="group bg-gray-800/50 backdrop-blur-md border border-gray-700/50 p-10 rounded-[32px] text-left hover:border-primary-500/50 transition-all flex flex-col h-full"
                 >
-                  <div className={`w-20 h-20 rounded-2xl ${cat.bg} ${cat.color} flex items-center justify-center text-4xl mb-10 transition-transform group-hover:scale-110`}>
+                  <div className="w-14 h-14 bg-gray-800 border border-gray-700 text-primary-400 rounded-xl flex items-center justify-center text-2xl mb-8 group-hover:scale-110 group-hover:bg-primary-600 group-hover:text-white transition-all">
                     <FontAwesomeIcon icon={cat.icon} />
                   </div>
                   
-                  <div className="flex-1 space-y-4">
-                    <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight group-hover:text-primary-600">
+                  <div className="flex-1 space-y-3">
+                    <h3 className="text-xl font-bold text-white uppercase tracking-tight group-hover:text-primary-400">
                        {cat.name}
                     </h3>
-                    <div className="w-8 h-px bg-gray-200 group-hover:w-16 group-hover:bg-primary-500 transition-all" />
-                    <p className="text-gray-500 text-sm italic">
-                      "{cat.tagline}"
+                    <p className="text-gray-500 text-xs leading-relaxed">
+                      {cat.tagline}
                     </p>
                   </div>
                   
-                  <div className="mt-12 pt-8 border-t border-gray-50 flex items-center justify-between">
+                  <div className="mt-10 pt-6 border-t border-gray-700 flex items-center justify-between">
                     <span className="text-gray-400 font-bold text-[10px] uppercase tracking-widest group-hover:text-primary-600 transition-colors">
-                      Begin Setup
+                      Open Form
                     </span>
-                    <FontAwesomeIcon icon={faArrowRight} className="text-gray-300 group-hover:text-primary-600 group-hover:translate-x-2 transition-all" />
+                    <FontAwesomeIcon icon={faArrowRight} className="text-gray-600 group-hover:text-primary-600 group-hover:translate-x-2 transition-all" />
                   </div>
                 </button>
               ))}
@@ -350,18 +415,18 @@ const Membership = () => {
           </div>
         )}
 
-        {/* ── STEP 2: APPLICATION FORM ── */}
+        {/* ── STEP 2: DYNAMIC APPLICATION FORM ── */}
         {selectedCategory && (
           <div ref={formRef} className="max-w-4xl mx-auto mb-32">
-            <div className="card shadow-2xl p-0 overflow-hidden border-none text-gray-900 bg-white shadow-gray-200">
+            <div className="bg-white rounded-[40px] shadow-[0_50px_100px_rgba(0,0,0,0.05)] overflow-hidden border border-gray-100">
                <div className="p-8 lg:p-12 bg-gray-900 text-white flex flex-col md:flex-row items-center justify-between gap-8">
                   <div className="flex items-center gap-8">
-                    <div className={`w-20 h-20 ${activeCat?.bg} ${activeCat?.color} rounded-2xl flex items-center justify-center text-3xl shadow-lg`}>
-                       <FontAwesomeIcon icon={activeCat?.icon} />
+                    <div className="w-20 h-20 bg-gray-800 text-primary-400 rounded-2xl flex items-center justify-center text-3xl shadow-lg border border-gray-700">
+                       <FontAwesomeIcon icon={categories.find(c => c.id === selectedCategory)?.icon} />
                     </div>
                     <div>
-                       <div className="badge border-gray-700 bg-gray-800 text-primary-400 mb-2">Phase 02 — Application</div>
-                       <h2 className="text-3xl font-black uppercase tracking-tight">{activeCat?.name}</h2>
+                       <div className="badge border-gray-700 bg-gray-800 text-primary-400 mb-2">Membership Application</div>
+                       <h2 className="text-3xl font-black uppercase tracking-tight">Partner with us as {selectedCategory}</h2>
                     </div>
                   </div>
                   <button 
@@ -372,35 +437,59 @@ const Membership = () => {
                   </button>
                </div>
 
-               <div className="p-8 lg:p-16 space-y-12 bg-white">
-                  <div className="flex items-start gap-4 p-6 bg-gray-50 rounded-xl border border-gray-100">
-                    <div className="w-10 h-10 bg-primary-600 text-white rounded-lg flex items-center justify-center shadow-lg">
-                      <FontAwesomeIcon icon={faShieldHalved} />
+               <div className="p-8 lg:p-16 space-y-12">
+                  {selectedCategory === 'academic' && (
+                    <div className="p-6 bg-gray-50 rounded-2xl border border-gray-100 flex flex-col sm:flex-row items-center gap-8">
+                       <Label icon={faClipboardList}>Select Academic Entity Type</Label>
+                       <div className="flex gap-6">
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                             <input 
+                                type="radio" 
+                                name="academicSelection" 
+                                value="institute" 
+                                checked={academicType === 'institute'} 
+                                onChange={handleAcademicTypeChange}
+                                className="w-4 h-4 text-primary-600 focus:ring-primary-500"
+                             />
+                             <span className="text-sm font-bold text-gray-600 group-hover:text-gray-900">Training Institute</span>
+                          </label>
+                          <label className="flex items-center gap-2 cursor-pointer group">
+                             <input 
+                                type="radio" 
+                                name="academicSelection" 
+                                value="university" 
+                                checked={academicType === 'university'} 
+                                onChange={handleAcademicTypeChange}
+                                className="w-4 h-4 text-primary-600 focus:ring-primary-500"
+                             />
+                             <span className="text-sm font-bold text-gray-600 group-hover:text-gray-900">College / University</span>
+                          </label>
+                       </div>
                     </div>
-                    <div className="space-y-1">
-                       <p className="font-bold text-gray-900">Verification protocol active.</p>
-                       <p className="text-gray-500 text-xs">Our board reviews each application based on industry presence and heritage impact.</p>
-                    </div>
-                  </div>
+                  )}
 
                   <form onSubmit={handleSubmit} className="space-y-10">
-                    {FormComponent && <FormComponent />}
+                    {selectedCategory === 'academic' && (
+                      academicType === 'institute' ? <AcademicInstituteForm /> : <AcademicUniversityForm />
+                    )}
+                    {selectedCategory === 'industry' && <IndustryForm />}
+                    {selectedCategory === 'stakeholder' && <StakeholderForm />}
                     
                     <div className="pt-8 flex flex-col sm:flex-row gap-4 border-t border-gray-100">
                       <button
                         type="button"
                         onClick={() => setSelectedCategory(null)}
-                        className="btn-secondary flex-1"
+                        className="w-full sm:w-1/3 px-8 py-5 border border-gray-100 rounded-2xl text-[11px] font-black uppercase tracking-widest text-gray-400 hover:bg-gray-50 transition-colors flex items-center justify-center gap-3"
                       >
                         <FontAwesomeIcon icon={faArrowLeft} />
-                        Back to Categories
+                        Cancel
                       </button>
                       <button
                         type="submit"
-                        className="btn-primary flex-[2] bg-primary-600"
+                        className="w-full sm:w-2/3 px-8 py-5 bg-primary-600 text-white rounded-2xl text-[11px] font-black uppercase tracking-widest hover:bg-primary-700 shadow-xl shadow-primary-500/20 transition-all flex items-center justify-center gap-3"
                       >
                         <FontAwesomeIcon icon={faPaperPlane} />
-                        Submit Application
+                        Transmit Application
                       </button>
                     </div>
                   </form>

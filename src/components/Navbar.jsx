@@ -46,9 +46,9 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="VTC"
-                className={`h-10 w-auto ${!isScrolled && location.pathname === '/' ? 'brightness-0 invert' : ''}`}
+                className={`h-10 w-auto ${!isScrolled ? 'brightness-0 invert' : ''}`}
               />
-              <div className={`flex flex-col leading-tight ${!isScrolled && location.pathname === '/' ? 'text-white' : 'text-gray-900'}`}>
+              <div className={`flex flex-col leading-tight ${!isScrolled ? 'text-white' : 'text-gray-900'}`}>
                 <span className="font-bold text-xl tracking-tight">Vibrant Textiles</span>
                 <span className="text-[10px] font-bold uppercase tracking-widest opacity-60">Association</span>
               </div>
@@ -65,7 +65,7 @@ const Navbar = () => {
                     className={`text-sm font-semibold transition-colors ${
                       isActive
                         ? 'text-primary-600'
-                        : !isScrolled && location.pathname === '/' ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-gray-900'
+                        : !isScrolled ? 'text-white/80 hover:text-white' : 'text-gray-600 hover:text-gray-900'
                     }`}
                   >
                     {item.name}
@@ -84,7 +84,7 @@ const Navbar = () => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={`lg:hidden p-2 rounded-md ${
-                !isScrolled && location.pathname === '/' ? 'text-white' : 'text-gray-900'
+                !isScrolled ? 'text-white' : 'text-gray-900'
               }`}
             >
               <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="lg" />
