@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
@@ -30,132 +29,99 @@ const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative bg-dark-900 pt-32 pb-12 overflow-hidden border-t border-white/5">
-      {/* Background Micro-Textures */}
-      <div className="absolute inset-0 noise-overlay opacity-20 pointer-events-none" />
-      <div className="absolute inset-0 grain-overlay opacity-10 pointer-events-none" />
-      
-      {/* Ambiance Blur */}
-      <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-primary-600/5 rounded-full blur-[120px] pointer-events-none" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 mb-24 items-start">
+    <footer className="bg-gray-900 text-gray-300 py-16 border-t border-gray-800">
+      <div className="section-container">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           
-          {/* Brand & Mission: 5 cols */}
-          <div className="lg:col-span-5 space-y-12">
-            <Link to="/" className="inline-block group relative">
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="flex items-center gap-4"
-              >
-                <img src={logo} alt="VTC" className="h-10 w-auto brightness-0 invert" />
-                <div className="flex flex-col leading-none text-white">
-                  <span className="font-brodies text-xl">Vibrant Textiles</span>
-                  <span className="text-[9px] font-black uppercase tracking-[0.3em] opacity-40">Association</span>
-                </div>
-              </motion.div>
+          {/* Brand */}
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-3">
+              <img src={logo} alt="VTC" className="h-8 w-auto brightness-0 invert" />
+              <div className="flex flex-col leading-tight">
+                <span className="font-bold text-lg text-white">Vibrant Textiles</span>
+                <span className="text-[10px] font-bold uppercase tracking-widest opacity-50">Association</span>
+              </div>
             </Link>
-            
-            <p className="font-brodies text-2xl lg:text-3xl text-white leading-tight max-w-sm">
-              Weaving the rhythmic pulse of <span className="text-primary-500 italic">Civilization's heartbeat</span> since 1998.
+            <p className="text-sm leading-relaxed max-w-xs">
+              Uniting artisans, manufacturers, and stakeholders to define the global standard of excellence in the textile industry since 1998.
             </p>
-
-            <div className="flex items-center gap-5">
+            <div className="flex gap-4">
               {socials.map((social, i) => (
-                <motion.a
+                <a
                   key={i}
                   href={social.href}
-                  whileHover={{ y: -8, scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 hover:text-primary-500 hover:border-primary-500/50 transition-all duration-300"
+                  className="w-10 h-10 rounded-lg bg-gray-800 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-colors"
+                  aria-label={social.label}
                 >
-                  <FontAwesomeIcon icon={social.icon} className="text-lg" />
-                </motion.a>
+                  <FontAwesomeIcon icon={social.icon} />
+                </a>
               ))}
             </div>
           </div>
 
-          {/* Links Grid: 7 cols */}
-          <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16">
-             
-             {/* Navigation */}
-             <div className="space-y-8">
-               <h4 className="text-primary-500 font-black text-[10px] uppercase tracking-[0.4em]">Navigator</h4>
-               <ul className="space-y-4">
-                 {quickLinks.map((link) => (
-                   <li key={link.name}>
-                     <Link 
-                       to={link.path} 
-                       className="text-white/40 hover:text-white font-bold text-[15px] transition-all duration-300 flex items-center gap-3 group"
-                     >
-                       <div className="w-0 h-[1.5px] bg-primary-500 group-hover:w-3 transition-all" />
-                       {link.name}
-                     </Link>
-                   </li>
-                 ))}
-               </ul>
-             </div>
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-6">Navigation</h4>
+            <ul className="space-y-3">
+              {quickLinks.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-sm hover:text-white transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-             {/* Ecosystem */}
-             <div className="space-y-8">
-                <h4 className="text-primary-500 font-black text-[10px] uppercase tracking-[0.4em]">Ecosystem</h4>
-                <ul className="space-y-4">
-                  {resources.map((link) => (
-                    <li key={link.name}>
-                      <Link 
-                        to={link.path} 
-                        className="text-white/40 hover:text-white font-bold text-[15px] transition-all duration-300 flex items-center gap-3 group"
-                      >
-                        <div className="w-0 h-[1.5px] bg-primary-500 group-hover:w-3 transition-all" />
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-             </div>
+          {/* Resources */}
+          <div>
+            <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-6">Resources</h4>
+            <ul className="space-y-3">
+              {resources.map((link) => (
+                <li key={link.name}>
+                  <Link to={link.path} className="text-sm hover:text-white transition-colors">
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-             {/* Pulse / Newsletter */}
-             <div className="space-y-8">
-               <h4 className="text-primary-500 font-black text-[10px] uppercase tracking-[0.4em]">The Pulse</h4>
-               <div className="relative group">
-                 <input 
-                   type="email" 
-                   placeholder="Your industry email"
-                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-5 text-white text-[13px] font-bold focus:outline-none focus:border-primary-500/50 transition-all placeholder:text-white/10"
-                 />
-                 <motion.button
-                   whileHover={{ x: 5 }}
-                   className="absolute right-4 top-1/2 -translate-y-1/2 text-primary-500"
-                 >
-                   <FontAwesomeIcon icon={faArrowRight} />
-                 </motion.button>
-               </div>
-               <p className="text-[10px] font-black uppercase tracking-widest text-white/20">Join the Collective Network</p>
-             </div>
+          {/* Newsletter */}
+          <div className="space-y-6">
+            <h4 className="text-white font-bold uppercase tracking-wider text-sm mb-6">Newsletter</h4>
+            <p className="text-sm">Join our network for the latest industry updates.</p>
+            <div className="flex gap-2">
+              <input
+                type="email"
+                placeholder="Email address"
+                className="flex-1 bg-gray-800 border border-gray-700 rounded-md px-4 py-2 text-sm focus:outline-none focus:border-primary-500"
+              />
+              <button className="bg-primary-600 hover:bg-primary-700 text-white p-2 rounded-md transition-colors">
+                <FontAwesomeIcon icon={faArrowRight} />
+              </button>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Metadata */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-           <div className="flex flex-col items-center md:items-start gap-1">
-             <span className="text-white/20 text-[13px] font-bold">© {new Date().getFullYear()} Vibrant Textiles Association.</span>
-             <span className="text-white/10 text-[9px] font-black uppercase tracking-[0.3em]">Redefining Legacy. Innovation by Antigravity.</span>
-           </div>
+        {/* Bottom */}
+        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="text-xs text-gray-500 flex flex-col gap-1 items-center md:items-start text-center md:text-left">
+            <span>© {new Date().getFullYear()} Vibrant Textiles Association. All rights reserved.</span>
+            <span className="uppercase tracking-widest text-[9px]">Minimalist UI Redesign by Antigravity.</span>
+          </div>
 
-           <div className="flex items-center gap-10">
-              <Link to="/privacy" className="text-white/20 hover:text-white/40 text-[10px] font-black uppercase tracking-widest transition-all">Privacy</Link>
-              <Link to="/terms" className="text-white/20 hover:text-white/40 text-[10px] font-black uppercase tracking-widest transition-all">Terms</Link>
-              
-              <motion.button
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={scrollToTop}
-                className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/30 hover:text-primary-500 transition-all"
-                aria-label="Scroll to top"
-              >
-                <FontAwesomeIcon icon={faArrowUp} />
-              </motion.button>
-           </div>
+          <div className="flex items-center gap-8">
+            <Link to="/privacy" className="text-xs hover:text-white transition-colors">Privacy</Link>
+            <Link to="/terms" className="text-xs hover:text-white transition-colors">Terms</Link>
+            <button
+              onClick={scrollToTop}
+              className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors"
+              aria-label="Scroll to top"
+            >
+              <FontAwesomeIcon icon={faArrowUp} />
+            </button>
+          </div>
         </div>
       </div>
     </footer>
@@ -163,3 +129,4 @@ const Footer = () => {
 };
 
 export default Footer;
+
