@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -275,9 +275,11 @@ const StakeholderForm = () => (
 );
 
 const Membership = () => {
+  const [activeMembers, setActiveMembers] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [academicType, setAcademicType] = useState('institute');
   const [showSuccess, setShowSuccess] = useState(false);
+  const [loading, setLoading] = useState(true);
   const formRef = useRef(null);
 
   const categories = [
@@ -285,6 +287,21 @@ const Membership = () => {
     { id: 'stakeholder', name: 'Stakeholder', icon: faHandshake, tagline: 'Collaborators, NGOs & Policy Support' },
     { id: 'industry', name: 'Industry', icon: faIndustry, tagline: 'Manufacturers, MSMEs & Corporate Titans' },
   ];
+
+  useEffect(() => {
+    const fetchActiveMembers = async () => {
+      const { data } = await supabase
+        .from('members')
+        .select('*')
+        .in('category', ['academic', 'stakeholder', 'industry'])
+        .eq('is_active', true)
+        .order('sort_order');
+      
+      setActiveMembers(data || []);
+      setLoading(false);
+    };
+    fetchActiveMembers();
+  }, []);
 
   const handleCategorySelect = (id) => {
     setSelectedCategory(id);
@@ -352,18 +369,47 @@ const Membership = () => {
 
           <div className="grid lg:grid-cols-3 gap-8">
             {categories.map((cat) => (
-              <div key={cat.id} className="p-10 bg-gray-50 rounded-[40px] border border-gray-100 space-y-6">
-                <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-600 text-2xl">
-                  <FontAwesomeIcon icon={cat.icon} />
+              <div key={cat.id} className="group p-10 bg-gray-50 rounded-[40px] border border-gray-100 space-y-8 hover:shadow-2xl transition-all">
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-16 bg-white rounded-2xl shadow-sm flex items-center justify-center text-primary-600 text-2xl group-hover:bg-primary-600 group-hover:text-white transition-colors">
+                    <FontAwesomeIcon icon={cat.icon} />
+                  </div>
+                  <span className="text-[9px] font-black uppercase tracking-widest text-gray-300">Section 0{cat.id === 'academic' ? 1 : cat.id === 'stakeholder' ? 2 : 3}</span>
                 </div>
+                
                 <div className="space-y-4">
                   <h3 className="text-2xl font-black text-gray-900 uppercase tracking-tight">{cat.name}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed italic">"{cat.tagline}"</p>
-                  <ul className="text-xs text-gray-400 space-y-2 pt-4">
-                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Verified Participation</li>
-                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Strategic Council Access</li>
-                    <li className="flex items-center gap-2"><div className="w-1 h-1 bg-primary-600 rounded-full" /> Industrial Revival Projects</li>
-                  </ul>
+                </div>
+
+                {/* Member Roster for this Category */}
+                <div className="space-y-3 pt-4 border-t border-gray-200">
+                  <p className="text-[10px] font-black uppercase tracking-widest text-primary-600 mb-4">Registry Node</p>
+                  {loading ? (
+                    <div className="space-y-4">
+                       {[1,2,3].map(i => <div key={i} className="h-4 bg-gray-100 rounded animate-pulse" />)}
+                    </div>
+                  ) : activeMembers.filter(m => m.category === cat.id).length > 0 ? (
+                    <div className="space-y-4">
+                       {activeMembers.filter(m => m.category === cat.id).map(m => (
+                         <div key={m.id} className="flex items-center gap-4 group/item">
+                            <div className="w-10 h-10 rounded-xl bg-white border border-gray-100 overflow-hidden shadow-sm flex-shrink-0">
+                               {m.image_url ? (
+                                  <img src={m.image_url} className="w-full h-full object-cover grayscale group-hover/item:grayscale-0 transition-all" alt="" />
+                               ) : (
+                                  <div className="w-full h-full flex items-center justify-center text-gray-200 text-xs font-bold">{m.name[0]}</div>
+                               )}
+                            </div>
+                            <div>
+                               <h5 className="text-[11px] font-bold text-gray-900 leading-tight group-hover/item:text-primary-600 transition-colors">{m.name}</h5>
+                               <p className="text-[9px] text-gray-400 font-bold uppercase tracking-tighter">{m.designation}</p>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  ) : (
+                    <p className="text-[10px] text-gray-400 italic">No active nodes in this registry phase.</p>
+                  )}
                 </div>
               </div>
             ))}

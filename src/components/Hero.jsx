@@ -37,7 +37,7 @@ const Hero = () => {
             </Link>
             
             <Link to="/about-textile">
-              <button className="btn-secondary text-white border-white/20 hover:bg-white/10 py-4 px-10 text-lg">
+              <button className="btn-primary text-white border-white/20 hover:bg-white/10 py-4 px-10 text-lg">
                 Learn More
               </button>
             </Link>
