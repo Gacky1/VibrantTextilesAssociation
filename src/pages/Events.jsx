@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCalendarAlt, faMapMarkerAlt, faArrowRight, faCheckCircle, 
@@ -35,111 +36,149 @@ const Events = () => {
   const featuredEvent = upcoming[0];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-[#fafafa] font-sans text-gray-900 overflow-hidden">
       <Navbar />
       
-      <PageHero
-        eyebrow="The Industrial Calendar"
-        title="Events & Summits"
-        subtitle="Exploring the rhythmic milestones where textile heritage meets industrial high-tech innovation."
-      />
+      {/* Dynamic Background Mesh */}
+      <div className="fixed inset-0 z-0 pointer-events-none opacity-40">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-rose-200 rounded-full blur-[120px] animate-float" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-indigo-100 rounded-full blur-[150px] animate-float" style={{ animationDelay: '3s' }} />
+      </div>
+
+      <div className="relative z-10">
+        <PageHero
+          eyebrow="The Industrial Calendar"
+          title="Events & Summits"
+          subtitle="Exploring the rhythmic milestones where textile heritage meets industrial high-tech innovation."
+        />
 
       <div className="section-container py-24">
         
         {/* ── SEARCH & FILTER ── */}
-        <div className="flex flex-col md:flex-row items-center justify-between mb-16 gap-8">
-          <div className="space-y-1">
-            <h2 className="text-3xl font-black tracking-tight">Industrial Registry</h2>
-            <p className="text-gray-400 text-sm font-bold uppercase tracking-widest">Showing {filteredEvents.length} Gatherings</p>
+        <motion.div 
+          initial={{ y: 20, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          viewport={{ once: true }}
+          className="flex flex-col md:flex-row items-center justify-between mb-20 gap-8"
+        >
+          <div className="space-y-2">
+            <h2 className="text-5xl font-black tracking-tighter text-gray-900">Industrial Registry</h2>
+            <p className="text-primary-600 text-xs font-black uppercase tracking-[0.4em]">Chronological Sequence: {filteredEvents.length} Summits</p>
           </div>
-          <div className="relative w-full md:w-96 group">
-            <FontAwesomeIcon icon={faSearch} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-300 group-focus-within:text-primary-600 transition-colors" />
+          <div className="relative w-full md:w-[450px] group">
+            <FontAwesomeIcon icon={faSearch} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-600 transition-colors z-10" />
             <input 
               type="text"
-              placeholder="Filter by title, city, or sector..."
+              placeholder="Search by title, city, or sector..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-medium"
+              className="w-full pl-14 pr-6 py-5 bg-white border border-gray-100 rounded-3xl shadow-sm focus:ring-4 focus:ring-primary-500/10 focus:border-primary-500 transition-all text-sm font-medium"
             />
           </div>
-        </div>
+        </motion.div>
 
         {/* ── FEATURED HERO ── */}
         {!loading && featuredEvent && !searchQuery && (
-          <div className="mb-32 relative group cursor-pointer" onClick={() => setSelectedEvent(featuredEvent)}>
-            <div className="h-[600px] w-full rounded-[48px] overflow-hidden relative shadow-2xl">
+          <motion.div 
+            initial={{ scale: 0.95, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            className="mb-40 relative group cursor-pointer" 
+            onClick={() => setSelectedEvent(featuredEvent)}
+          >
+            <div className="h-[700px] w-full rounded-[64px] overflow-hidden relative shadow-3xl">
               <img 
                 src={featuredEvent.image_url} 
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000" 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-[2000ms] ease-out" 
                 alt={featuredEvent.title}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/20 to-transparent" />
               
-              <div className="absolute inset-x-0 bottom-0 p-12 lg:p-24 space-y-8">
+              <div className="absolute inset-x-0 bottom-0 p-12 lg:p-24 space-y-10">
                 <div className="flex flex-wrap items-center gap-4">
-                   <div className="badge bg-primary-600 text-white border-transparent">Next Major Summit</div>
-                   <div className="badge border-white/20 text-white">{featuredEvent.type}</div>
+                   <div className="badge border-none bg-primary-600 text-white shadow-lg shadow-primary-500/30">Next Major Summit</div>
+                   <div className="badge border-white/20 bg-white/10 backdrop-blur-md text-white">{featuredEvent.type}</div>
                 </div>
                 <div className="max-w-4xl space-y-4">
-                  <h1 className="text-4xl md:text-7xl font-black text-white leading-tight tracking-tighter">
+                  <h1 className="text-5xl md:text-8xl font-black text-white leading-[0.85] tracking-tighter">
                     {featuredEvent.title}
                   </h1>
-                  <div className="flex flex-wrap gap-8 text-white/60 font-bold uppercase tracking-[0.2em] text-[10px]">
-                    <div className="flex items-center gap-2"><FontAwesomeIcon icon={faCalendarAlt} className="text-primary-500" /> {featuredEvent.date}</div>
-                    <div className="flex items-center gap-2"><FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary-500" /> {featuredEvent.location}</div>
+                  <div className="flex flex-wrap gap-10 text-white/50 font-black uppercase tracking-[0.3em] text-[10px] pt-4">
+                    <div className="flex items-center gap-3"><FontAwesomeIcon icon={faCalendarAlt} className="text-primary-500" /> {featuredEvent.date}</div>
+                    <div className="flex items-center gap-3"><FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary-500" /> {featuredEvent.location}</div>
                   </div>
                 </div>
-                <button className="btn-primary py-6 px-12 group-hover:gap-6 transition-all">
-                  Register Interest <FontAwesomeIcon icon={faArrowRight} />
+                <button className="btn-primary py-7 px-14 group-hover:px-16 transition-all shadow-2xl">
+                  Register Interest <FontAwesomeIcon icon={faArrowRight} className="group-hover:translate-x-2 transition-transform" />
                 </button>
               </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {/* ── UPCOMING REGISTRY ── */}
-        <div className="mb-32 space-y-12">
-          <div className="flex items-center gap-6">
-            <h2 className="text-4xl font-black tracking-tight">Upcoming Sequence</h2>
-            <div className="h-px flex-1 bg-gray-100" />
-            <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Phase 01</span>
-          </div>
+        <div className="mb-40 space-y-16">
+          <motion.div 
+            initial={{ x: -20, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            viewport={{ once: true }}
+            className="flex items-center gap-6"
+          >
+            <h2 className="text-5xl font-black tracking-tighter">Upcoming Sequence</h2>
+            <div className="h-[2px] flex-1 bg-gradient-to-r from-gray-100 to-transparent" />
+            <span className="text-[10px] font-black uppercase tracking-[0.5em] text-primary-500">PHASE 01</span>
+          </motion.div>
 
           {loading ? (
-             <div className="grid md:grid-cols-2 gap-8">
-                {[1,2].map(i => <div key={i} className="h-64 bg-gray-50 animate-pulse rounded-[40px]" />)}
+             <div className="grid md:grid-cols-2 gap-10">
+                {[1,2].map(i => <div key={i} className="h-80 bg-white shadow-sm shimmer rounded-[40px]" />)}
              </div>
           ) : upcoming.length === 0 ? (
-            <div className="py-24 border-2 border-dashed border-gray-100 rounded-[40px] flex flex-col items-center justify-center text-center space-y-4">
-               <FontAwesomeIcon icon={faClock} className="text-gray-100 text-6xl" />
-               <p className="text-gray-400 font-bold uppercase tracking-widest text-xs italic">The rhythmic pulse is steady — No upcoming summits scheduled.</p>
-            </div>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="py-32 border-2 border-dashed border-gray-200 rounded-[50px] flex flex-col items-center justify-center text-center space-y-6"
+            >
+               <div className="w-20 h-20 rounded-full bg-gray-50 flex items-center justify-center">
+                 <FontAwesomeIcon icon={faClock} className="text-gray-200 text-3xl" />
+               </div>
+               <p className="text-gray-400 font-black uppercase tracking-[0.4em] text-[10px] max-w-xs">The rhythmic pulse is steady — No upcoming summits scheduled.</p>
+            </motion.div>
           ) : (
-            <div className="grid md:grid-cols-2 gap-8">
-              {upcoming.map(event => (
-                <div 
+            <div className="grid md:grid-cols-2 gap-10">
+              {upcoming.map((event, idx) => (
+                <motion.div 
                   key={event.id}
+                  initial={{ y: 50, opacity: 0 }}
+                  whileInView={{ y: 0, opacity: 1 }}
+                  transition={{ delay: idx * 0.1 }}
+                  viewport={{ once: true }}
                   onClick={() => setSelectedEvent(event)}
-                  className="card group hover:border-primary-100 hover:shadow-2xl transition-all p-0 overflow-hidden flex flex-col sm:flex-row h-full"
+                  className="group relative bg-white pb-8 rounded-[48px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100"
                 >
-                  <div className="sm:w-2/5 relative overflow-hidden bg-gray-100 h-64 sm:h-auto">
-                    <img src={event.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt={event.title} />
-                    <div className="absolute inset-0 bg-gray-900/10 group-hover:bg-transparent transition-colors" />
+                  <div className="h-72 relative overflow-hidden">
+                    <img src={event.image_url} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={event.title} />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors" />
+                    <div className="absolute top-6 left-6">
+                      <div className="badge bg-white shadow-xl text-primary-600 border-none">{event.type}</div>
+                    </div>
                   </div>
-                  <div className="sm:w-3/5 p-10 flex flex-col justify-between space-y-8">
+                  <div className="p-10 space-y-8">
                     <div className="space-y-4">
-                       <span className="text-primary-600 font-black text-[9px] uppercase tracking-widest">{event.type}</span>
-                       <h3 className="text-2xl font-black leading-tight text-gray-900 group-hover:text-primary-600 transition-colors">{event.title}</h3>
-                       <div className="space-y-2 text-gray-400 font-bold text-[9px] uppercase tracking-widest">
-                          <p><FontAwesomeIcon icon={faCalendarAlt} className="mr-2 text-primary-400" /> {event.date}</p>
-                          <p><FontAwesomeIcon icon={faMapMarkerAlt} className="mr-2 text-primary-400" /> {event.location}</p>
+                       <h3 className="text-3xl font-black leading-[1.1] text-gray-900 group-hover:text-primary-600 transition-colors uppercase italic">{event.title}</h3>
+                       <div className="flex gap-8 text-gray-400 font-black text-[9px] uppercase tracking-[0.3em] pt-2">
+                          <p className="flex items-center gap-2"><FontAwesomeIcon icon={faCalendarAlt} className="text-primary-400" /> {event.date}</p>
+                          <p className="flex items-center gap-2"><FontAwesomeIcon icon={faMapMarkerAlt} className="text-primary-400" /> {event.location}</p>
                        </div>
                     </div>
-                    <button className="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 text-gray-400 group-hover:text-primary-600 transition-colors">
-                       View Protocol <FontAwesomeIcon icon={faArrowRight} />
-                    </button>
+                    <div className="flex items-center justify-between border-t border-gray-50 pt-8">
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-gray-400 group-hover:text-primary-600 transition-colors">View Protocol</span>
+                      <div className="w-12 h-12 rounded-full bg-gray-50 flex items-center justify-center text-gray-300 group-hover:bg-primary-600 group-hover:text-white transition-all">
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           )}
@@ -160,8 +199,8 @@ const Events = () => {
                   onClick={() => setSelectedEvent(event)}
                   className="card p-8 group hover:bg-gray-50 transition-all border border-transparent hover:border-gray-100 cursor-pointer space-y-6"
                 >
-                   <div className="h-40 rounded-2xl overflow-hidden bg-gray-100 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all">
-                      <img src={event.image_url} className="w-full h-full object-cover" alt={event.title} />
+                   <div className="h-44 rounded-2xl overflow-hidden bg-gray-50 border border-gray-100">
+                      <img src={event.image_url} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" alt={event.title} />
                    </div>
                    <div className="space-y-3">
                       <div className="flex justify-between items-center text-[8px] font-black uppercase tracking-[0.2em] text-gray-400">
@@ -260,6 +299,8 @@ const Events = () => {
             <FontAwesomeIcon icon={faArrowRight} />
           </button>
         </div>
+      </div>
+
       </div>
 
       <Footer />
