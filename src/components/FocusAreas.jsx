@@ -6,29 +6,45 @@ const focusAreas = [
     id: 1,
     title: 'Skill Development & Training',
     icon: faGraduationCap,
-    desc: 'Empowering artisans with government-aligned vocational courses and heritage mastery.',
-    points: ['Artisan Workshops', 'Modern Tech Integration', 'Vocational Certification'],
+    desc: 'Empowering the workforce by bridging tradition with technology.',
+    points: [
+      'Conduct workshops and training programs for artisans, vendors, and industry professionals',
+      'Bridge gaps between traditional handloom skills and modern textile technologies',
+      'Support vocational courses aligned with government skill initiatives'
+    ],
   },
   {
     id: 2,
-    title: 'Industry Support',
+    title: 'Vendor & Industry Support',
     icon: faIndustry,
-    desc: 'Strategic resources and market linkages for MSMEs and textile vendors.',
-    points: ['Market Linkage', 'Strategic Mentorship'],
+    desc: 'Facilitating growth through mentorship, resources, and market connections.',
+    points: [
+      'Facilitate resources, mentorship, and guidance for textile vendors and MSMEs',
+      'Enable market linkages and industry collaborations for business growth',
+      'Support adoption of modern production and quality standards'
+    ],
   },
   {
     id: 3,
-    title: 'Policy Collaboration',
+    title: 'Government & Policy Collaboration',
     icon: faLandmark,
-    desc: 'Representing stakeholder interests in national policy-making and regulatory compliance.',
-    points: ['Grants Support', 'Trade Policy Advocacy'],
+    desc: 'Advocating for stakeholder interests and streamlining compliance.',
+    points: [
+      'Represent stakeholder interests in policy-making and scheme implementation',
+      'Facilitate awareness and adoption of government initiatives, grants, and subsidies',
+      'Help streamline compliance, certifications, and industry regulations'
+    ],
   },
   {
     id: 4,
-    title: 'Heritage Preservation',
+    title: 'Sustainability & Heritage Preservation',
     icon: faSeedling,
-    desc: 'Sustainable innovation while preserving traditional handloom and weaving techniques.',
-    points: ['Eco-friendly Dyeing', 'Craft Revival'],
+    desc: 'Preserving our rich cultural DNA through eco-friendly innovation.',
+    points: [
+      'Promote eco-friendly and ethical textile practices',
+      'Preserve and revive traditional handloom and craft techniques',
+      'Encourage innovation while respecting cultural heritage'
+    ],
   }
 ];
 
@@ -69,13 +85,14 @@ const FocusAreas = () => {
                   "{area.desc}"
                 </p>
                 
-                <div className="flex flex-wrap gap-2 pt-4">
+                <ul className="space-y-3 pt-6">
                   {area.points.map((pt, i) => (
-                    <span key={i} className="px-3 py-1 rounded-full bg-gray-50 border border-gray-100 text-[10px] font-bold uppercase tracking-wider text-gray-500">
+                    <li key={i} className="flex gap-3 text-sm text-gray-500 leading-relaxed">
+                      <div className="w-1.5 h-1.5 rounded-full bg-primary-400 mt-2 flex-shrink-0" />
                       {pt}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
           ))}

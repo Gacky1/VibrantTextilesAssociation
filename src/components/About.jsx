@@ -22,12 +22,18 @@ const About = () => {
               <div className="badge">Our Purpose</div>
               <h2 className="section-title">Redefining the Textile Paradigm</h2>
               <p className="text-xl text-gray-600 leading-relaxed italic">
-                Vibrant Textiles is a non-profit catalyst dedicated to local modernization and the global expansion of India's heritage.
+                Vibrant Textiles is a non-profit association committed to the growth, development, and enrichment of India’s textile
+and handloom ecosystem. 
               </p>
             </div>
 
             <p className="text-gray-600 leading-relaxed text-lg">
-              We bridge the gap between ancient rhythm and technological depth, fostering a sustainable ecosystem for the progressive artisan. Our mission is to preserve the legacy while embracing the future of manufacturing and craft.
+              The organization works as a facilitator, supporter, and bridge between artisans, vendors,
+MSMEs, industry stakeholders, academic institutions, and government bodies.
+Vibrant Textiles focuses on capacity building, skill development, policy support, industry collaboration, and
+sustainable growth, while preserving India’s rich textile heritage. By connecting traditional craftsmanship with modern
+industry needs, it aims to strengthen the entire textile value chain and position India competitively in domestic and
+global markets.
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">

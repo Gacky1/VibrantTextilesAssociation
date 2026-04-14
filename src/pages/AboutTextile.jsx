@@ -24,51 +24,57 @@ const AboutTextile = () => {
   }, [searchQuery]);
 
   const economicStats = [
-    { label: 'Economic Contribution', val: '~2.3%', sub: 'Of India\'s GDP' },
+    { label: 'GDP Contribution', val: '~2.3%', sub: 'Of India\'s National GDP' },
+    { label: 'Industrial Output', val: '11-13%', sub: 'Of Total Manufacturing' },
     { label: 'Workforce Hub', val: '45M+', sub: 'Direct Employment' },
-    { label: 'Market Velocity', val: '$225B', sub: 'Projected Size 2025' },
-    { label: 'Global Presence', val: '$36B', sub: 'Annual Exports Value' }
+    { label: 'Global Exports', val: '$36B', sub: 'Annual Performance' }
   ];
 
   const industrySectors = [
     {
       title: "Handloom & Traditional",
-      description: "Fabrics and garments created manually by artisans with a deep focus on cultural preservation and artisan empowerment.",
+      description: "Fabrics and garments created manually by artisans.",
+      focus: "Cultural preservation, artisan empowerment, heritage promotion",
       examples: "Khadi, Banarasi Silk, Ikat, Jamdani, Pashmina",
       icon: faCrown,
       tag: "Heritage"
     },
     {
       title: "Powerloom & Mechanized",
-      description: "Mechanized production for mass scale, driving efficiency, MSME support, and stringent quality control.",
+      description: "Fabrics made using mechanized looms for mass production.",
+      focus: "MSME/vendor support, production efficiency, quality control",
       examples: "Cotton fabrics, polyester, denim",
       icon: faCogs,
       tag: "Industrial"
     },
     {
       title: "Apparel & Garments",
-      description: "Ready-to-wear clothing for domestic and global markets, focusing on skill development and export readiness.",
-      examples: "Fashion wear, uniforms, casual/formal clothing",
+      description: "Ready-to-wear clothing for domestic and export markets.",
+      focus: "Skill development, entrepreneurship, export readiness",
+      examples: "Fashion wear, uniforms, casual and formal clothing",
       icon: faShoppingBag,
       tag: "Fashion"
     },
     {
       title: "Home Textiles & Furnishings",
-      description: "Fabrics engineered for interiors and décor, bridging market linkage with advanced design skill training.",
+      description: "Fabrics designed for interiors and décor.",
+      focus: "Market linkage, design skill training",
       examples: "Bedsheets, curtains, carpets, upholstery",
       icon: faHome,
       tag: "Lifestyle"
     },
     {
       title: "Technical & Industrial",
-      description: "High-performance engineered textiles for medical, protective, and functional industrial applications.",
-      examples: "Medical textiles, geotextiles, smart textiles",
+      description: "Textiles engineered for functional or industrial applications.",
+      focus: "Innovation, industrial collaboration, skill awareness",
+      examples: "Medical textiles, protective fabrics, geotextiles, smart textiles",
       icon: faFlask,
       tag: "Innovation"
     },
     {
       title: "Natural Fibres & Yarn",
-      description: "The raw soul of manufacturing with a focus on sustainable sourcing and vendor support quality.",
+      description: "Raw materials for textile manufacturing.",
+      focus: "Sustainable sourcing, quality improvement, vendor support",
       examples: "Cotton, silk, wool, jute, hemp",
       icon: faLeaf,
       tag: "Sustainability"
@@ -104,20 +110,30 @@ const AboutTextile = () => {
             A Legacy of <span className="text-primary-600 italic">Diversity</span> and Growth.
           </h2>
           <p className="text-gray-500 text-xl leading-relaxed italic">
-            "The textile industry is one of India’s oldest and most diverse sectors, spanning from traditional handlooms to modern industrial apparel manufacturing. It contributes significantly to economic growth while preserving our rich cultural DNA."
+            "The textile industry is one of India’s oldest and most diverse sectors, spanning everything from traditional handlooms and handicrafts to modern industrial textiles and apparel manufacturing. It contributes significantly to India’s economic growth, employment generation, and export earnings, while preserving the country’s rich cultural heritage."
           </p>
+
+          <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 pt-4">
+            <p className="text-sm font-bold text-gray-400 uppercase tracking-widest w-full">India's textile ecosystem includes:</p>
+            {['Fibres, yarn, and fabrics', 'Garments and apparel', 'Handloom and artisanal textiles', 'Home textiles and furnishings', 'Technical and industrial textiles'].map((item, i) => (
+              <div key={i} className="flex items-center gap-2 text-sm font-semibold text-gray-600">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary-500" />
+                {item}
+              </div>
+            ))}
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-12 text-left">
             <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
-              <h4 className="font-bold text-gray-900">GDP Contribution</h4>
-              <p className="text-sm text-gray-500">Contributing up to 13% of industrial output and consistently driving national economic metrics.</p>
+              <h4 className="font-bold text-gray-900">GDP & Industrial Output</h4>
+              <p className="text-sm text-gray-500">Accounting for ~2.3% of India’s GDP and a critical 11–13% of national industrial output.</p>
             </div>
             <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
-              <h4 className="font-bold text-gray-900">Employment Node</h4>
-              <p className="text-sm text-gray-500">A primary employment engine providing livelihoods to over 45 million people directly across India.</p>
+              <h4 className="font-bold text-gray-900">Market Size & Vision</h4>
+              <p className="text-sm text-gray-500">Present domestic market at US$ 225B (2025), projected to scale to US$ 350B by 2030.</p>
             </div>
             <div className="p-8 bg-gray-50 rounded-3xl space-y-4">
-              <h4 className="font-bold text-gray-900">Global Launchpad</h4>
-              <p className="text-sm text-gray-500">Positioning India as a leading global exporter with strong growth targets reaching $350B by 2030.</p>
+              <h4 className="font-bold text-gray-900">Employment Engine</h4>
+              <p className="text-sm text-gray-500">Providing direct livelihoods to over 45 million people and millions more across the value chain.</p>
             </div>
           </div>
         </div>
@@ -135,19 +151,24 @@ const AboutTextile = () => {
                    <div className="absolute top-0 right-0 p-8 text-gray-50 group-hover:text-primary-50 transition-colors">
                       <FontAwesomeIcon icon={sector.icon} className="text-7xl" />
                    </div>
-                   <div className="relative z-10 space-y-6">
+                    <div className="relative z-10 space-y-6">
                       <span className="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
                          {sector.tag}
                       </span>
                       <h3 className="text-2xl font-bold text-gray-900">{sector.title}</h3>
-                      <p className="text-gray-500 text-sm leading-relaxed">
-                         {sector.description}
-                      </p>
+                      <div className="space-y-2">
+                        <p className="text-gray-500 text-sm leading-relaxed">
+                           {sector.description}
+                        </p>
+                        <p className="text-gray-400 text-xs italic">
+                           Focus: {sector.focus}
+                        </p>
+                      </div>
                       <div className="space-y-3 pt-4 border-t border-gray-100">
-                         <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Key Specializations</p>
+                         <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Key Examples</p>
                          <p className="text-sm font-bold text-gray-700">{sector.examples}</p>
                       </div>
-                   </div>
+                    </div>
                 </div>
              ))}
           </div>
