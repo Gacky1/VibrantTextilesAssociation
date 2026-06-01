@@ -1,22 +1,8 @@
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelope, faPhone, faMapMarkerAlt, faArrowRight, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faPhone, faMapMarkerAlt, faArrowRight, faArrowUp, faBell, faFileAlt } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/VTC TRANSPARENT.svg';
-
-const quickLinks = [
-  { name: 'Home', path: '/' },
-  { name: 'About Textile', path: '/about-textile' },
-  { name: 'Events/Fair', path: '/events' },
-  { name: 'Members', path: '/members' },
-];
-
-const resources = [
-  { name: 'Skill Dev', path: '/skill-development' },
-  { name: 'Media', path: '/media' },
-  { name: 'Research', path: '/research' },
-  { name: 'Contact', path: '/contact' },
-];
 
 const socials = [
   { icon: faFacebookF, href: '#', label: 'Facebook' },
@@ -25,115 +11,168 @@ const socials = [
   { icon: faInstagram, href: '#', label: 'Instagram' },
 ];
 
+const notifications = [
+  { text: 'National Handloom Summit 2026', date: 'June 15' },
+  { text: 'RPL Skilling Assessment Openings', date: 'June 28' },
+  { text: 'New Industrial Cluster Subsidies', date: 'July 05' },
+  { text: 'Exhibitor Invites: Global Expo 2026', date: 'July 18' }
+];
+
+const releases = [
+  { text: 'VTA Annual Industry Outlook (PDF)', path: '/research' },
+  { text: 'Eco-Fiber Circular Economy Code', path: '/research' },
+  { text: 'Technology Modernization Report', path: '/media' },
+];
+
 const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative bg-[#0a0a2e] text-indigo-100/70 py-24 overflow-hidden">
-      {/* Decorative Gradient Background */}
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary-500 via-rose-500 to-vibrant-orange" />
-      <div className="absolute bottom-0 right-0 w-[50%] h-[50%] bg-primary-600/5 rounded-full blur-[120px]" />
+    <footer className="relative bg-slate-950 text-slate-400 py-24 overflow-hidden border-t border-white/5">
       
-      <div className="section-container relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-16 mb-20">
+      {/* Decorative gradient accents */}
+      <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-rose-500 via-indigo-500 to-teal-500" />
+      <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] bg-indigo-500/5 rounded-full blur-[140px] pointer-events-none" />
+
+      <div className="section-container relative z-10 max-w-7xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16 mb-20">
           
-          {/* Brand */}
-          <div className="space-y-8">
+          {/* Column 1: About Us */}
+          <div className="space-y-6">
             <Link to="/" className="flex items-center gap-3">
-              <img src={logo} alt="VTC" className="h-10 w-auto brightness-0 invert" />
-              <div className="flex flex-col leading-tight">
-                <span className="font-black text-xl text-white tracking-tighter">Vibrant Textiles</span>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary-400">Association</span>
+              <img src={logo} alt="VTC Logo" className="h-10 w-auto brightness-0 invert" />
+              <div className="flex flex-col leading-tight text-white">
+                <span className="font-black text-lg tracking-tight">Vibrant Textiles</span>
+                <span className="text-[9px] font-black uppercase tracking-[0.2em] text-rose-500">Association</span>
               </div>
             </Link>
-            <p className="text-sm leading-relaxed max-w-xs font-medium italic">
-              "Uniting artisans, manufacturers, and stakeholders to define the global standard of excellence in the textile industry since 1998."
+            <p className="text-sm leading-relaxed max-w-xs font-normal">
+              Uniting artisans, manufacturers, academic bodies, and policy creators since 1998 to define the global standard of sustainability and excellence in textiles.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-3 pt-2">
               {socials.map((social, i) => (
                 <a
                   key={i}
                   href={social.href}
-                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all transform hover:-translate-y-1 shadow-lg"
+                  className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-300 transform hover:-translate-y-0.5"
                   aria-label={social.label}
                 >
-                  <FontAwesomeIcon icon={social.icon} />
+                  <FontAwesomeIcon icon={social.icon} className="text-sm" />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div className="space-y-8">
-            <h4 className="text-white font-black uppercase tracking-[0.2em] text-xs">Navigation</h4>
+          {/* Column 2: Contact */}
+          <div className="space-y-6">
+            <h4 className="text-white font-black uppercase tracking-[0.2em] text-[11px] border-l-2 border-rose-500 pl-3">
+              Contact
+            </h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li className="flex items-start gap-3">
+                <FontAwesomeIcon icon={faMapMarkerAlt} className="text-rose-500 mt-1 flex-shrink-0" />
+                <span>Textile Enclave, Phase-3, New Delhi, 110020, India</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <FontAwesomeIcon icon={faPhone} className="text-rose-500 flex-shrink-0" />
+                <span>+91 (11) 4892-0900</span>
+              </li>
+              <li className="flex items-center gap-3">
+                <FontAwesomeIcon icon={faEnvelope} className="text-rose-500 flex-shrink-0" />
+                <a href="mailto:office@vibranttextiles.org" className="hover:text-white transition-colors">
+                  office@vibranttextiles.org
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Column 3: Notification */}
+          <div className="space-y-6">
+            <h4 className="text-white font-black uppercase tracking-[0.2em] text-[11px] border-l-2 border-indigo-500 pl-3">
+              Notification
+            </h4>
             <ul className="space-y-4">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.path} className="text-sm font-semibold hover:text-primary-400 transition-colors flex items-center gap-2 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
-                    {link.name}
-                  </Link>
+              {notifications.map((item, idx) => (
+                <li key={idx} className="group flex gap-3 items-start">
+                  <div className="w-8 h-8 rounded-lg bg-white/5 border border-white/5 flex items-center justify-center flex-shrink-0 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
+                    <FontAwesomeIcon icon={faBell} className="text-xs" />
+                  </div>
+                  <div>
+                    <h5 className="text-xs font-bold text-gray-200 group-hover:text-indigo-400 transition-colors line-clamp-1">
+                      {item.text}
+                    </h5>
+                    <span className="text-[10px] text-slate-500 font-semibold">{item.date}</span>
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Resources */}
-          <div className="space-y-8">
-            <h4 className="text-white font-black uppercase tracking-[0.2em] text-xs">Resources</h4>
-            <ul className="space-y-4">
-              {resources.map((link) => (
-                <li key={link.name}>
-                  <Link to={link.path} className="text-sm font-semibold hover:text-primary-400 transition-colors flex items-center gap-2 group">
-                    <div className="w-1.5 h-1.5 rounded-full bg-primary-600 opacity-0 group-hover:opacity-100 transition-all" />
-                    {link.name}
+          {/* Column 4: Releases */}
+          <div className="space-y-6">
+            <h4 className="text-white font-black uppercase tracking-[0.2em] text-[11px] border-l-2 border-teal-500 pl-3">
+              Releases
+            </h4>
+            <ul className="space-y-3">
+              {releases.map((item, idx) => (
+                <li key={idx}>
+                  <Link
+                    to={item.path}
+                    className="text-xs font-bold text-gray-300 hover:text-teal-400 transition-colors flex items-center gap-2 group"
+                  >
+                    <FontAwesomeIcon icon={faFileAlt} className="text-[10px] text-teal-500/70 group-hover:text-teal-400" />
+                    <span>{item.text}</span>
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
 
-          {/* Newsletter */}
-          <div className="space-y-8">
-            <h4 className="text-white font-black uppercase tracking-[0.2em] text-xs">Industrial Pulse</h4>
-            <p className="text-sm font-medium">Join our network for the latest industry updates.</p>
-            <div className="relative group">
-              <input
-                type="email"
-                placeholder="Email address"
-                className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm focus:outline-none focus:border-primary-500 focus:bg-white/10 transition-all"
-              />
-              <button className="absolute right-2 top-2 bottom-2 bg-primary-600 hover:bg-primary-700 text-white w-10 rounded-xl transition-all flex items-center justify-center shadow-lg shadow-primary-500/20">
-                <FontAwesomeIcon icon={faArrowRight} />
-              </button>
+            {/* Micro email input field for releases */}
+            <div className="pt-2 space-y-2">
+              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
+                Subscribe to Announcements
+              </span>
+              <div className="relative">
+                <input
+                  type="email"
+                  placeholder="name@domain.com"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:bg-white/10 transition-all"
+                />
+                <button 
+                  className="absolute right-1 top-1 bottom-1 w-8 rounded-lg bg-teal-600 hover:bg-teal-500 text-white flex items-center justify-center shadow-md transition-colors"
+                  aria-label="Subscribe"
+                >
+                  <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
+                </button>
+              </div>
             </div>
           </div>
+
         </div>
 
-        {/* Bottom */}
-        <div className="pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="text-[11px] font-bold text-indigo-100/40 flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-            <span>© {new Date().getFullYear()} Vibrant Textiles Association. Definining Excellence.</span>
-            <span className="uppercase tracking-[0.4em] text-[9px] text-primary-500/60">Crafted with Dynamic Vibrancy</span>
+        {/* Footer Bottom */}
+        <div className="pt-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-6">
+          <div className="text-[10px] font-bold text-slate-500 flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
+            <span>© {new Date().getFullYear()} Vibrant Textiles Association. All rights reserved.</span>
+            <span className="uppercase tracking-[0.3em] text-[8px] text-rose-500/80">Defining Global Sustainable Standards</span>
           </div>
 
-          <div className="flex items-center gap-10">
-            <Link to="/privacy" className="text-[11px] font-black uppercase tracking-widest hover:text-white transition-colors">Privacy</Link>
-            <Link to="/terms" className="text-[11px] font-black uppercase tracking-widest hover:text-white transition-colors">Terms</Link>
+          <div className="flex items-center gap-8">
+            <Link to="/membership" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
+            <Link to="/about-textile" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
             <button
               onClick={scrollToTop}
-              className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary-600 hover:text-white transition-all shadow-xl"
+              className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-300 shadow-xl"
               aria-label="Scroll to top"
             >
-              <FontAwesomeIcon icon={faArrowUp} />
+              <FontAwesomeIcon icon={faArrowUp} className="text-xs" />
             </button>
           </div>
         </div>
+
       </div>
     </footer>
   );
 };
 
 export default Footer;
-
-

@@ -23,15 +23,16 @@ import AdminApplications from './admin/AdminApplications';
 import AdminSkillDevelopment from './admin/AdminSkillDevelopment';
 import AdminResearch from './admin/AdminResearch';
 import ProtectedRoute from './admin/ProtectedRoute';
-
 import SmoothScroll from './components/SmoothScroll';
+import { PortalProvider } from './context/PortalContext';
 
 function App() {
   return (
-    <Router>
-      <SmoothScroll>
-        <ScrollToTop />
-        <Routes>
+    <PortalProvider>
+      <Router>
+        <SmoothScroll>
+          <ScrollToTop />
+          <Routes>
         {/* ── Public Routes ── */}
         <Route path="/" element={<Home />} />
         <Route path="/about-textile" element={<AboutTextile />} />
@@ -67,7 +68,8 @@ function App() {
         </Route>
         </Routes>
       </SmoothScroll>
-    </Router>
+      </Router>
+    </PortalProvider>
   );
 }
 
