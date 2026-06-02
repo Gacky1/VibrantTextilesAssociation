@@ -136,7 +136,7 @@ const Hero = () => {
   const titleWords = active.title.split(' ');
 
   return (
-    <section className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden text-white pt-24 pb-12 lg:py-0">
+    <section className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden text-white pt-24 pb-12 lg:pt-32 lg:pb-12">
       
       {/* Background elegant breathing radial spotlights */}
       <div className="absolute inset-0 z-0 pointer-events-none">

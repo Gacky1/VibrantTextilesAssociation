@@ -73,18 +73,18 @@ const Navbar = () => {
     <>
       {/* Navbar with solid White background for maximum visibility */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-100 shadow-sm transition-all duration-300">
-        <div className="max-w-[90rem] mx-auto px-6 sm:px-8">
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-8">
           <div className="flex justify-between items-center h-22">
             
             {/* Left Column: Dynamic Animated Logo Branding */}
-            <Link to="/" className="flex items-center gap-3 group flex-shrink-0">
+            <Link to="/" className="flex items-center gap-2 sm:gap-3 group flex-shrink-0">
               <img
                 src={logo}
                 alt="VTC Logo"
                 className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
               />
               {/* English/Hindi transition loop wrapper */}
-              <div className="flex flex-col justify-center overflow-hidden h-[36px] relative min-w-[155px]">
+              <div className="flex flex-col justify-center overflow-hidden h-[36px] relative min-w-[110px] sm:min-w-[155px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={textIndex}
@@ -94,11 +94,11 @@ const Navbar = () => {
                     transition={{ duration: 0.35, ease: "easeInOut" }}
                     className="flex flex-col leading-none"
                   >
-                    <span className="font-black text-[17px] tracking-tight text-slate-900 leading-none">
+                    <span className="font-black text-[13px] sm:text-[17px] tracking-tight text-slate-900 leading-none">
                       {brandTexts[textIndex].main}
                     </span>
-                    <span className={`font-black text-rose-600 mt-1.5 leading-none ${
-                      textIndex === 1 ? 'text-[12px] tracking-wide font-extrabold' : 'text-[9px] uppercase tracking-[0.25em]'
+                    <span className={`font-black text-rose-600 mt-1 sm:mt-1.5 leading-none ${
+                      textIndex === 1 ? 'text-[9px] sm:text-[12px] tracking-wide font-extrabold' : 'text-[7px] sm:text-[9px] uppercase tracking-[0.25em]'
                     }`}>
                       {brandTexts[textIndex].sub}
                     </span>
@@ -269,24 +269,24 @@ const Navbar = () => {
             </div>
 
             {/* Mobile Actions: Hamburger and fast Portal Toggle */}
-            <div className="flex items-center gap-4 xl:hidden flex-shrink-0">
+            <div className="flex items-center gap-2 sm:gap-4 xl:hidden flex-shrink-0">
               
               {/* Dynamic portal switcher inside mobile toolbar */}
               <button
                 onClick={() => setPortalMode(portalMode === 'industry' ? 'academy' : 'industry')}
-                className={`flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[9px] font-black uppercase tracking-widest border transition-all ${
+                className={`flex items-center gap-1 sm:gap-1.5 rounded-full px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] font-black uppercase tracking-widest border transition-all ${
                   portalMode === 'industry' 
                     ? 'bg-indigo-50 border-indigo-100 text-indigo-600' 
                     : 'bg-rose-50 border-rose-100 text-rose-600'
                 }`}
               >
                 <FontAwesomeIcon icon={portalMode === 'industry' ? faBuilding : faGraduationCap} />
-                {portalMode === 'industry' ? 'Industry' : 'Academy'}
+                <span className="hidden sm:inline">{portalMode === 'industry' ? 'Industry' : 'Academy'}</span>
               </button>
 
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-2 rounded-md text-slate-800 hover:text-rose-600 focus:outline-none"
+                className="p-1.5 sm:p-2 rounded-md text-slate-800 hover:text-rose-600 focus:outline-none"
               >
                 <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="lg" />
               </button>
