@@ -17,7 +17,7 @@ const Navbar = () => {
   const [textIndex, setTextIndex] = useState(0);
   const brandTexts = [
     { main: "Vibrant Textiles", sub: "Association" },
-    { main: "Vibrant वस्त्र", sub: "संगठन" }
+    { main: "वाइब्रेंट वस्त्र", sub: "संगठन" }
   ];
 
   useEffect(() => {
