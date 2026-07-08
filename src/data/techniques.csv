@@ -1,0 +1,18 @@
+id,name,category
+1,Handloom Weaving,Weaving
+2,Brocade Weaving,Weaving
+3,Ikat,Resist Weaving
+4,Double Ikat,Resist Weaving
+5,Tie and Dye,Dyeing
+6,Bandhani,Dyeing
+7,Block Printing,Printing
+8,Ajrakh Printing,Printing
+9,Kalamkari,Painting/Printing
+10,Chikankari,Embroidery
+11,Kantha,Embroidery
+12,Phulkari,Embroidery
+13,Zari Work,Embellishment
+14,Jamdani,Supplementary Weft Weaving
+15,Batik,Resist Dyeing
+16,Powerloom Weaving,Weaving
+17,Knitting,Knitting

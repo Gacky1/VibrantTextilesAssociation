@@ -1,0 +1,45 @@
+id,name,state,city,material,technique,category,cluster,gi_tag,primary_uses,short_description
+1,Banarasi Brocade and Sarees,Uttar Pradesh,Varanasi,Silk,Brocade Weaving,Saree,Varanasi Silk Cluster,1,"Wedding, luxury, festive","Rich silk brocade textiles known for zari, floral and Mughal-inspired motifs."
+2,Kanchipuram Silk,Tamil Nadu,Kanchipuram,Mulberry Silk,Handloom Weaving,Saree,Kanchipuram Silk Cluster,1,"Wedding, temple, festive",Heavy silk sarees with contrast borders and traditional motifs.
+3,Patan Patola,Gujarat,Patan,Silk,Double Ikat,Saree,Patan Patola Cluster,1,"Luxury, wedding, heirloom",Highly skilled double ikat silk textile from Patan.
+4,Pochampally Ikat,Telangana,Pochampally,Cotton/Silk,Ikat,Saree/Fabric,Pochampally Ikat Cluster,1,"Sarees, dupattas, apparel",Geometric ikat patterns created through resist-dyed yarns.
+5,Chanderi Sarees,Madhya Pradesh,Chanderi,Silk-Cotton,Handloom Weaving,Saree/Fabric,Chanderi Cluster,1,"Festive, formal, lightweight luxury",Lightweight translucent sarees with fine zari borders.
+6,Kota Doria,Rajasthan,Kota,Cotton/Silk,Handloom Weaving,Saree/Fabric,Kota Doria Cluster,1,"Summer sarees, dupattas",Lightweight square-check fabric locally known for khat patterns.
+7,Mysore Silk,Karnataka,Mysuru,Silk,Handloom Weaving,Saree,,1,"Festive, wedding",Fine silk sarees associated with Karnataka silk production.
+8,Sambalpuri Ikat,Odisha,Sambalpur,Cotton/Silk,Ikat,Saree/Fabric,Sambalpur Ikat Cluster,1,"Sarees, dress material",Odisha bandha ikat with symbolic motifs and traditional borders.
+9,Muga Silk,Assam,Sualkuchi,Muga Silk,Handloom Weaving,Saree/Fabric,Sualkuchi Silk Cluster,1,"Luxury, festive, ceremonial",Golden silk textile associated with Assam.
+10,Eri Silk,Assam,Sualkuchi,Eri Silk,Handloom Weaving,Shawl/Fabric,Sualkuchi Silk Cluster,0,"Shawls, stoles, apparel",Soft warm silk often positioned as peace silk.
+11,Maheshwari Saree,Madhya Pradesh,Maheshwar,Silk-Cotton,Handloom Weaving,Saree/Fabric,Maheshwar Handloom Cluster,1,"Festive, formal",Elegant reversible-border sarees from Maheshwar.
+12,Paithani,Maharashtra,Paithan,Silk,Zari Work,Saree,Paithan Paithani Cluster,1,"Wedding, luxury","Silk saree with rich pallus, peacock motifs and zari."
+13,Bagru Print,Rajasthan,Bagru,Cotton,Block Printing,Fabric,Bagru Print Cluster,1,"Apparel, home furnishing",Traditional hand block printing using earthy palettes and natural dyes.
+14,Sanganeri Print,Rajasthan,Jaipur,Cotton,Block Printing,Fabric,Sanganer Print Cluster,1,"Apparel, home furnishing",Fine floral block prints from the Jaipur-Sanganer region.
+15,Ajrakh,Gujarat,Kutch,Cotton/Silk,Ajrakh Printing,Fabric/Dupatta,Kutch Textile Craft Cluster,0,"Dupattas, stoles, apparel","Complex resist block printing with indigo, madder and geometric patterns."
+16,Bandhani,Gujarat/Rajasthan,Kutch/Jodhpur,Cotton/Silk,Bandhani,Saree/Dupatta,Kutch Textile Craft Cluster,1,"Festive, wedding",Tie-dye textile with dotted patterns and vibrant colors.
+17,Jamdani,West Bengal,Nadia/Dhaka heritage belt,Cotton,Jamdani,Saree/Fabric,,1,"Luxury sarees, heritage apparel",Fine muslin-like weaving with supplementary motifs.
+18,Baluchari Saree,West Bengal,Bishnupur,Silk,Jacquard/Brocade Weaving,Saree,,1,"Festive, cultural",Sarees known for mythological narrative motifs on the pallu.
+19,Kantha Embroidery,West Bengal,Bolpur/Shantiniketan,Cotton/Silk,Kantha,Saree/Dupatta,,0,"Apparel, decor",Running-stitch embroidery tradition of Bengal.
+20,Phulkari,Punjab,Patiala/Amritsar,Cotton,Phulkari,Dupatta/Shawl,,1,"Wedding, festive",Vibrant floral embroidery traditionally made on odhnis and dupattas.
+21,Chikankari,Uttar Pradesh,Lucknow,Cotton/Muslin,Chikankari,Garment/Fabric,Lucknow Chikankari Cluster,1,"Kurtas, sarees, apparel",Fine whitework embroidery from Lucknow.
+22,Kalamkari,Andhra Pradesh,Srikalahasti/Machilipatnam,Cotton/Silk,Kalamkari,Fabric/Saree,,1,"Sarees, wall panels, apparel",Narrative hand-painted or block-printed textile tradition.
+23,Uppada Jamdani,Andhra Pradesh,Uppada,Silk/Cotton,Jamdani,Saree,,1,Luxury sarees,Fine sarees with lightweight jamdani-style weaving.
+24,Dharmavaram Silk,Andhra Pradesh,Dharmavaram,Silk,Handloom Weaving,Saree,,1,"Wedding, festive",Silk sarees known for broad borders and rich colors.
+25,Ilkal Saree,Karnataka,Ilkal,Cotton/Silk,Handloom Weaving,Saree,,1,Traditional sarees,Distinctive red pallu and woven borders from North Karnataka.
+26,Guledgudd Khana,Karnataka,Bagalkot,Cotton/Silk,Handloom Weaving,Blouse Fabric,,1,"Blouse fabric, apparel",Traditional checked and patterned blouse fabric.
+27,Navalgund Durries,Karnataka,Navalgund,Cotton,Handloom Weaving,Carpet/Rug,,1,Floor covering,Handwoven durries with geometric motifs.
+28,Kasavu,Kerala,Balaramapuram/Kuthampully,Cotton,Handloom Weaving,Saree/Dhoti,,1,"Festive, traditional",White/off-white textile with gold border associated with Kerala dress.
+29,Kotpad Handloom Fabric,Odisha,Kotpad,Cotton,Natural Dye Weaving,Fabric/Saree,,1,"Sarees, shawls, apparel",Tribal handloom fabric known for natural aal dye.
+30,Bomkai Saree,Odisha,Ganjam/Sonepur,Cotton/Silk,Handloom Weaving,Saree,,1,Festive sarees,Odisha saree with extra weft motifs and contrasting borders.
+31,Bhagalpuri Silk,Bihar,Bhagalpur,Tussar Silk,Handloom Weaving,Fabric/Saree,Bhagalpur Silk Cluster,1,"Sarees, stoles, fabrics",Tussar silk textiles from Bhagalpur.
+32,Sujini Embroidery,Bihar,Bhagalpur/Muzaffarpur,Cotton,Embroidery,Quilt/Fabric,,1,"Quilts, decor, apparel",Narrative embroidery with running stitches.
+33,Tussar Silk,Jharkhand,Ranchi/Dumka,Tussar Silk,Handloom Weaving,Fabric/Saree,,0,"Sarees, stoles",Wild silk fabric with textured golden-beige appearance.
+34,Champa Kosa Silk,Chhattisgarh,Janjgir-Champa,Kosa Silk,Handloom Weaving,Saree/Fabric,,0,"Sarees, dress material",Kosa silk textile associated with Chhattisgarh weaving.
+35,Bagh Print,Madhya Pradesh,Bagh/Dhar,Cotton/Silk,Block Printing,Fabric,,1,"Apparel, sarees, home decor",Natural-dye block prints with bold geometric and floral forms.
+36,Pashmina Shawl,Jammu & Kashmir,Srinagar,Pashmina Wool,Handloom Weaving,Shawl,,1,"Luxury shawls, stoles",Fine wool shawl textile associated with Kashmir.
+37,Kullu Shawl,Himachal Pradesh,Kullu,Wool,Handloom Weaving,Shawl,,1,"Winter wear, gifting",Wool shawls with geometric borders.
+38,Solapur Chaddar,Maharashtra,Solapur,Cotton,Powerloom/Handloom Weaving,Bed Linen,,1,Bed linen,Durable chaddars/bed sheets from Solapur.
+39,Solapur Terry Towel,Maharashtra,Solapur,Cotton,Terry Weaving,Towel,,1,Bath textile,Terry towels associated with Solapur.
+40,Tiruppur Knitwear,Tamil Nadu,Tiruppur,Cotton,Knitting,Garment,Tiruppur Knitwear Cluster,0,"T-shirts, innerwear, exports",Large-scale cotton knitwear and garment manufacturing cluster.
+41,Karur Home Textiles,Tamil Nadu,Karur,Cotton,Weaving,Home Furnishing,Karur Home Textile Cluster,0,"Home furnishing, exports",Home textile and made-ups production cluster.
+42,Surat Synthetic Sarees,Gujarat,Surat,Polyester/Rayon,Powerloom Weaving,Saree/Fabric,Surat Textile Cluster,0,"Sarees, dress material",Major synthetic textile and processing hub.
+43,Bhilwara Suiting,Rajasthan,Bhilwara,Blended Fabric,Powerloom Weaving,Fabric,Bhilwara Textile Cluster,0,"Suiting, uniforms",Major suiting and synthetic fabric production centre.
+44,Panipat Home Textiles,Haryana,Panipat,Cotton/Wool,Weaving,Home Furnishing,Panipat Home Textile Cluster,0,"Rugs, mats, blankets",Home textile and floor covering manufacturing hub.

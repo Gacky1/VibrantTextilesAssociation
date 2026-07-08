@@ -47,6 +47,7 @@ const Navbar = () => {
   // Define Navbar options dynamically based on active Portal Mode
   const industryNavItems = [
     { name: 'Industry', path: '/about-textile' },
+    { name: 'Textile Explorer', path: '/textile-explorer' },
     { name: 'Cluster', path: '/members' },
     { name: 'Events/Media', path: '/events' },
     { name: 'News', path: '/media' },
@@ -64,6 +65,7 @@ const Navbar = () => {
   ];
 
   const academyGeneralItems = [
+    { name: 'Textile Explorer', path: '/textile-explorer' },
     { name: 'Event/Media', path: '/events' },
     { name: 'Research', path: '/research' },
     { name: 'News', path: '/media' },
@@ -71,8 +73,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar with solid White background for maximum visibility */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-100 shadow-sm transition-all duration-300">
+      {/* Navbar with solid White background (switches to slate in dark mode) */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-slate-950 border-b border-slate-100 dark:border-slate-800 shadow-sm transition-all duration-300">
         <div className="max-w-[90rem] mx-auto px-4 sm:px-8">
           <div className="flex justify-between items-center h-22">
             
@@ -94,7 +96,7 @@ const Navbar = () => {
                     transition={{ duration: 0.35, ease: "easeInOut" }}
                     className="flex flex-col leading-none"
                   >
-                    <span className="font-black text-[13px] sm:text-[17px] tracking-tight text-slate-900 leading-none">
+                    <span className="font-black text-[13px] sm:text-[17px] tracking-tight text-slate-900 dark:text-white leading-none">
                       {brandTexts[textIndex].main}
                     </span>
                     <span className={`font-black text-rose-600 mt-1 sm:mt-1.5 leading-none ${
@@ -127,7 +129,7 @@ const Navbar = () => {
                           key={item.name}
                           to={item.path}
                           className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors relative py-2 ${
-                            isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900'
+                            isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                           }`}
                         >
                           {item.name}
@@ -150,7 +152,7 @@ const Navbar = () => {
                           className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none ${
                             isDropdownOpen || academyDropdownItems.some(item => location.pathname === item.path)
                               ? 'text-rose-600' 
-                              : 'text-slate-600 hover:text-slate-900'
+                              : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                           }`}
                         >
                           Academics & Skilling
@@ -164,7 +166,7 @@ const Navbar = () => {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute left-0 mt-2 w-72 rounded-2xl bg-white border border-slate-100 shadow-2xl p-4 space-y-1 z-50"
+                              className="absolute left-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50"
                             >
                               {academyDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
@@ -175,8 +177,8 @@ const Navbar = () => {
                                     onClick={() => setIsDropdownOpen(false)}
                                     className={`block text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all ${
                                       isActive 
-                                        ? 'bg-rose-50 text-rose-600' 
-                                        : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                                        ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-600' 
+                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
                                     }`}
                                   >
                                     {item.name}
@@ -196,7 +198,7 @@ const Navbar = () => {
                             key={item.name}
                             to={item.path}
                             className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors relative py-2 ${
-                              isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900'
+                              isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-355 dark:hover:text-white'
                             }`}
                           >
                             {item.name}
@@ -219,13 +221,13 @@ const Navbar = () => {
             <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
               
               {/* Dual-Portal Selector Toggle Capsule */}
-              <div className="flex items-center bg-slate-100 border border-slate-200/60 rounded-full p-1 shadow-inner relative">
+              <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-full p-1 shadow-inner relative">
                 
                 {/* Industry portal toggle */}
                 <button
                   onClick={() => setPortalMode('industry')}
                   className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 relative z-10 focus:outline-none ${
-                    portalMode === 'industry' ? 'text-white' : 'text-slate-500 hover:text-slate-800'
+                    portalMode === 'industry' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
                   <FontAwesomeIcon icon={faBuilding} className="text-[10px]" />
@@ -236,11 +238,11 @@ const Navbar = () => {
                 <button
                   onClick={() => setPortalMode('academy')}
                   className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 relative z-10 focus:outline-none ${
-                    portalMode === 'academy' ? 'text-white' : 'text-slate-500 hover:text-slate-800'
+                    portalMode === 'academy' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
                   <FontAwesomeIcon icon={faGraduationCap} className="text-[10px]" />
-                  Academy
+                  Academia
                 </button>
 
                 {/* Sliding highlighted pill background */}
@@ -286,7 +288,7 @@ const Navbar = () => {
 
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="p-1.5 sm:p-2 rounded-md text-slate-800 hover:text-rose-600 focus:outline-none"
+                className="p-1.5 sm:p-2 rounded-md text-slate-800 dark:text-slate-200 hover:text-rose-600 focus:outline-none"
               >
                 <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} size="lg" />
               </button>

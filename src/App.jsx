@@ -9,6 +9,8 @@ import MembersPage from './pages/MembersPage';
 import SkillDevelopment from './pages/SkillDevelopment';
 import Membership from './pages/Membership';
 import { Media, Research, Contact } from './pages/OtherPages';
+import TextileExplorer from './pages/TextileExplorer';
+import TextileDetail from './pages/TextileDetail';
 
 // Admin
 import AdminLayout from './admin/AdminLayout';
@@ -43,6 +45,8 @@ function App() {
         <Route path="/research" element={<Research />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/membership" element={<Membership />} />
+        <Route path="/textile-explorer" element={<TextileExplorer />} />
+        <Route path="/textile-explorer/:slug" element={<TextileDetail />} />
 
         {/* ── Admin Routes ── */}
         <Route path="/admin/login" element={<AdminLogin />} />

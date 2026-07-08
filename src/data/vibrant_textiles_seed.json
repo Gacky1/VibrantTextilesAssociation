@@ -1,0 +1,1076 @@
+{
+  "regions": [
+    {
+      "id": 1,
+      "name": "North"
+    },
+    {
+      "id": 2,
+      "name": "South"
+    },
+    {
+      "id": 3,
+      "name": "East"
+    },
+    {
+      "id": 4,
+      "name": "West"
+    },
+    {
+      "id": 5,
+      "name": "Central"
+    },
+    {
+      "id": 6,
+      "name": "North East"
+    }
+  ],
+  "states": [
+    {
+      "id": 1,
+      "region_id": 1,
+      "name": "Uttar Pradesh"
+    },
+    {
+      "id": 2,
+      "region_id": 1,
+      "name": "Punjab"
+    },
+    {
+      "id": 3,
+      "region_id": 1,
+      "name": "Haryana"
+    },
+    {
+      "id": 4,
+      "region_id": 1,
+      "name": "Himachal Pradesh"
+    },
+    {
+      "id": 5,
+      "region_id": 1,
+      "name": "Jammu & Kashmir"
+    },
+    {
+      "id": 6,
+      "region_id": 2,
+      "name": "Tamil Nadu"
+    },
+    {
+      "id": 7,
+      "region_id": 2,
+      "name": "Karnataka"
+    },
+    {
+      "id": 8,
+      "region_id": 2,
+      "name": "Kerala"
+    },
+    {
+      "id": 9,
+      "region_id": 2,
+      "name": "Telangana"
+    },
+    {
+      "id": 10,
+      "region_id": 2,
+      "name": "Andhra Pradesh"
+    },
+    {
+      "id": 11,
+      "region_id": 3,
+      "name": "West Bengal"
+    },
+    {
+      "id": 12,
+      "region_id": 3,
+      "name": "Odisha"
+    },
+    {
+      "id": 13,
+      "region_id": 3,
+      "name": "Bihar"
+    },
+    {
+      "id": 14,
+      "region_id": 3,
+      "name": "Jharkhand"
+    },
+    {
+      "id": 15,
+      "region_id": 4,
+      "name": "Gujarat"
+    },
+    {
+      "id": 16,
+      "region_id": 4,
+      "name": "Rajasthan"
+    },
+    {
+      "id": 17,
+      "region_id": 4,
+      "name": "Maharashtra"
+    },
+    {
+      "id": 18,
+      "region_id": 5,
+      "name": "Madhya Pradesh"
+    },
+    {
+      "id": 19,
+      "region_id": 5,
+      "name": "Chhattisgarh"
+    },
+    {
+      "id": 20,
+      "region_id": 6,
+      "name": "Assam"
+    },
+    {
+      "id": 21,
+      "region_id": 6,
+      "name": "Manipur"
+    },
+    {
+      "id": 22,
+      "region_id": 6,
+      "name": "Nagaland"
+    },
+    {
+      "id": 23,
+      "region_id": 6,
+      "name": "Meghalaya"
+    },
+    {
+      "id": 24,
+      "region_id": 6,
+      "name": "Tripura"
+    }
+  ],
+  "materials": [
+    {
+      "id": 1,
+      "name": "Cotton",
+      "type": "Natural"
+    },
+    {
+      "id": 2,
+      "name": "Silk",
+      "type": "Natural"
+    },
+    {
+      "id": 3,
+      "name": "Mulberry Silk",
+      "type": "Natural"
+    },
+    {
+      "id": 4,
+      "name": "Muga Silk",
+      "type": "Natural"
+    },
+    {
+      "id": 5,
+      "name": "Eri Silk",
+      "type": "Natural"
+    },
+    {
+      "id": 6,
+      "name": "Tussar Silk",
+      "type": "Natural"
+    },
+    {
+      "id": 7,
+      "name": "Wool",
+      "type": "Natural"
+    },
+    {
+      "id": 8,
+      "name": "Pashmina Wool",
+      "type": "Natural"
+    },
+    {
+      "id": 9,
+      "name": "Jute",
+      "type": "Natural"
+    },
+    {
+      "id": 10,
+      "name": "Linen",
+      "type": "Natural"
+    },
+    {
+      "id": 11,
+      "name": "Bamboo",
+      "type": "Natural"
+    },
+    {
+      "id": 12,
+      "name": "Hemp",
+      "type": "Natural"
+    },
+    {
+      "id": 13,
+      "name": "Polyester",
+      "type": "Synthetic"
+    },
+    {
+      "id": 14,
+      "name": "Rayon",
+      "type": "Semi-synthetic"
+    },
+    {
+      "id": 15,
+      "name": "Blended Fabric",
+      "type": "Blended"
+    }
+  ],
+  "techniques": [
+    {
+      "id": 1,
+      "name": "Handloom Weaving",
+      "category": "Weaving"
+    },
+    {
+      "id": 2,
+      "name": "Brocade Weaving",
+      "category": "Weaving"
+    },
+    {
+      "id": 3,
+      "name": "Ikat",
+      "category": "Resist Weaving"
+    },
+    {
+      "id": 4,
+      "name": "Double Ikat",
+      "category": "Resist Weaving"
+    },
+    {
+      "id": 5,
+      "name": "Tie and Dye",
+      "category": "Dyeing"
+    },
+    {
+      "id": 6,
+      "name": "Bandhani",
+      "category": "Dyeing"
+    },
+    {
+      "id": 7,
+      "name": "Block Printing",
+      "category": "Printing"
+    },
+    {
+      "id": 8,
+      "name": "Ajrakh Printing",
+      "category": "Printing"
+    },
+    {
+      "id": 9,
+      "name": "Kalamkari",
+      "category": "Painting/Printing"
+    },
+    {
+      "id": 10,
+      "name": "Chikankari",
+      "category": "Embroidery"
+    },
+    {
+      "id": 11,
+      "name": "Kantha",
+      "category": "Embroidery"
+    },
+    {
+      "id": 12,
+      "name": "Phulkari",
+      "category": "Embroidery"
+    },
+    {
+      "id": 13,
+      "name": "Zari Work",
+      "category": "Embellishment"
+    },
+    {
+      "id": 14,
+      "name": "Jamdani",
+      "category": "Supplementary Weft Weaving"
+    },
+    {
+      "id": 15,
+      "name": "Batik",
+      "category": "Resist Dyeing"
+    },
+    {
+      "id": 16,
+      "name": "Powerloom Weaving",
+      "category": "Weaving"
+    },
+    {
+      "id": 17,
+      "name": "Knitting",
+      "category": "Knitting"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Saree"
+    },
+    {
+      "id": 2,
+      "name": "Fabric"
+    },
+    {
+      "id": 3,
+      "name": "Dupatta"
+    },
+    {
+      "id": 4,
+      "name": "Shawl"
+    },
+    {
+      "id": 5,
+      "name": "Stole"
+    },
+    {
+      "id": 6,
+      "name": "Dress Material"
+    },
+    {
+      "id": 7,
+      "name": "Home Furnishing"
+    },
+    {
+      "id": 8,
+      "name": "Carpet/Rug"
+    },
+    {
+      "id": 9,
+      "name": "Garment"
+    },
+    {
+      "id": 10,
+      "name": "Towel"
+    },
+    {
+      "id": 11,
+      "name": "Bed Linen"
+    }
+  ],
+  "clusters": [
+    {
+      "id": 1,
+      "name": "Varanasi Silk Cluster",
+      "state": "Uttar Pradesh",
+      "city": "Varanasi",
+      "description": "Banarasi brocade and silk saree weaving"
+    },
+    {
+      "id": 2,
+      "name": "Kanchipuram Silk Cluster",
+      "state": "Tamil Nadu",
+      "city": "Kanchipuram",
+      "description": "Traditional silk saree weaving"
+    },
+    {
+      "id": 3,
+      "name": "Surat Textile Cluster",
+      "state": "Gujarat",
+      "city": "Surat",
+      "description": "Synthetic textiles, processing, embroidery, sarees"
+    },
+    {
+      "id": 4,
+      "name": "Tiruppur Knitwear Cluster",
+      "state": "Tamil Nadu",
+      "city": "Tiruppur",
+      "description": "Cotton knitwear and garment exports"
+    },
+    {
+      "id": 5,
+      "name": "Panipat Home Textile Cluster",
+      "state": "Haryana",
+      "city": "Panipat",
+      "description": "Home textiles, carpets, blankets, rugs"
+    },
+    {
+      "id": 6,
+      "name": "Bhilwara Textile Cluster",
+      "state": "Rajasthan",
+      "city": "Bhilwara",
+      "description": "Suiting fabric and synthetic textiles"
+    },
+    {
+      "id": 7,
+      "name": "Patan Patola Cluster",
+      "state": "Gujarat",
+      "city": "Patan",
+      "description": "Double ikat silk Patola weaving"
+    },
+    {
+      "id": 8,
+      "name": "Chanderi Cluster",
+      "state": "Madhya Pradesh",
+      "city": "Chanderi",
+      "description": "Chanderi silk-cotton sarees and fabrics"
+    },
+    {
+      "id": 9,
+      "name": "Pochampally Ikat Cluster",
+      "state": "Telangana",
+      "city": "Pochampally",
+      "description": "Ikat sarees and fabrics"
+    },
+    {
+      "id": 10,
+      "name": "Sualkuchi Silk Cluster",
+      "state": "Assam",
+      "city": "Sualkuchi",
+      "description": "Muga, Eri and silk textiles"
+    },
+    {
+      "id": 11,
+      "name": "Sambalpur Ikat Cluster",
+      "state": "Odisha",
+      "city": "Sambalpur",
+      "description": "Bandha/Ikat sarees and fabrics"
+    },
+    {
+      "id": 12,
+      "name": "Kota Doria Cluster",
+      "state": "Rajasthan",
+      "city": "Kota",
+      "description": "Lightweight cotton/silk Kota Doria fabrics"
+    },
+    {
+      "id": 13,
+      "name": "Bagru Print Cluster",
+      "state": "Rajasthan",
+      "city": "Bagru",
+      "description": "Natural dye block printing"
+    },
+    {
+      "id": 14,
+      "name": "Sanganer Print Cluster",
+      "state": "Rajasthan",
+      "city": "Jaipur",
+      "description": "Sanganeri hand block printing"
+    },
+    {
+      "id": 15,
+      "name": "Bhagalpur Silk Cluster",
+      "state": "Bihar",
+      "city": "Bhagalpur",
+      "description": "Tussar silk and silk fabrics"
+    },
+    {
+      "id": 16,
+      "name": "Maheshwar Handloom Cluster",
+      "state": "Madhya Pradesh",
+      "city": "Maheshwar",
+      "description": "Maheshwari sarees and fabrics"
+    },
+    {
+      "id": 17,
+      "name": "Paithan Paithani Cluster",
+      "state": "Maharashtra",
+      "city": "Paithan",
+      "description": "Paithani silk sarees"
+    },
+    {
+      "id": 18,
+      "name": "Lucknow Chikankari Cluster",
+      "state": "Uttar Pradesh",
+      "city": "Lucknow",
+      "description": "Chikankari embroidery"
+    },
+    {
+      "id": 19,
+      "name": "Kutch Textile Craft Cluster",
+      "state": "Gujarat",
+      "city": "Kutch",
+      "description": "Ajrakh, Bandhani, embroidery and weaving"
+    },
+    {
+      "id": 20,
+      "name": "Karur Home Textile Cluster",
+      "state": "Tamil Nadu",
+      "city": "Karur",
+      "description": "Home textiles and made-ups"
+    }
+  ],
+  "textiles": [
+    {
+      "id": 1,
+      "name": "Banarasi Brocade and Sarees",
+      "state": "Uttar Pradesh",
+      "city": "Varanasi",
+      "material": "Silk",
+      "technique": "Brocade Weaving",
+      "category": "Saree",
+      "cluster": "Varanasi Silk Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Wedding, luxury, festive",
+      "short_description": "Rich silk brocade textiles known for zari, floral and Mughal-inspired motifs."
+    },
+    {
+      "id": 2,
+      "name": "Kanchipuram Silk",
+      "state": "Tamil Nadu",
+      "city": "Kanchipuram",
+      "material": "Mulberry Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree",
+      "cluster": "Kanchipuram Silk Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Wedding, temple, festive",
+      "short_description": "Heavy silk sarees with contrast borders and traditional motifs."
+    },
+    {
+      "id": 3,
+      "name": "Patan Patola",
+      "state": "Gujarat",
+      "city": "Patan",
+      "material": "Silk",
+      "technique": "Double Ikat",
+      "category": "Saree",
+      "cluster": "Patan Patola Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Luxury, wedding, heirloom",
+      "short_description": "Highly skilled double ikat silk textile from Patan."
+    },
+    {
+      "id": 4,
+      "name": "Pochampally Ikat",
+      "state": "Telangana",
+      "city": "Pochampally",
+      "material": "Cotton/Silk",
+      "technique": "Ikat",
+      "category": "Saree/Fabric",
+      "cluster": "Pochampally Ikat Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Sarees, dupattas, apparel",
+      "short_description": "Geometric ikat patterns created through resist-dyed yarns."
+    },
+    {
+      "id": 5,
+      "name": "Chanderi Sarees",
+      "state": "Madhya Pradesh",
+      "city": "Chanderi",
+      "material": "Silk-Cotton",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "Chanderi Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Festive, formal, lightweight luxury",
+      "short_description": "Lightweight translucent sarees with fine zari borders."
+    },
+    {
+      "id": 6,
+      "name": "Kota Doria",
+      "state": "Rajasthan",
+      "city": "Kota",
+      "material": "Cotton/Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "Kota Doria Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Summer sarees, dupattas",
+      "short_description": "Lightweight square-check fabric locally known for khat patterns."
+    },
+    {
+      "id": 7,
+      "name": "Mysore Silk",
+      "state": "Karnataka",
+      "city": "Mysuru",
+      "material": "Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Festive, wedding",
+      "short_description": "Fine silk sarees associated with Karnataka silk production."
+    },
+    {
+      "id": 8,
+      "name": "Sambalpuri Ikat",
+      "state": "Odisha",
+      "city": "Sambalpur",
+      "material": "Cotton/Silk",
+      "technique": "Ikat",
+      "category": "Saree/Fabric",
+      "cluster": "Sambalpur Ikat Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Sarees, dress material",
+      "short_description": "Odisha bandha ikat with symbolic motifs and traditional borders."
+    },
+    {
+      "id": 9,
+      "name": "Muga Silk",
+      "state": "Assam",
+      "city": "Sualkuchi",
+      "material": "Muga Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "Sualkuchi Silk Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Luxury, festive, ceremonial",
+      "short_description": "Golden silk textile associated with Assam."
+    },
+    {
+      "id": 10,
+      "name": "Eri Silk",
+      "state": "Assam",
+      "city": "Sualkuchi",
+      "material": "Eri Silk",
+      "technique": "Handloom Weaving",
+      "category": "Shawl/Fabric",
+      "cluster": "Sualkuchi Silk Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Shawls, stoles, apparel",
+      "short_description": "Soft warm silk often positioned as peace silk."
+    },
+    {
+      "id": 11,
+      "name": "Maheshwari Saree",
+      "state": "Madhya Pradesh",
+      "city": "Maheshwar",
+      "material": "Silk-Cotton",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "Maheshwar Handloom Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Festive, formal",
+      "short_description": "Elegant reversible-border sarees from Maheshwar."
+    },
+    {
+      "id": 12,
+      "name": "Paithani",
+      "state": "Maharashtra",
+      "city": "Paithan",
+      "material": "Silk",
+      "technique": "Zari Work",
+      "category": "Saree",
+      "cluster": "Paithan Paithani Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Wedding, luxury",
+      "short_description": "Silk saree with rich pallus, peacock motifs and zari."
+    },
+    {
+      "id": 13,
+      "name": "Bagru Print",
+      "state": "Rajasthan",
+      "city": "Bagru",
+      "material": "Cotton",
+      "technique": "Block Printing",
+      "category": "Fabric",
+      "cluster": "Bagru Print Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Apparel, home furnishing",
+      "short_description": "Traditional hand block printing using earthy palettes and natural dyes."
+    },
+    {
+      "id": 14,
+      "name": "Sanganeri Print",
+      "state": "Rajasthan",
+      "city": "Jaipur",
+      "material": "Cotton",
+      "technique": "Block Printing",
+      "category": "Fabric",
+      "cluster": "Sanganer Print Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Apparel, home furnishing",
+      "short_description": "Fine floral block prints from the Jaipur-Sanganer region."
+    },
+    {
+      "id": 15,
+      "name": "Ajrakh",
+      "state": "Gujarat",
+      "city": "Kutch",
+      "material": "Cotton/Silk",
+      "technique": "Ajrakh Printing",
+      "category": "Fabric/Dupatta",
+      "cluster": "Kutch Textile Craft Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Dupattas, stoles, apparel",
+      "short_description": "Complex resist block printing with indigo, madder and geometric patterns."
+    },
+    {
+      "id": 16,
+      "name": "Bandhani",
+      "state": "Gujarat/Rajasthan",
+      "city": "Kutch/Jodhpur",
+      "material": "Cotton/Silk",
+      "technique": "Bandhani",
+      "category": "Saree/Dupatta",
+      "cluster": "Kutch Textile Craft Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Festive, wedding",
+      "short_description": "Tie-dye textile with dotted patterns and vibrant colors."
+    },
+    {
+      "id": 17,
+      "name": "Jamdani",
+      "state": "West Bengal",
+      "city": "Nadia/Dhaka heritage belt",
+      "material": "Cotton",
+      "technique": "Jamdani",
+      "category": "Saree/Fabric",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Luxury sarees, heritage apparel",
+      "short_description": "Fine muslin-like weaving with supplementary motifs."
+    },
+    {
+      "id": 18,
+      "name": "Baluchari Saree",
+      "state": "West Bengal",
+      "city": "Bishnupur",
+      "material": "Silk",
+      "technique": "Jacquard/Brocade Weaving",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Festive, cultural",
+      "short_description": "Sarees known for mythological narrative motifs on the pallu."
+    },
+    {
+      "id": 19,
+      "name": "Kantha Embroidery",
+      "state": "West Bengal",
+      "city": "Bolpur/Shantiniketan",
+      "material": "Cotton/Silk",
+      "technique": "Kantha",
+      "category": "Saree/Dupatta",
+      "cluster": "",
+      "gi_tag": 0,
+      "primary_uses": "Apparel, decor",
+      "short_description": "Running-stitch embroidery tradition of Bengal."
+    },
+    {
+      "id": 20,
+      "name": "Phulkari",
+      "state": "Punjab",
+      "city": "Patiala/Amritsar",
+      "material": "Cotton",
+      "technique": "Phulkari",
+      "category": "Dupatta/Shawl",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Wedding, festive",
+      "short_description": "Vibrant floral embroidery traditionally made on odhnis and dupattas."
+    },
+    {
+      "id": 21,
+      "name": "Chikankari",
+      "state": "Uttar Pradesh",
+      "city": "Lucknow",
+      "material": "Cotton/Muslin",
+      "technique": "Chikankari",
+      "category": "Garment/Fabric",
+      "cluster": "Lucknow Chikankari Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Kurtas, sarees, apparel",
+      "short_description": "Fine whitework embroidery from Lucknow."
+    },
+    {
+      "id": 22,
+      "name": "Kalamkari",
+      "state": "Andhra Pradesh",
+      "city": "Srikalahasti/Machilipatnam",
+      "material": "Cotton/Silk",
+      "technique": "Kalamkari",
+      "category": "Fabric/Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Sarees, wall panels, apparel",
+      "short_description": "Narrative hand-painted or block-printed textile tradition."
+    },
+    {
+      "id": 23,
+      "name": "Uppada Jamdani",
+      "state": "Andhra Pradesh",
+      "city": "Uppada",
+      "material": "Silk/Cotton",
+      "technique": "Jamdani",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Luxury sarees",
+      "short_description": "Fine sarees with lightweight jamdani-style weaving."
+    },
+    {
+      "id": 24,
+      "name": "Dharmavaram Silk",
+      "state": "Andhra Pradesh",
+      "city": "Dharmavaram",
+      "material": "Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Wedding, festive",
+      "short_description": "Silk sarees known for broad borders and rich colors."
+    },
+    {
+      "id": 25,
+      "name": "Ilkal Saree",
+      "state": "Karnataka",
+      "city": "Ilkal",
+      "material": "Cotton/Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Traditional sarees",
+      "short_description": "Distinctive red pallu and woven borders from North Karnataka."
+    },
+    {
+      "id": 26,
+      "name": "Guledgudd Khana",
+      "state": "Karnataka",
+      "city": "Bagalkot",
+      "material": "Cotton/Silk",
+      "technique": "Handloom Weaving",
+      "category": "Blouse Fabric",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Blouse fabric, apparel",
+      "short_description": "Traditional checked and patterned blouse fabric."
+    },
+    {
+      "id": 27,
+      "name": "Navalgund Durries",
+      "state": "Karnataka",
+      "city": "Navalgund",
+      "material": "Cotton",
+      "technique": "Handloom Weaving",
+      "category": "Carpet/Rug",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Floor covering",
+      "short_description": "Handwoven durries with geometric motifs."
+    },
+    {
+      "id": 28,
+      "name": "Kasavu",
+      "state": "Kerala",
+      "city": "Balaramapuram/Kuthampully",
+      "material": "Cotton",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Dhoti",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Festive, traditional",
+      "short_description": "White/off-white textile with gold border associated with Kerala dress."
+    },
+    {
+      "id": 29,
+      "name": "Kotpad Handloom Fabric",
+      "state": "Odisha",
+      "city": "Kotpad",
+      "material": "Cotton",
+      "technique": "Natural Dye Weaving",
+      "category": "Fabric/Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Sarees, shawls, apparel",
+      "short_description": "Tribal handloom fabric known for natural aal dye."
+    },
+    {
+      "id": 30,
+      "name": "Bomkai Saree",
+      "state": "Odisha",
+      "city": "Ganjam/Sonepur",
+      "material": "Cotton/Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Festive sarees",
+      "short_description": "Odisha saree with extra weft motifs and contrasting borders."
+    },
+    {
+      "id": 31,
+      "name": "Bhagalpuri Silk",
+      "state": "Bihar",
+      "city": "Bhagalpur",
+      "material": "Tussar Silk",
+      "technique": "Handloom Weaving",
+      "category": "Fabric/Saree",
+      "cluster": "Bhagalpur Silk Cluster",
+      "gi_tag": 1,
+      "primary_uses": "Sarees, stoles, fabrics",
+      "short_description": "Tussar silk textiles from Bhagalpur."
+    },
+    {
+      "id": 32,
+      "name": "Sujini Embroidery",
+      "state": "Bihar",
+      "city": "Bhagalpur/Muzaffarpur",
+      "material": "Cotton",
+      "technique": "Embroidery",
+      "category": "Quilt/Fabric",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Quilts, decor, apparel",
+      "short_description": "Narrative embroidery with running stitches."
+    },
+    {
+      "id": 33,
+      "name": "Tussar Silk",
+      "state": "Jharkhand",
+      "city": "Ranchi/Dumka",
+      "material": "Tussar Silk",
+      "technique": "Handloom Weaving",
+      "category": "Fabric/Saree",
+      "cluster": "",
+      "gi_tag": 0,
+      "primary_uses": "Sarees, stoles",
+      "short_description": "Wild silk fabric with textured golden-beige appearance."
+    },
+    {
+      "id": 34,
+      "name": "Champa Kosa Silk",
+      "state": "Chhattisgarh",
+      "city": "Janjgir-Champa",
+      "material": "Kosa Silk",
+      "technique": "Handloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "",
+      "gi_tag": 0,
+      "primary_uses": "Sarees, dress material",
+      "short_description": "Kosa silk textile associated with Chhattisgarh weaving."
+    },
+    {
+      "id": 35,
+      "name": "Bagh Print",
+      "state": "Madhya Pradesh",
+      "city": "Bagh/Dhar",
+      "material": "Cotton/Silk",
+      "technique": "Block Printing",
+      "category": "Fabric",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Apparel, sarees, home decor",
+      "short_description": "Natural-dye block prints with bold geometric and floral forms."
+    },
+    {
+      "id": 36,
+      "name": "Pashmina Shawl",
+      "state": "Jammu & Kashmir",
+      "city": "Srinagar",
+      "material": "Pashmina Wool",
+      "technique": "Handloom Weaving",
+      "category": "Shawl",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Luxury shawls, stoles",
+      "short_description": "Fine wool shawl textile associated with Kashmir."
+    },
+    {
+      "id": 37,
+      "name": "Kullu Shawl",
+      "state": "Himachal Pradesh",
+      "city": "Kullu",
+      "material": "Wool",
+      "technique": "Handloom Weaving",
+      "category": "Shawl",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Winter wear, gifting",
+      "short_description": "Wool shawls with geometric borders."
+    },
+    {
+      "id": 38,
+      "name": "Solapur Chaddar",
+      "state": "Maharashtra",
+      "city": "Solapur",
+      "material": "Cotton",
+      "technique": "Powerloom/Handloom Weaving",
+      "category": "Bed Linen",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Bed linen",
+      "short_description": "Durable chaddars/bed sheets from Solapur."
+    },
+    {
+      "id": 39,
+      "name": "Solapur Terry Towel",
+      "state": "Maharashtra",
+      "city": "Solapur",
+      "material": "Cotton",
+      "technique": "Terry Weaving",
+      "category": "Towel",
+      "cluster": "",
+      "gi_tag": 1,
+      "primary_uses": "Bath textile",
+      "short_description": "Terry towels associated with Solapur."
+    },
+    {
+      "id": 40,
+      "name": "Tiruppur Knitwear",
+      "state": "Tamil Nadu",
+      "city": "Tiruppur",
+      "material": "Cotton",
+      "technique": "Knitting",
+      "category": "Garment",
+      "cluster": "Tiruppur Knitwear Cluster",
+      "gi_tag": 0,
+      "primary_uses": "T-shirts, innerwear, exports",
+      "short_description": "Large-scale cotton knitwear and garment manufacturing cluster."
+    },
+    {
+      "id": 41,
+      "name": "Karur Home Textiles",
+      "state": "Tamil Nadu",
+      "city": "Karur",
+      "material": "Cotton",
+      "technique": "Weaving",
+      "category": "Home Furnishing",
+      "cluster": "Karur Home Textile Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Home furnishing, exports",
+      "short_description": "Home textile and made-ups production cluster."
+    },
+    {
+      "id": 42,
+      "name": "Surat Synthetic Sarees",
+      "state": "Gujarat",
+      "city": "Surat",
+      "material": "Polyester/Rayon",
+      "technique": "Powerloom Weaving",
+      "category": "Saree/Fabric",
+      "cluster": "Surat Textile Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Sarees, dress material",
+      "short_description": "Major synthetic textile and processing hub."
+    },
+    {
+      "id": 43,
+      "name": "Bhilwara Suiting",
+      "state": "Rajasthan",
+      "city": "Bhilwara",
+      "material": "Blended Fabric",
+      "technique": "Powerloom Weaving",
+      "category": "Fabric",
+      "cluster": "Bhilwara Textile Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Suiting, uniforms",
+      "short_description": "Major suiting and synthetic fabric production centre."
+    },
+    {
+      "id": 44,
+      "name": "Panipat Home Textiles",
+      "state": "Haryana",
+      "city": "Panipat",
+      "material": "Cotton/Wool",
+      "technique": "Weaving",
+      "category": "Home Furnishing",
+      "cluster": "Panipat Home Textile Cluster",
+      "gi_tag": 0,
+      "primary_uses": "Rugs, mats, blankets",
+      "short_description": "Home textile and floor covering manufacturing hub."
+    }
+  ]
+}
