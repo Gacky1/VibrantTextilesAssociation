@@ -589,14 +589,14 @@ const TextileExplorer = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden flex flex-col">
+    <div className="min-h-screen bg-textile-linen font-sans text-slate-900 overflow-x-hidden flex flex-col">
       <Navbar />
 
-      <div className={`flex-1 pt-24 pb-16 transition-colors duration-300 ${isDarkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+      <div className={`flex-1 pt-24 pb-16 transition-colors duration-300 bg-textile-linen ${isDarkMode ? 'dark text-slate-100' : 'text-slate-900'}`}>
         <div className="max-w-[90rem] mx-auto px-4 sm:px-8 mt-6">
         
         {/* Top Header Panel: Breadcrumbs, Search, Layout Controllers */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-[32px] shadow-sm mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white/80 dark:bg-slate-900/80 border border-slate-200/50 dark:border-slate-800/50 p-6 rounded-[32px] shadow-lg backdrop-blur-md mb-8 border-stitch-gold">
           
           {/* Breadcrumbs & Title */}
           <div className="space-y-1">
@@ -689,8 +689,8 @@ const TextileExplorer = () => {
         <div className="flex gap-8 items-start">
           
           {/* Left Sidebar (Sticky Filters) - Hidden on mobile/tablet */}
-          <aside className="hidden lg:block w-72 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] p-6 shadow-sm sticky top-28 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 pb-12">
-            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
+          <aside className="hidden lg:block w-72 bg-white/85 dark:bg-slate-900/85 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] p-6 shadow-lg backdrop-blur-md sticky top-28 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 pb-12 border-stitch">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50 dark:border-slate-800">
               <h3 className="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
                 <FontAwesomeIcon icon={faFilter} className="text-xs text-rose-500" />
                 Refine Search
@@ -744,7 +744,7 @@ const TextileExplorer = () => {
                         <motion.div
                           layout
                           key={textile.id}
-                          className={`glass-panel border border-white/5 dark:border-white/5 bg-white dark:bg-slate-900 rounded-[32px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 group flex ${
+                          className={`glass-panel border border-slate-200/50 dark:border-slate-800/50 bg-white/90 dark:bg-slate-900/90 rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group flex border-stitch ${
                             viewMode === 'grid' ? 'flex-col h-[540px]' : 'flex-col md:flex-row h-auto md:h-80'
                           }`}
                         >
@@ -829,7 +829,7 @@ const TextileExplorer = () => {
 
                             {/* Footer Explore action */}
                             <div className="pt-4 border-t border-slate-100 dark:border-white/5 flex justify-between items-center mt-3">
-                              <span className="text-[9px] font-black uppercase text-emerald-600 bg-emerald-50 dark:bg-emerald-950/20 px-2.5 py-1 rounded-full flex items-center gap-1">
+                              <span className="label-woven text-[8px] border-emerald-500/25 text-emerald-600 dark:text-emerald-400 bg-emerald-50/50 dark:bg-emerald-950/20">
                                 {textile.price_range} Class
                               </span>
                               

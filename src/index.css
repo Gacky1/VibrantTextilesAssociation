@@ -35,10 +35,29 @@ html {
 body {
   font-family: var(--font-family-sans);
   color: #111827;
-  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+
+  /* Textile Linen Background Texture */
+  background-color: #fafaf9; /* Warm stone-50 background */
+  background-image: 
+    linear-gradient(90deg, rgba(120, 110, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(120, 110, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 110, 90, 0.02) 2px, transparent 2px),
+    linear-gradient(0deg, rgba(120, 110, 90, 0.02) 2px, transparent 2px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
+}
+
+body.dark, .dark body {
+  background-color: #0c0a09; /* Dark stone-950 */
+  color: #f3f4f6;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 2px, transparent 2px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.01) 2px, transparent 2px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
 }
 
 /* ===== SCROLLBAR ===== */
@@ -130,11 +149,17 @@ body {
 }
 
 .card {
-  background-color: white;
-  border: 1px solid #f3f4f6;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(243, 244, 246, 0.8);
   border-radius: 1.5rem;
   padding: 2rem;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark .card {
+  background-color: rgba(15, 23, 42, 0.85);
+  border-color: rgba(30, 41, 59, 0.8);
 }
 
 .card:hover {
@@ -182,5 +207,103 @@ body {
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+/* ===== TEXTILE SPECIFIC CLASSES ===== */
+
+/* Global repeating linen texture utility */
+.bg-textile-linen {
+  background-color: #fafaf9;
+  background-image: 
+    linear-gradient(90deg, rgba(120, 110, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(120, 110, 90, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(120, 110, 90, 0.02) 2px, transparent 2px),
+    linear-gradient(0deg, rgba(120, 110, 90, 0.02) 2px, transparent 2px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
+}
+
+.dark .bg-textile-linen {
+  background-color: #0c0a09;
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 2px, transparent 2px),
+    linear-gradient(0deg, rgba(255, 255, 255, 0.01) 2px, transparent 2px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
+}
+
+/* Sewing / Embroidery stitch borders */
+.border-stitch {
+  position: relative;
+}
+.border-stitch::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 2px dashed rgba(225, 29, 72, 0.3);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.dark .border-stitch::after {
+  border-color: rgba(251, 113, 133, 0.35);
+}
+
+.border-stitch-gold {
+  position: relative;
+}
+.border-stitch-gold::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border: 2px dashed rgba(202, 138, 4, 0.45);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.dark .border-stitch-gold::after {
+  border-color: rgba(234, 179, 8, 0.4);
+}
+
+/* Woven Label (looks like clothing tag) */
+.label-woven {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.75rem;
+  background-color: #faf9f6;
+  color: #475569; /* slate-600 */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1px dashed rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.05), 1px 1px 3px rgba(0, 0, 0, 0.05);
+  border-radius: 2px;
+  position: relative;
+}
+.dark .label-woven {
+  background-color: #1c1917; /* stone-900 look */
+  color: #d6d3d1; /* stone-300 */
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.3), 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Hanging thread tassels / fringe divider */
+.fringe-divider {
+  height: 16px;
+  background-image: repeating-linear-gradient(90deg, 
+    #e11d48 0px, #e11d48 2px, 
+    transparent 2px, transparent 6px, 
+    #ca8a04 6px, #ca8a04 8px, 
+    transparent 8px, transparent 12px
+  );
+  width: 100%;
+  opacity: 0.75;
+  position: relative;
+  z-index: 10;
+}
+.dark .fringe-divider {
+  opacity: 0.45;
+}
+
 
 

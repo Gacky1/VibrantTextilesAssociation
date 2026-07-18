@@ -1,0 +1,20 @@
+# AI Coding Guidelines & Project Context
+
+Please read this configuration before generating, modifying, or refactoring code in this project.
+
+## 1. Primary Context File
+- ALWAYS refer to [PROJECT_CONTEXT.md](file:///d:/Project/VibrantTextiles/PROJECT_CONTEXT.md) in the project root for the complete database schemas, file structures, and architecture breakdowns.
+
+## 2. Core Constraints & Styling Rules
+- **Tailwind CSS v4**: This project uses Tailwind CSS v4. Do NOT attempt to create or edit `tailwind.config.js`. All customizations (theme tokens, colors, custom utility classes) are defined in [src/index.css](file:///d:/Project/VibrantTextiles/src/index.css) using the `@theme` block.
+- **Portal Modes**: Keep in mind that the site has two main portals: `industry` and `academy`. Use `const { portalMode, setPortalMode } = usePortal();` from [src/context/PortalContext.jsx](file:///d:/Project/VibrantTextiles/src/context/PortalContext.jsx) to conditionalize menus, headers, and navigation options.
+- **Routing**: This project uses `react-router-dom` v7. Routes are mapped in [src/App.jsx](file:///d:/Project/VibrantTextiles/src/App.jsx). New views should be registered there.
+
+## 3. Database & Supabase Queries
+- **DB Client**: The Supabase client is configured in [src/lib/supabase.js](file:///d:/Project/VibrantTextiles/src/lib/supabase.js).
+- **Asynchronous Safe fetches**: All data fetching functions reside in [src/data/textileDatabase.js](file:///d:/Project/VibrantTextiles/src/data/textileDatabase.js). Always wrap fetches in `try...catch` blocks and supply robust default layouts/fallbacks if fields are empty to prevent client-side failures.
+
+## 4. UI Patterns
+- Use **Framer Motion** for state transitions and card animations.
+- Use **FontAwesomeIcon** for UI icons.
+- Prefer pre-established utility classes like `.glass-panel`, `.glass-card`, `.section-container`, `.btn-primary`, and `.text-gradient` from `index.css`.

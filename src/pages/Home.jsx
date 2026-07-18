@@ -9,10 +9,12 @@ import Footer from '../components/Footer';
 
 const Home = () => {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-textile-linen flex flex-col">
       <Navbar />
       <Hero />
+      <div className="fringe-divider" />
       <JoinOptions />
+      <div className="fringe-divider" />
       <About />
       {/* <Mission /> */}
       {/* <FocusAreas /> */}

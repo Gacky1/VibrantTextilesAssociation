@@ -99,7 +99,7 @@ const TextileDetail = () => {
   const currentRegionPath = regionHighlights[textile.regionName] || "";
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden pt-22 pb-16">
+    <div className="min-h-screen bg-textile-linen font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden pt-22 pb-16">
       <Navbar />
 
       {/* ── Breadcrumbs Panel ── */}
@@ -185,6 +185,7 @@ const TextileDetail = () => {
           <FontAwesomeIcon icon={faArrowLeft} className="group-hover:-translate-x-1 transition-transform" />
         </Link>
       </section>
+      <div className="fringe-divider" />
 
       {/* ── Main content grid: sidebar Table of Contents + central layout + side widgets ── */}
       <div className="max-w-[90rem] mx-auto px-4 sm:px-8 mt-12">
@@ -230,7 +231,7 @@ const TextileDetail = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 
                 {/* Card 1: Material */}
-                <div className="p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[24px] space-y-3">
+                <div className="p-6 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[24px] space-y-3 border-stitch">
                   <span className="text-[10px] font-black uppercase text-emerald-500 bg-emerald-50 dark:bg-emerald-950/20 px-3 py-1 rounded-full">Material</span>
                   <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{textile.material?.name}</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
@@ -239,7 +240,7 @@ const TextileDetail = () => {
                 </div>
 
                 {/* Card 2: Technique */}
-                <div className="p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[24px] space-y-3">
+                <div className="p-6 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[24px] space-y-3 border-stitch">
                   <span className="text-[10px] font-black uppercase text-indigo-500 bg-indigo-50 dark:bg-indigo-950/20 px-3 py-1 rounded-full">Technique</span>
                   <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{textile.technique?.name}</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
@@ -248,7 +249,7 @@ const TextileDetail = () => {
                 </div>
 
                 {/* Card 3: Categories */}
-                <div className="p-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[24px] space-y-3">
+                <div className="p-6 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[24px] space-y-3 border-stitch">
                   <span className="text-[10px] font-black uppercase text-rose-500 bg-rose-50 dark:bg-rose-950/20 px-3 py-1 rounded-full">Products</span>
                   <h4 className="font-extrabold text-base text-slate-800 dark:text-white">{textile.categoryName}s</h4>
                   <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
@@ -264,7 +265,7 @@ const TextileDetail = () => {
               <h2 className="text-3xl font-black tracking-tight text-slate-900 dark:text-white pb-3 border-b border-slate-100 dark:border-slate-800">
                 History & Origin
               </h2>
-              <div className="p-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] space-y-6">
+              <div className="p-8 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] space-y-6 border-stitch">
                 <div className="border-l-4 border-rose-500 pl-6 space-y-4">
                   <p className="text-slate-600 dark:text-slate-300 text-lg leading-relaxed font-semibold italic">
                     "{textile.history}"
@@ -287,7 +288,7 @@ const TextileDetail = () => {
               <div className="space-y-6">
                 
                 {/* 1. Weaving Process */}
-                <div className="p-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] flex flex-col md:flex-row gap-8">
+                <div className="p-8 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] flex flex-col md:flex-row gap-8 border-stitch">
                   <div className="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/20 text-indigo-500 flex items-center justify-center text-xl font-bold flex-shrink-0">
                     W
                   </div>
@@ -300,7 +301,7 @@ const TextileDetail = () => {
                 </div>
 
                 {/* 2. Dyeing Process */}
-                <div className="p-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] flex flex-col md:flex-row gap-8">
+                <div className="p-8 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] flex flex-col md:flex-row gap-8 border-stitch">
                   <div className="h-12 w-12 rounded-2xl bg-rose-50 dark:bg-rose-950/20 text-rose-500 flex items-center justify-center text-xl font-bold flex-shrink-0">
                     D
                   </div>
@@ -323,14 +324,14 @@ const TextileDetail = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Motifs Card */}
-                <div className="p-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] space-y-4">
+                <div className="p-8 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] space-y-4 border-stitch">
                   <h4 className="font-extrabold text-lg text-slate-800 dark:text-white">Signature Motifs</h4>
                   <p className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
                     Symbolic patterns represent cultural values, local flora, fauna, and geometric structures.
                   </p>
                   <div className="flex flex-wrap gap-2 pt-2">
                     {textile.motifs?.map(mot => (
-                      <span key={mot} className="text-xs font-bold px-3.5 py-1.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-700 dark:text-slate-300">
+                      <span key={mot} className="text-xs font-bold px-3.5 py-1.5 rounded-xl bg-slate-55/60 dark:bg-slate-800/60 border border-slate-200/50 dark:border-slate-700 text-slate-700 dark:text-slate-300">
                         {mot}
                       </span>
                     ))}
@@ -338,14 +339,14 @@ const TextileDetail = () => {
                 </div>
 
                 {/* Color Swatches Card */}
-                <div className="p-8 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-[32px] space-y-4">
+                <div className="p-8 bg-white/90 dark:bg-slate-900/90 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] space-y-4 border-stitch">
                   <h4 className="font-extrabold text-lg text-slate-800 dark:text-white">Heritage Color Palette</h4>
                   <p className="text-xs text-slate-400 dark:text-slate-500 leading-relaxed">
                     A collection of traditional colors representing regional dyes and metallic threads.
                   </p>
                   <div className="grid grid-cols-2 gap-3 pt-2">
                     {textile.color_palette?.map(col => (
-                      <div key={col.name} className="flex items-center gap-2.5 p-2 rounded-xl border border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50">
+                      <div key={col.name} className="flex items-center gap-2.5 p-2 rounded-xl border border-slate-200/50 dark:border-white/5 bg-slate-50/50 dark:bg-slate-800/50">
                         <span className="h-7 w-7 rounded-lg shadow-inner flex-shrink-0" style={{ backgroundColor: col.hex }} />
                         <div className="min-w-0">
                           <p className="text-[10px] font-extrabold text-slate-800 dark:text-white truncate leading-tight">{col.name}</p>
