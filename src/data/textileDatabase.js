@@ -227,13 +227,16 @@ export const getRelatedTextiles = async (textileId, limit = 3) => {
     const list = textiles.filter(t => t.id !== textileId && (t.state === current.state || t.material === current.material));
     const results = list.length >= limit ? list : [...list, ...textiles.filter(t => t.id !== textileId && !list.find(l => l.id === t.id))];
 
-    return results.slice(0, limit).map(t => ({
-      ...t,
-      stateName: t.state,
-      materialName: t.material,
-      techniqueName: t.technique,
-      thumbnail: t.thumbnail || 'https://images.unsplash.com/photo-1582142401825-783286395b4f?q=80&w=600&auto=format&fit=crop'
-    }));
+    return results.slice(0, limit).map(t => {
+      const localImgs = getLocalImages(t.name, t.material, t.thumbnail, t.hero_image);
+      return {
+        ...t,
+        stateName: t.state,
+        materialName: t.material,
+        techniqueName: t.technique,
+        thumbnail: localImgs.thumbnail
+      };
+    });
   } catch (err) {
     console.error("Error in getRelatedTextiles:", err);
     return [];

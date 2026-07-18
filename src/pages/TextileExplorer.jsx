@@ -15,17 +15,14 @@ import { getAllTextiles, regions, states } from '../data/textileDatabase';
 const TextileExplorer = () => {
   // Theme state
   const [isDarkMode, setIsDarkMode] = useState(() => {
-    return document.documentElement.classList.contains('dark') || 
-           localStorage.getItem('vta_theme') === 'dark';
+    return localStorage.getItem('vta_theme') === 'dark';
   });
 
   // Toggle Dark Mode
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
       localStorage.setItem('vta_theme', 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
       localStorage.setItem('vta_theme', 'light');
     }
   }, [isDarkMode]);
@@ -592,10 +589,11 @@ const TextileExplorer = () => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300 overflow-x-hidden pt-24 pb-16">
+    <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden flex flex-col">
       <Navbar />
 
-      <div className="max-w-[90rem] mx-auto px-4 sm:px-8 mt-6">
+      <div className={`flex-1 pt-24 pb-16 transition-colors duration-300 ${isDarkMode ? 'dark bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-8 mt-6">
         
         {/* Top Header Panel: Breadcrumbs, Search, Layout Controllers */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-6 rounded-[32px] shadow-sm mb-8">
@@ -936,6 +934,7 @@ const TextileExplorer = () => {
           </div>
         )}
       </AnimatePresence>
+      </div>
 
       <Footer />
     </div>

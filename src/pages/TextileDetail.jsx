@@ -570,6 +570,9 @@ const TextileDetail = () => {
                         src={rel.thumbnail}
                         alt={rel.name}
                         className="w-full h-full object-cover group-hover:scale-103 transition-transform"
+                        onError={(e) => {
+                          e.target.src = "/assets/textiles/banarasi_silk.png";
+                        }}
                       />
                     </div>
                     <div className="p-4 space-y-1">
