@@ -305,6 +305,16 @@ body.dark, .dark body {
   opacity: 0.45;
 }
 
+/* Native nested scrolling for admin panels and modal surfaces. */
+[data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+[data-lenis-prevent] [class*="overflow-y-auto"] {
+  touch-action: pan-y;
+  scrollbar-gutter: stable;
+}
+
 /* ===== ANIMATED SEWING-THREAD HOVER STYLES ===== */
 .nav-thread-rose, .nav-thread-gold {
   position: relative;
@@ -344,6 +354,13 @@ body.dark, .dark body {
   width: 100%;
 }
 
-
-
-
+/* Dark Textile Linen Weave (Canvas look for headers/hero banners) */
+.bg-textile-linen-dark {
+  background-color: #0c0a09; /* stone-950 base */
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 3px, transparent 3px),
+    linear-gradient(rgba(255, 255, 255, 0.01) 3px, transparent 3px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
+}

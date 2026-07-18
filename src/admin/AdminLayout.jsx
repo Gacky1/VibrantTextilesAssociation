@@ -4,8 +4,10 @@ import { supabase } from '../lib/supabase';
 
 const navItems = [
   { to: '/admin/marketplace', label: 'Marketplace', icon: '◆' },
+  { to: '/admin/textiles', label: 'Textile Explorer', icon: '◈' },
   { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
-  { to: '/admin/members', label: 'Members', icon: '👥' },
+  { to: '/admin/members', label: 'Partner Verification', icon: '✓' },
+  { to: '/admin/council-members', label: 'Council Registry', icon: '👥' },
   { to: '/admin/events', label: 'Events', icon: '📅' },
   { to: '/admin/skill-dev', label: 'Skill Dev', icon: '🎓' },
   { to: '/admin/research', label: 'Research', icon: '🔬' },
@@ -25,7 +27,7 @@ const AdminLayout = () => {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 font-sans overflow-hidden">
+    <div data-lenis-prevent className="flex h-screen bg-gray-100 font-sans overflow-hidden">
       {/* Sidebar */}
       <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} flex-shrink-0 bg-gray-900 flex flex-col transition-all duration-300`}>
         {/* Logo */}

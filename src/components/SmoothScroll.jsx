@@ -16,6 +16,9 @@ function SmoothScroll({ children }) {
       smoothTouch: false,
       touchMultiplier: 2,
       infinite: false,
+      // Admin panels and dialogs use native overflow containers. Let wheel and
+      // touch gestures reach them instead of being captured by page smoothing.
+      prevent: (node) => Boolean(node.closest?.('[data-lenis-prevent]')),
     });
 
     let rafId;

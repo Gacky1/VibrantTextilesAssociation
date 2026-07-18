@@ -10,7 +10,39 @@ const getPreviewProducts = (filters = {}) => previewMarketplaceProducts.filter((
 });
 
 const productSelect = `*, marketplace_categories(name,slug), industry_members(id,organization_name,slug,logo_url,city,state,verification_status)`;
-export async function getMarketplaceProducts(filters = {}) { if (!isMarketplaceSchemaReady) return ok(getPreviewProducts(filters)); try { let query = supabase.from('marketplace_products').select(productSelect).eq('status','published').order('is_featured',{ascending:false}).order('published_at',{ascending:false}); if(filters.search) query=query.textSearch('search_vector',filters.search,{type:'websearch'}); if(filters.category) query=query.eq('marketplace_categories.slug',filters.category); if(filters.material) query=query.contains('materials',[filters.material]); if(filters.state) query=query.eq('origin_state',filters.state); if(filters.featured) query=query.eq('is_featured',true); const {data,error}=await query.range(filters.from||0,filters.to||23); if(error) throw error; return ok(data||[]); } catch(error){ return fail(error); } }
+export async function getMarketplaceProducts(filters = {}) {
+  if (!isMarketplaceSchemaReady) return ok(getPreviewProducts(filters));
+  try {
+    const activeSelect = `*, marketplace_categories${filters.category ? '!inner' : ''}(name,slug), industry_members(id,organization_name,slug,logo_url,city,state,verification_status)`;
+    let query = supabase.from('marketplace_products')
+      .select(activeSelect)
+      .eq('status', 'published')
+      .order('is_featured', { ascending: false })
+      .order('published_at', { ascending: false });
+
+    if (filters.search) {
+      const term = `%${filters.search}%`;
+      query = query.or(`name.ilike.${term},short_description.ilike.${term},material.ilike.${term}`);
+    }
+    if (filters.category) {
+      query = query.eq('marketplace_categories.slug', filters.category);
+    }
+    if (filters.material) {
+      query = query.contains('materials', [filters.material]);
+    }
+    if (filters.state) {
+      query = query.eq('origin_state', filters.state);
+    }
+    if (filters.featured) {
+      query = query.eq('is_featured', true);
+    }
+    const { data, error } = await query.range(filters.from || 0, filters.to || 23);
+    if (error) throw error;
+    return ok(data || []);
+  } catch (error) {
+    return fail(error);
+  }
+}
 export async function getMarketplaceProductBySlug(slug){ if (!isMarketplaceSchemaReady) return ok(previewMarketplaceProducts.find((product)=>product.slug===slug)||null); try { const {data,error}=await supabase.from('marketplace_products').select(`${productSelect}, marketplace_product_images(*), marketplace_product_specifications(*), marketplace_product_documents(*)`).eq('slug',slug).eq('status','published').maybeSingle(); if(error) throw error; return ok(data); } catch(error){return fail(error);} }
 export async function getMarketplaceCategories(){ if (!isMarketplaceSchemaReady) return ok(previewMarketplaceCategories); try{const {data,error}=await supabase.from('marketplace_categories').select('*').eq('is_active',true).order('sort_order');if(error)throw error;return ok(data||[]);}catch(error){return fail(error);} }
 export const getFeaturedProducts=()=>getMarketplaceProducts({featured:true,to:7});

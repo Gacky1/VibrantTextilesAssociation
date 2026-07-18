@@ -122,6 +122,36 @@ export const getAllTextiles = async () => {
   }
 };
 
+// Live explorer payload: catalog plus filter metadata from Supabase.
+// Static constants are retained only as a resilient fallback for older deployments.
+export const getTextileExplorerData = async () => {
+  try {
+    const [textilesResult, regionsResult, statesResult] = await Promise.all([
+      supabase.from('textiles').select('*').order('id'),
+      supabase.from('regions').select('*').order('id'),
+      supabase.from('states').select('*').order('name'),
+    ]);
+    if (textilesResult.error) throw textilesResult.error;
+    if (regionsResult.error) throw regionsResult.error;
+    if (statesResult.error) throw statesResult.error;
+    const liveRegions = regionsResult.data || [];
+    const liveStates = statesResult.data || [];
+    const normalized = (textilesResult.data || []).map((textile) => {
+      const state = liveStates.find((item) => item.name === textile.state);
+      const region = liveRegions.find((item) => item.id === state?.region_id);
+      const images = getLocalImages(textile.name, textile.material, textile.thumbnail, textile.hero_image);
+      return { ...textile, regionName: region?.name || 'Other', stateName: textile.state, cityName: textile.city,
+        materialName: textile.material, techniqueName: textile.technique, categoryName: textile.category,
+        gi_tag: Boolean(textile.gi_tag), popularity_score: textile.popularity_score || 8.5,
+        price_range: textile.price_range || 'Mid', thumbnail: images.thumbnail };
+    });
+    return { data: normalized, regions: liveRegions.length ? liveRegions : regions,
+      states: liveStates.length ? liveStates : states, error: null, success: true };
+  } catch (error) {
+    return { data: [], regions, states, error: error.message || 'Unable to load Textile Explorer', success: false };
+  }
+};
+
 // 5. Async Fetch a single textile detail by slug
 export const getTextileBySlug = async (slug) => {
   try {

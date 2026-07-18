@@ -4,13 +4,25 @@
 
 1. Apply the existing `supabase_schema.sql` and `supabase_textiles_setup.sql` migrations.
 2. In the Supabase SQL editor, run `supabase_marketplace_setup.sql` once.
-3. Keep `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`. Never add a service-role key to Vite.
-4. After the migration succeeds, set `VITE_MARKETPLACE_SCHEMA_READY=true` and restart Vite. Until then, the catalog uses explicit local preview records and does not request missing marketplace tables.
-5. Build with `npm run build` and deploy the generated `dist` directory.
+3. Run `supabase_verification_upgrade.sql` to enable buyer verification and the admin verification operations.
+4. Run `supabase_textile_admin_upgrade.sql` to let Master Admin manage Textile Explorer records under RLS.
+5. Keep `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`. Never add a service-role key to Vite.
+6. After the migration succeeds, set `VITE_MARKETPLACE_SCHEMA_READY=true` and restart Vite. Until then, the catalog uses explicit local preview records and does not request missing marketplace tables.
+7. Build with `npm run build` and deploy the generated `dist` directory.
 
 ## Demo data
 
 Create a Supabase Auth user with email `marketplace.demo@vta.local`, then run `supabase_marketplace_seed.sql`. The rerunnable seed promotes only that dedicated account to `industry_member` and creates a verified supplier, three published products, categories, specifications, pricing examples and marketplace metrics.
+
+## Admin-created accounts
+
+Deploy the secure Edge Function used by **Partner Verification → Create account**:
+
+```bash
+supabase functions deploy admin-create-account
+```
+
+Supabase supplies `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. Never add the service-role key to `.env` or frontend code. The function independently verifies that the caller has an active `master_admin` profile before creating an Auth user, profile, optional industry-member record, and audit log.
 
 The migration creates profile/member/catalog/enquiry/quotation/notification/audit tables, indexes, the Auth-to-profile trigger, RLS policies, seven storage buckets, and category seed records. Public buckets are limited to product and member presentation assets. Attachments, quotations, product documents, and verification documents remain private and should be accessed using short-lived signed URLs.
 

@@ -10,7 +10,7 @@ import {
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import InteractiveIndiaMap from '../components/InteractiveIndiaMap';
-import { getAllTextiles, regions, states } from '../data/textileDatabase';
+import { getTextileExplorerData, regions as fallbackRegions, states as fallbackStates } from '../data/textileDatabase';
 
 const TextileExplorer = () => {
   // Theme state
@@ -71,13 +71,19 @@ const TextileExplorer = () => {
   // Get full textile list from Supabase database
   const [allTextiles, setAllTextiles] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [loadError, setLoadError] = useState('');
+  const [explorerRegions, setExplorerRegions] = useState(fallbackRegions);
+  const [explorerStates, setExplorerStates] = useState(fallbackStates);
 
   useEffect(() => {
     const fetchTextiles = async () => {
       try {
         setIsLoading(true);
-        const data = await getAllTextiles();
-        setAllTextiles(data);
+        const result = await getTextileExplorerData();
+        setAllTextiles(result.data || []);
+        setExplorerRegions(result.regions || fallbackRegions);
+        setExplorerStates(result.states || fallbackStates);
+        setLoadError(result.error || '');
       } catch (err) {
         console.error("Error loading textiles:", err);
       } finally {
@@ -118,10 +124,10 @@ const TextileExplorer = () => {
 
   // States list filtered by selected Region
   const filteredStatesList = useMemo(() => {
-    if (!selectedRegion) return states;
-    const regionObj = regions.find(r => r.id === selectedRegion || r.name === selectedRegion);
-    return states.filter(s => s.region_id === regionObj?.id);
-  }, [selectedRegion]);
+    if (!selectedRegion) return explorerStates;
+    const regionObj = explorerRegions.find(r => r.id === selectedRegion || r.name === selectedRegion);
+    return explorerStates.filter(s => s.region_id === regionObj?.id);
+  }, [selectedRegion, explorerRegions, explorerStates]);
 
   // Cities list filtered by selected State
   const filteredCitiesList = useMemo(() => {
@@ -289,7 +295,7 @@ const TextileExplorer = () => {
                 className="w-full text-xs font-semibold px-3 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 rounded-xl focus:ring-2 focus:ring-rose-500/20 focus:outline-none"
               >
                 <option value="">All Regions</option>
-                {regions.map(r => (
+                {explorerRegions.map(r => (
                   <option key={r.id} value={r.name}>{r.name}</option>
                 ))}
               </select>
@@ -721,6 +727,12 @@ const TextileExplorer = () => {
                 <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
                   Loading Live Textiles from Database...
                 </p>
+              </div>
+            ) : loadError ? (
+              <div className="rounded-2xl border border-red-200 bg-red-50 p-8 text-center">
+                <h3 className="font-black text-red-800">Textile database unavailable</h3>
+                <p className="mt-2 text-sm text-red-600">{loadError}</p>
+                <button onClick={() => window.location.reload()} className="mt-4 rounded-full bg-red-700 px-5 py-2 text-xs font-bold text-white">Retry</button>
               </div>
             ) : (
               <>

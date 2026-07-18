@@ -30,9 +30,13 @@ import { PortalProvider } from './context/PortalContext';
 import Marketplace from './pages/Marketplace';
 import MarketplaceProduct from './pages/MarketplaceProduct';
 import MarketplaceSupplier from './pages/MarketplaceSupplier';
-import { AccountHome, AccountLogin, AccountStatus, MemberHome, Unauthorized } from './pages/AccountPages';
-import { IndustryMemberRoute, UserRoute } from './auth/RoleRoutes';
+import { AccountHome, AccountLogin, AccountStatus, BuyerVerification, MemberHome, Unauthorized } from './pages/AccountPages';
+import { IndustryMemberRoute, RoleProtectedRoute, UserRoute } from './auth/RoleRoutes';
 import AdminMarketplace from './admin/AdminMarketplace';
+import AdminAccountRegistry from './admin/AdminAccountRegistry';
+import AdminTextiles from './admin/AdminTextiles';
+import { MemberEnquiries, MemberProducts, MemberProfile, MemberQuotations, MemberVerification } from './pages/MemberPortalPages';
+import { BuyerEnquiries, BuyerQuotations, BuyerSavedProducts, NewBuyerEnquiry } from './pages/BuyerMarketplacePages';
 
 function App() {
   return (
@@ -58,9 +62,19 @@ function App() {
         <Route path="/marketplace/suppliers/:slug" element={<MarketplaceSupplier />} />
         <Route path="/account/login" element={<AccountLogin />} />
         <Route path="/account/status" element={<AccountStatus />} />
+        <Route path="/account/verification" element={<RoleProtectedRoute roles={['user']}><BuyerVerification /></RoleProtectedRoute>} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/account" element={<UserRoute><AccountHome /></UserRoute>} />
+        <Route path="/account/enquiries" element={<UserRoute><BuyerEnquiries /></UserRoute>} />
+        <Route path="/account/enquiries/new" element={<UserRoute><NewBuyerEnquiry /></UserRoute>} />
+        <Route path="/account/quotations" element={<UserRoute><BuyerQuotations /></UserRoute>} />
+        <Route path="/account/saved" element={<UserRoute><BuyerSavedProducts /></UserRoute>} />
         <Route path="/member" element={<IndustryMemberRoute><MemberHome /></IndustryMemberRoute>} />
+        <Route path="/member/products" element={<IndustryMemberRoute><MemberProducts /></IndustryMemberRoute>} />
+        <Route path="/member/enquiries" element={<IndustryMemberRoute><MemberEnquiries /></IndustryMemberRoute>} />
+        <Route path="/member/quotations" element={<IndustryMemberRoute><MemberQuotations /></IndustryMemberRoute>} />
+        <Route path="/member/profile" element={<IndustryMemberRoute><MemberProfile /></IndustryMemberRoute>} />
+        <Route path="/member/verification" element={<IndustryMemberRoute><MemberVerification /></IndustryMemberRoute>} />
 
         {/* ── Admin Routes ── */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -76,7 +90,9 @@ function App() {
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="marketplace" element={<AdminMarketplace />} />
-          <Route path="members" element={<AdminMembers />} />
+          <Route path="textiles" element={<AdminTextiles />} />
+          <Route path="members" element={<AdminAccountRegistry />} />
+          <Route path="council-members" element={<AdminMembers />} />
           <Route path="events" element={<AdminEvents />} />
           <Route path="media" element={<AdminMedia />} />
           <Route path="press" element={<AdminPress />} />

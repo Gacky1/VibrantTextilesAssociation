@@ -58,7 +58,8 @@ export function AuthProvider({ children }) {
 
   const value = useMemo(() => ({
     user, profile, role: profile?.role ?? null, accountStatus: profile?.account_status ?? null,
-    memberProfile, memberVerificationStatus: memberProfile?.verification_status ?? null, loading,
+    memberProfile, memberVerificationStatus: memberProfile?.verification_status ?? null,
+    buyerVerificationStatus: profile?.buyer_verification_status ?? null, loading,
     signIn,
     signUp: (email, password, fullName) => supabase.auth.signUp({ email, password, options: { data: { full_name: fullName } } }),
     signOut: () => supabase.auth.signOut(), refreshProfile: () => loadProfile(user),
@@ -66,6 +67,7 @@ export function AuthProvider({ children }) {
     isMasterAdmin: profile?.role === 'master_admin',
     isIndustryMember: profile?.role === 'industry_member',
     isVerifiedIndustryMember: profile?.role === 'industry_member' && memberProfile?.verification_status === 'verified',
+    isVerifiedBuyer: profile?.role === 'user' && profile?.buyer_verification_status === 'verified',
   }), [user, profile, memberProfile, loading, loadProfile, signIn]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
