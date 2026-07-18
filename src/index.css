@@ -305,5 +305,45 @@ body.dark, .dark body {
   opacity: 0.45;
 }
 
+/* ===== ANIMATED SEWING-THREAD HOVER STYLES ===== */
+.nav-thread-rose, .nav-thread-gold {
+  position: relative;
+}
+
+.nav-thread-rose::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, 
+    #e11d48 0px, #e11d48 4px, 
+    transparent 4px, transparent 7px
+  );
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-thread-rose:hover::after {
+  width: 100%;
+}
+
+.nav-thread-gold::after {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-image: repeating-linear-gradient(90deg, 
+    #ca8a04 0px, #ca8a04 4px, 
+    transparent 4px, transparent 7px
+  );
+  transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.nav-thread-gold:hover::after {
+  width: 100%;
+}
+
+
 
 

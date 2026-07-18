@@ -27,6 +27,12 @@ import AdminResearch from './admin/AdminResearch';
 import ProtectedRoute from './admin/ProtectedRoute';
 import SmoothScroll from './components/SmoothScroll';
 import { PortalProvider } from './context/PortalContext';
+import Marketplace from './pages/Marketplace';
+import MarketplaceProduct from './pages/MarketplaceProduct';
+import MarketplaceSupplier from './pages/MarketplaceSupplier';
+import { AccountHome, AccountLogin, AccountStatus, MemberHome, Unauthorized } from './pages/AccountPages';
+import { IndustryMemberRoute, UserRoute } from './auth/RoleRoutes';
+import AdminMarketplace from './admin/AdminMarketplace';
 
 function App() {
   return (
@@ -47,6 +53,14 @@ function App() {
         <Route path="/membership" element={<Membership />} />
         <Route path="/textile-explorer" element={<TextileExplorer />} />
         <Route path="/textile-explorer/:slug" element={<TextileDetail />} />
+        <Route path="/marketplace" element={<Marketplace />} />
+        <Route path="/marketplace/products/:slug" element={<MarketplaceProduct />} />
+        <Route path="/marketplace/suppliers/:slug" element={<MarketplaceSupplier />} />
+        <Route path="/account/login" element={<AccountLogin />} />
+        <Route path="/account/status" element={<AccountStatus />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route path="/account" element={<UserRoute><AccountHome /></UserRoute>} />
+        <Route path="/member" element={<IndustryMemberRoute><MemberHome /></IndustryMemberRoute>} />
 
         {/* ── Admin Routes ── */}
         <Route path="/admin/login" element={<AdminLogin />} />
@@ -61,6 +75,7 @@ function App() {
         >
           <Route index element={<Navigate to="/admin/dashboard" replace />} />
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="marketplace" element={<AdminMarketplace />} />
           <Route path="members" element={<AdminMembers />} />
           <Route path="events" element={<AdminEvents />} />
           <Route path="media" element={<AdminMedia />} />

@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faTimes, faChevronRight, faChevronDown, faBuilding, faGraduationCap } from '@fortawesome/free-solid-svg-icons';
 import logo from '../assets/VTC TRANSPARENT.svg';
 import { usePortal } from '../context/PortalContext';
+import SignInMenu from './auth/SignInMenu';
 
 const Navbar = () => {
   const { portalMode, setPortalMode } = usePortal();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null); // 'academy', 'news_events', or null
   const dropdownRef = useRef(null);
   const location = useLocation();
 
@@ -30,14 +31,14 @@ const Navbar = () => {
   // Close mobile and desktop dropdowns on route changes
   useEffect(() => {
     setIsMobileMenuOpen(false);
-    setIsDropdownOpen(false);
+    setActiveDropdown(null);
   }, [location.pathname, portalMode]);
 
-  // Click outside listener to close dropdown
+  // Click outside listener to close dropdowns
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        setIsDropdownOpen(false);
+        setActiveDropdown(null);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
@@ -45,13 +46,21 @@ const Navbar = () => {
   }, []);
 
   // Define Navbar options dynamically based on active Portal Mode
-  const industryNavItems = [
+  const industryDirectItems = [
     { name: 'Industry', path: '/about-textile' },
     { name: 'Textile Explorer', path: '/textile-explorer' },
-    { name: 'Cluster', path: '/members' },
-    { name: 'Events/Media', path: '/events' },
-    { name: 'News', path: '/media' },
-    { name: 'Research & Publications', path: '/research' },
+    { name: 'Marketplace', path: '/marketplace' },
+    { name: 'Research', path: '/research' },
+  ];
+
+  const academyDirectItems = [
+    { name: 'Textile Explorer', path: '/textile-explorer' },
+    { name: 'Research', path: '/research' },
+  ];
+
+  const newsDropdownItems = [
+    { name: 'Events & Exhibitions', path: '/events' },
+    { name: 'News & Press Releases', path: '/media' },
   ];
 
   // For Academy, group related items into a dropdown to prevent crowding/overflow
@@ -62,13 +71,6 @@ const Navbar = () => {
     { name: 'Upskilling', path: '/skill-development' },
     { name: 'Apprenticeships', path: '/skill-development' },
     { name: 'Placement', path: '/skill-development' },
-  ];
-
-  const academyGeneralItems = [
-    { name: 'Textile Explorer', path: '/textile-explorer' },
-    { name: 'Event/Media', path: '/events' },
-    { name: 'Research', path: '/research' },
-    { name: 'News', path: '/media' },
   ];
 
   return (
@@ -86,7 +88,7 @@ const Navbar = () => {
                 className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
               />
               {/* English/Hindi transition loop wrapper */}
-              <div className="flex flex-col justify-center overflow-hidden h-[36px] relative min-w-[110px] sm:min-w-[155px]">
+              <div className="flex flex-col justify-center overflow-hidden h-[42px] relative min-w-[110px] sm:min-w-[155px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={textIndex}
@@ -110,7 +112,7 @@ const Navbar = () => {
             </Link>
 
             {/* Desktop Nav Items */}
-            <div className="hidden xl:flex items-center gap-6">
+            <div className="hidden xl:flex items-center gap-4 2xl:gap-6" ref={dropdownRef}>
               <AnimatePresence mode="wait">
                 <motion.div 
                   key={portalMode}
@@ -118,55 +120,156 @@ const Navbar = () => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 4 }}
                   transition={{ duration: 0.2 }}
-                  className="flex items-center gap-6"
+                  className="flex items-center gap-4 2xl:gap-6"
                 >
                   {portalMode === 'industry' ? (
                     // Industry Menu Links
-                    industryNavItems.map((item) => {
-                      const isActive = location.pathname === item.path;
-                      return (
-                        <Link
-                          key={item.name}
-                          to={item.path}
-                          className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors relative py-2 ${
-                            isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
-                          }`}
-                        >
-                          {item.name}
-                          {isActive && (
-                            <motion.div 
-                              layoutId="activeNavLine"
-                              className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
-                            />
-                          )}
-                        </Link>
-                      );
-                    })
-                  ) : (
-                    // Academy Menu with compact Dropdown
                     <>
-                      {/* Academics & Skilling Dropdown */}
-                      <div className="relative" ref={dropdownRef}>
+                      <Link
+                        to="/about-textile"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                          location.pathname === '/about-textile' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Industry
+                        {location.pathname === '/about-textile' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-amber-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
+
+                      <Link
+                        to="/textile-explorer"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                          location.pathname === '/textile-explorer' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Textile Explorer
+                        {location.pathname === '/textile-explorer' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-amber-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
+
+                      <Link
+                        to="/marketplace"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                          location.pathname === '/marketplace' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Marketplace
+                        {location.pathname === '/marketplace' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-amber-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
+
+                      {/* News & Events Dropdown */}
+                      <div className="relative">
                         <button
-                          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                          className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none ${
-                            isDropdownOpen || academyDropdownItems.some(item => location.pathname === item.path)
-                              ? 'text-rose-600' 
+                          onClick={() => setActiveDropdown(activeDropdown === 'news_events' ? null : 'news_events')}
+                          className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-gold ${
+                            activeDropdown === 'news_events' || newsDropdownItems.some(item => location.pathname === item.path)
+                              ? 'text-amber-600' 
                               : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                           }`}
                         >
-                          Academics & Skilling
-                          <FontAwesomeIcon icon={faChevronDown} className={`text-[10px] transition-transform duration-350 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                          News & Events
+                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'news_events' ? 'rotate-180' : ''}`} />
                         </button>
-
                         <AnimatePresence>
-                          {isDropdownOpen && (
+                          {activeDropdown === 'news_events' && (
                             <motion.div
                               initial={{ opacity: 0, y: 10, scale: 0.95 }}
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute left-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50"
+                              className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch-gold"
+                            >
+                              {newsDropdownItems.map((item) => {
+                                const isActive = location.pathname === item.path;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    onClick={() => setActiveDropdown(null)}
+                                    className={`block text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all ${
+                                      isActive 
+                                        ? 'bg-amber-50 dark:bg-amber-950/20 text-amber-600' 
+                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                                    }`}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      <Link
+                        to="/research"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                          location.pathname === '/research' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Research
+                        {location.pathname === '/research' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-amber-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
+                    </>
+                  ) : (
+                    // Academy Menu with compact Dropdown
+                    <>
+                      {/* Academics & Skilling Dropdown */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setActiveDropdown(activeDropdown === 'academy' ? null : 'academy')}
+                          className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
+                            activeDropdown === 'academy' || academyDropdownItems.some(item => location.pathname === item.path)
+                              ? 'text-rose-600' 
+                              : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                          }`}
+                        >
+                          Academics & Skilling
+                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'academy' ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {activeDropdown === 'academy' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.18 }}
+                              className="absolute left-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
                             >
                               {academyDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
@@ -174,7 +277,7 @@ const Navbar = () => {
                                   <Link
                                     key={item.name}
                                     to={item.path}
-                                    onClick={() => setIsDropdownOpen(false)}
+                                    onClick={() => setActiveDropdown(null)}
                                     className={`block text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all ${
                                       isActive 
                                         ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-600' 
@@ -190,27 +293,87 @@ const Navbar = () => {
                         </AnimatePresence>
                       </div>
 
-                      {/* Academy General Items */}
-                      {academyGeneralItems.map((item) => {
-                        const isActive = location.pathname === item.path;
-                        return (
-                          <Link
-                            key={item.name}
-                            to={item.path}
-                            className={`text-[12px] font-extrabold uppercase tracking-wider transition-colors relative py-2 ${
-                              isActive ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-355 dark:hover:text-white'
-                            }`}
-                          >
-                            {item.name}
-                            {isActive && (
-                              <motion.div 
-                                layoutId="activeNavLine"
-                                className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
-                              />
-                            )}
-                          </Link>
-                        );
-                      })}
+                      <Link
+                        to="/textile-explorer"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
+                          location.pathname === '/textile-explorer' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Textile Explorer
+                        {location.pathname === '/textile-explorer' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
+
+                      {/* News & Events Dropdown for Academy */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setActiveDropdown(activeDropdown === 'news_events' ? null : 'news_events')}
+                          className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
+                            activeDropdown === 'news_events' || newsDropdownItems.some(item => location.pathname === item.path)
+                              ? 'text-rose-600' 
+                              : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                          }`}
+                        >
+                          News & Events
+                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'news_events' ? 'rotate-180' : ''}`} />
+                        </button>
+                        <AnimatePresence>
+                          {activeDropdown === 'news_events' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.18 }}
+                              className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
+                            >
+                              {newsDropdownItems.map((item) => {
+                                const isActive = location.pathname === item.path;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    onClick={() => setActiveDropdown(null)}
+                                    className={`block text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all ${
+                                      isActive 
+                                        ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-600' 
+                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                                    }`}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      <Link
+                        to="/research"
+                        className={`whitespace-nowrap text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
+                          location.pathname === '/research' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        }`}
+                      >
+                        Research
+                        {location.pathname === '/research' && (
+                          <motion.div 
+                            layoutId="activeNavLine"
+                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
+                            style={{
+                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
+                              backgroundColor: 'transparent'
+                            }}
+                          />
+                        )}
+                      </Link>
                     </>
                   )}
                 </motion.div>
@@ -218,7 +381,7 @@ const Navbar = () => {
             </div>
 
             {/* Right Column: Dynamic Portal Switcher Toggle + Action Button */}
-            <div className="hidden lg:flex items-center gap-6 flex-shrink-0">
+            <div className="hidden lg:flex items-center gap-3 2xl:gap-6 flex-shrink-0 ml-6 2xl:ml-10">
               
               {/* Dual-Portal Selector Toggle Capsule */}
               <div className="flex items-center bg-slate-100 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-full p-1 shadow-inner relative">
@@ -226,7 +389,7 @@ const Navbar = () => {
                 {/* Industry portal toggle */}
                 <button
                   onClick={() => setPortalMode('industry')}
-                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 relative z-10 focus:outline-none ${
+                  className={`flex items-center gap-1.5 px-3 2xl:px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
                     portalMode === 'industry' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -237,7 +400,7 @@ const Navbar = () => {
                 {/* Academy portal toggle */}
                 <button
                   onClick={() => setPortalMode('academy')}
-                  className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider transition-all duration-300 relative z-10 focus:outline-none ${
+                  className={`flex items-center gap-1.5 px-3 2xl:px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
                     portalMode === 'academy' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
@@ -260,9 +423,11 @@ const Navbar = () => {
 
               </div>
 
+              <SignInMenu />
+
               {/* Join VTA Solid Action */}
               <Link to="/membership">
-                <button className="btn-primary py-2.5 px-6 text-xs uppercase tracking-wider font-extrabold flex items-center gap-2 group shadow-md">
+                <button className="btn-primary whitespace-nowrap py-2.5 px-4 2xl:px-6 text-xs uppercase tracking-wider font-extrabold flex items-center gap-2 group shadow-md">
                   Join VTA
                   <FontAwesomeIcon icon={faChevronRight} className="text-[10px] group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -313,7 +478,7 @@ const Navbar = () => {
             <div className="flex justify-between items-center px-6 py-5 border-b border-slate-100 bg-white">
               <Link to="/" onClick={() => setIsMobileMenuOpen(false)} className="flex items-center gap-3">
                 <img src={logo} alt="VTC Logo" className="h-10 w-auto" />
-                <div className="flex flex-col justify-center overflow-hidden h-[34px] relative min-w-[150px]">
+                <div className="flex flex-col justify-center overflow-hidden h-[40px] relative min-w-[150px]">
                   <AnimatePresence mode="wait">
                     <motion.div
                       key={textIndex}
@@ -349,23 +514,44 @@ const Navbar = () => {
                   {portalMode === 'academy' ? 'Academy Division' : 'Industry Division'}
                 </span>
               </div>
+
+              <SignInMenu mobile onNavigate={() => setIsMobileMenuOpen(false)} />
               
               <div className="space-y-4">
                 {portalMode === 'industry' ? (
-                  industryNavItems.map((item, idx) => (
-                    <Link
-                      key={idx}
-                      to={item.path}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block text-2xl font-black text-slate-800 hover:text-rose-600 transition-colors uppercase tracking-tight"
-                    >
-                      {item.name}
-                    </Link>
-                  ))
+                  <>
+                    {/* Direct Links */}
+                    {industryDirectItems.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        to={item.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block text-2xl font-black text-slate-800 hover:text-indigo-600 transition-colors uppercase tracking-tight"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+
+                    {/* News & Events Group */}
+                    <div className="space-y-3 pt-3 border-t border-slate-100">
+                      <span className="text-[10px] font-black text-slate-450 uppercase tracking-wider block">News & Events</span>
+                      {newsDropdownItems.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          to={item.path}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block text-lg font-extrabold text-slate-700 hover:text-indigo-600 pl-4 transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </>
                 ) : (
                   <>
+                    {/* Academics & Skilling Group */}
                     <div className="space-y-3">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">Academics & Skilling</span>
+                      <span className="text-[10px] font-black text-slate-450 uppercase tracking-wider block">Academics & Skilling</span>
                       {academyDropdownItems.map((item, idx) => (
                         <Link
                           key={idx}
@@ -378,14 +564,30 @@ const Navbar = () => {
                       ))}
                     </div>
 
+                    {/* General Links */}
                     <div className="space-y-3 pt-3 border-t border-slate-100">
-                      <span className="text-[10px] font-black text-slate-400 uppercase tracking-wider block">General Info</span>
-                      {academyGeneralItems.map((item, idx) => (
+                      <span className="text-[10px] font-black text-slate-455 uppercase tracking-wider block">Explorer & Research</span>
+                      {academyDirectItems.map((item, idx) => (
                         <Link
                           key={idx}
                           to={item.path}
                           onClick={() => setIsMobileMenuOpen(false)}
                           className="block text-xl font-black text-slate-800 hover:text-rose-600 transition-colors uppercase tracking-tight"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* News & Events Group */}
+                    <div className="space-y-3 pt-3 border-t border-slate-100">
+                      <span className="text-[10px] font-black text-slate-450 uppercase tracking-wider block">News & Events</span>
+                      {newsDropdownItems.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          to={item.path}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block text-lg font-extrabold text-slate-700 hover:text-rose-600 pl-4 transition-colors"
                         >
                           {item.name}
                         </Link>

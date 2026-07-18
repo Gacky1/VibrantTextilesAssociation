@@ -3,6 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 const navItems = [
+  { to: '/admin/marketplace', label: 'Marketplace', icon: '◆' },
   { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
   { to: '/admin/members', label: 'Members', icon: '👥' },
   { to: '/admin/events', label: 'Events', icon: '📅' },

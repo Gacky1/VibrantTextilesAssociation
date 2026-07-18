@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import Loader from './components/Loader.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 
 const Root = () => {
   const [loading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const Root = () => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
 
-  return loading ? <Loader /> : <App />;
+  return loading ? <Loader /> : <AuthProvider><App /></AuthProvider>;
 };
 
 createRoot(document.getElementById('root')).render(
