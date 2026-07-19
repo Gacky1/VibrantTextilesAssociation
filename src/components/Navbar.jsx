@@ -85,10 +85,10 @@ const Navbar = () => {
               <img
                 src={logo}
                 alt="VTC Logo"
-                className="h-11 w-auto transition-transform duration-300 group-hover:scale-105"
+                className="h-12 sm:h-12 w-auto transition-transform duration-300 group-hover:scale-105"
               />
               {/* English/Hindi transition loop wrapper */}
-              <div className="flex flex-col justify-center overflow-hidden h-[42px] relative min-w-[110px] sm:min-w-[155px]">
+              <div className="flex flex-col justify-center overflow-hidden h-[44px] relative min-w-[115px] sm:min-w-[160px]">
                 <AnimatePresence mode="wait">
                   <motion.div
                     key={textIndex}
@@ -98,11 +98,11 @@ const Navbar = () => {
                     transition={{ duration: 0.35, ease: "easeInOut" }}
                     className="flex flex-col leading-none"
                   >
-                    <span className="font-black text-[13px] xl:text-[15px] 2xl:text-[17px] tracking-tight text-slate-900 dark:text-white leading-none">
+                    <span className="font-black text-[13.5px] xl:text-[15.5px] 2xl:text-[17.5px] tracking-tight text-slate-900 dark:text-white leading-none">
                       {brandTexts[textIndex].main}
                     </span>
-                    <span className={`font-black text-rose-600 mt-1 sm:mt-1.5 leading-none ${
-                      textIndex === 1 ? 'text-[9px] xl:text-[10px] 2xl:text-[12px] tracking-wide font-extrabold' : 'text-[7px] xl:text-[8px] 2xl:text-[9px] uppercase tracking-[0.25em]'
+                    <span className={`font-black text-rose-600 mt-1 leading-none ${
+                      textIndex === 1 ? 'text-[9.5px] xl:text-[10.5px] 2xl:text-[12.5px] tracking-wide font-extrabold' : 'text-[7.5px] xl:text-[8.5px] 2xl:text-[9.5px] uppercase tracking-[0.25em]'
                     }`}>
                       {brandTexts[textIndex].sub}
                     </span>
@@ -127,7 +127,7 @@ const Navbar = () => {
                     <>
                       <Link
                         to="/about-textile"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
                           location.pathname === '/about-textile' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
@@ -146,7 +146,7 @@ const Navbar = () => {
 
                       <Link
                         to="/textile-explorer"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
                           location.pathname === '/textile-explorer' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
@@ -165,7 +165,7 @@ const Navbar = () => {
 
                       <Link
                         to="/marketplace"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
                           location.pathname === '/marketplace' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
@@ -186,7 +186,7 @@ const Navbar = () => {
                       <div className="relative">
                         <button
                           onClick={() => setActiveDropdown(activeDropdown === 'news_events' ? null : 'news_events')}
-                          className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-gold ${
+                          className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-gold ${
                             activeDropdown === 'news_events' || newsDropdownItems.some(item => location.pathname === item.path)
                               ? 'text-amber-600' 
                               : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
@@ -202,7 +202,7 @@ const Navbar = () => {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch-gold"
+                              className="!absolute left-0 top-full mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch-gold"
                             >
                               {newsDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
@@ -228,7 +228,7 @@ const Navbar = () => {
 
                       <Link
                         to="/research"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
                           location.pathname === '/research' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
@@ -256,7 +256,7 @@ const Navbar = () => {
                       <div className="relative">
                         <button
                           onClick={() => setActiveDropdown(activeDropdown === 'academy' ? null : 'academy')}
-                          className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
+                          className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
                             activeDropdown === 'academy' || academyDropdownItems.some(item => location.pathname === item.path)
                               ? 'text-rose-600' 
                               : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
@@ -273,7 +273,7 @@ const Navbar = () => {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute left-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
+                              className="!absolute left-0 top-full mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
                             >
                               {academyDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
@@ -299,7 +299,7 @@ const Navbar = () => {
 
                       <Link
                         to="/textile-explorer"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
                           location.pathname === '/textile-explorer' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
@@ -320,7 +320,7 @@ const Navbar = () => {
                       <div className="relative">
                         <button
                           onClick={() => setActiveDropdown(activeDropdown === 'news_events' ? null : 'news_events')}
-                          className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
+                          className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
                             activeDropdown === 'news_events' || newsDropdownItems.some(item => location.pathname === item.path)
                               ? 'text-rose-600' 
                               : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
@@ -336,7 +336,7 @@ const Navbar = () => {
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="absolute left-0 mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
+                              className="!absolute left-0 top-full mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
                             >
                               {newsDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
@@ -362,8 +362,8 @@ const Navbar = () => {
 
                       <Link
                         to="/research"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
-                          location.pathname === '/research' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
+                          location.pathname === '/research' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-905 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
                         Research
@@ -397,22 +397,22 @@ const Navbar = () => {
                 {/* Industry portal toggle */}
                 <button
                   onClick={() => setPortalMode('industry')}
-                  className={`flex items-center gap-1 px-2 xl:px-2.5 2xl:px-3.5 py-1 text-[8.5px] xl:text-[9px] 2xl:text-[10px] rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
+                  className={`flex items-center gap-1 px-2 xl:px-2.5 2xl:px-3 py-1 text-[9px] xl:text-[9.5px] 2xl:text-[10.5px] rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
                     portalMode === 'industry' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
-                  <FontAwesomeIcon icon={faBuilding} className="text-[8.5px] xl:text-[9px] 2xl:text-[10px]" />
+                  <FontAwesomeIcon icon={faBuilding} className="text-[9px] xl:text-[9.5px] 2xl:text-[10.5px]" />
                   Industry
                 </button>
 
                 {/* Academy portal toggle */}
                 <button
                   onClick={() => setPortalMode('academy')}
-                  className={`flex items-center gap-1 px-2 xl:px-2.5 2xl:px-3.5 py-1 text-[8.5px] xl:text-[9px] 2xl:text-[10px] rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
+                  className={`flex items-center gap-1 px-2 xl:px-2.5 2xl:px-3 py-1 text-[9px] xl:text-[9.5px] 2xl:text-[10.5px] rounded-full font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none ${
                     portalMode === 'academy' ? 'text-white' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white'
                   }`}
                 >
-                  <FontAwesomeIcon icon={faGraduationCap} className="text-[8.5px] xl:text-[9px] 2xl:text-[10px]" />
+                  <FontAwesomeIcon icon={faGraduationCap} className="text-[9px] xl:text-[9.5px] 2xl:text-[10.5px]" />
                   Academia
                 </button>
 
@@ -435,7 +435,7 @@ const Navbar = () => {
 
               {/* Join VTA Solid Action */}
               <Link to="/membership">
-                <button className="btn-primary whitespace-nowrap !py-1.5 !px-2.5 xl:!px-3.5 2xl:!px-5 text-[9px] xl:text-[10px] 2xl:text-xs uppercase tracking-wider font-extrabold flex items-center gap-1.5 group shadow-md">
+                <button className="btn-primary whitespace-nowrap !py-1.5 !px-2.5 xl:!px-3.5 2xl:!px-5 text-[9.5px] xl:text-[10.5px] 2xl:text-xs uppercase tracking-wider font-extrabold flex items-center gap-1.5 group shadow-md">
                   Join VTA
                   <FontAwesomeIcon icon={faChevronRight} className="text-[9px] xl:text-[10px] group-hover:translate-x-1 transition-transform" />
                 </button>

@@ -49,7 +49,7 @@ const Media = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-textile-linen font-sans text-gray-900">
       <Navbar />
       <PageHero
         eyebrow="The Visual Registry"
@@ -147,7 +147,7 @@ const Media = () => {
               press.map((item) => (
                 <div
                   key={item.id}
-                  className="group bg-white border border-gray-100 p-8 md:p-12 rounded-[40px] hover:border-primary-100 hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-8"
+                  className="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 p-8 md:p-12 rounded-[40px] hover:border-primary-100 hover:shadow-xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-8 border-stitch"
                 >
                   <div className="space-y-6 flex-1">
                     <div className="flex items-center gap-6">
@@ -174,7 +174,7 @@ const Media = () => {
         </div>
 
         {/* ── NEWSLETTER SECTION ── */}
-        <div className="bg-gray-900 rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden">
+        <div className="bg-gray-900 bg-textile-linen-dark rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden border-stitch-gold">
            <div className="absolute top-0 left-0 w-64 h-64 bg-primary-600/10 rounded-full blur-[100px] -ml-32 -mt-32" />
            <div className="space-y-6 relative z-10">
               <div className="badge border-gray-700 bg-gray-800 text-primary-400">The Resonance Loop</div>

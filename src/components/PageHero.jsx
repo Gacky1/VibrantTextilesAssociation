@@ -6,10 +6,7 @@
  */
 const PageHero = ({ eyebrow, title, subtitle }) => {
   return (
-    <div className="relative py-24 lg:py-32 overflow-hidden bg-indigo-950">
-      {/* Subtle Background Pattern */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none" 
-           style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+    <div className="relative py-24 lg:py-32 overflow-hidden bg-textile-linen-dark">
       
       <div className="absolute top-0 right-0 w-96 h-96 bg-primary-500/20 rounded-full blur-[100px] -mr-48 -mt-48" />
       <div className="absolute bottom-0 left-0 w-64 h-64 bg-rose-500/10 rounded-full blur-[80px] -ml-32 -mb-32" />
@@ -36,8 +33,18 @@ const PageHero = ({ eyebrow, title, subtitle }) => {
             </p>
           )}
 
-          <div className="w-24 h-1.5 bg-gradient-to-r from-primary-500 to-vibrant-orange rounded-full mt-10" />
+          {/* Stitched divider line */}
+          <div className="flex items-center gap-2 mt-10">
+            <div className="w-16 h-[2px] bg-gradient-to-r from-transparent to-primary-500/40" />
+            <div className="w-24 h-[2px] border-t-2 border-dashed border-primary-400" />
+            <div className="w-16 h-[2px] bg-gradient-to-l from-transparent to-primary-500/40" />
+          </div>
         </div>
+      </div>
+
+      {/* Bottom fringe divider for fabric texture transition */}
+      <div className="absolute bottom-0 left-0 right-0 z-0 pointer-events-none">
+        <div className="fringe-divider" />
       </div>
     </div>
   );

@@ -136,12 +136,19 @@ const Hero = () => {
   const titleWords = active.title.split(' ');
 
   return (
-    <section className="relative min-h-screen flex items-center bg-slate-950 overflow-hidden text-white pt-24 pb-12 lg:pt-32 lg:pb-12">
+    <section className="relative min-h-screen flex items-center bg-slate-950 bg-textile-linen-dark overflow-hidden text-white pt-24 pb-12 lg:pt-32 lg:pb-12">
       
-      {/* Background elegant breathing radial spotlights */}
+      {/* Background elegant breathing radial spotlights & silk threads */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-[15%] left-[5%] w-[45vw] h-[45vw] rounded-full bg-indigo-600/10 blur-[130px] animate-pulse" />
         <div className="absolute bottom-[15%] right-[5%] w-[45vw] h-[45vw] rounded-full bg-rose-600/5 blur-[160px] animate-pulse" style={{ animationDelay: '2.5s' }} />
+        
+        {/* Silk Thread Swirls representing warps/wefts */}
+        <svg className="absolute inset-0 w-full h-full opacity-20 dark:opacity-30" xmlns="http://www.w3.org/2000/svg">
+          <path d="M-100,300 C300,100 500,500 1400,200" fill="none" stroke="#e11d48" strokeWidth="1.5" strokeDasharray="6 8" />
+          <path d="M-100,500 C400,300 600,700 1500,400" fill="none" stroke="#ca8a04" strokeWidth="1.5" strokeDasharray="5 7" />
+          <path d="M200,-100 C400,300 100,600 800,1200" fill="none" stroke="#3b82f6" strokeWidth="1" strokeDasharray="4 6" />
+        </svg>
       </div>
 
       {/* Grid Layout Container */}
@@ -357,6 +364,9 @@ const Hero = () => {
           >
             {/* Slowly spinning color border ring glow inside the frame */}
             <div className={`absolute inset-0 -z-10 rounded-[28px] opacity-35 bg-gradient-to-tr ${active.accentGradient} animate-spin`} style={{ animationDuration: '10s' }} />
+            
+            {/* Inner embroidery stitch ring around the showcase frame */}
+            <div className="absolute inset-[6px] border border-dashed border-amber-500/35 rounded-[28px] pointer-events-none z-10" />
 
             <div className="w-full h-full rounded-[26px] overflow-hidden relative group bg-slate-950" style={{ transform: 'translateZ(10px)' }}>
               
@@ -381,6 +391,24 @@ const Hero = () => {
                 }}
               />
 
+              {/* Hanging clothing brand tag */}
+              <div className="absolute -top-1 right-8 z-20 flex flex-col items-center pointer-events-none">
+                {/* Sewing string */}
+                <div className="w-[1.5px] bg-amber-500/50" 
+                     style={{ 
+                       backgroundImage: 'repeating-linear-gradient(180deg, #ca8a04 0px, #ca8a04 3px, transparent 3px, transparent 6px)',
+                       height: '20px' 
+                     }} 
+                />
+                {/* Tag body */}
+                <div className="label-woven text-stone-800 bg-[#faf9f6] dark:bg-[#1c1917] dark:text-stone-300 text-[8px] px-2.5 py-1.5 rotate-3 shadow-lg flex flex-col items-center gap-1 border border-stone-200 dark:border-stone-800">
+                  <span className="font-mono text-[7px] text-rose-600 font-extrabold uppercase tracking-widest leading-none">HANDLOOM</span>
+                  <span className="font-black tracking-tight text-[9px] leading-none">VTA CERTIFIED</span>
+                  <div className="w-8 h-[1px] bg-stone-300 dark:bg-stone-700 my-0.5" />
+                  <span className="text-[6px] opacity-60 leading-none">100% ORGANIC</span>
+                </div>
+              </div>
+
               {/* High-end decorative brand badge floating inside image */}
               <div className="absolute top-4 left-4 bg-slate-950/70 border border-white/10 backdrop-blur-md px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest text-white/80 select-none">
                 VTA DIVISION
@@ -396,6 +424,10 @@ const Hero = () => {
 
       </div>
 
+      {/* Bottom fringe divider for fabric texture transition */}
+      <div className="absolute bottom-0 left-0 right-0 z-0 pointer-events-none">
+        <div className="fringe-divider" />
+      </div>
     </section>
   );
 };

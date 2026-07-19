@@ -61,7 +61,7 @@ const Research = () => {
   );
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900">
+    <div className="min-h-screen bg-textile-linen font-sans text-gray-900">
       <Navbar />
       
       <PageHero
@@ -80,7 +80,7 @@ const Research = () => {
             { val: '15', label: 'Tech Nodes', sub: 'Smart manufacturing' },
             { val: '₹12Cr', label: 'R&D Budget', sub: 'Annual investment' }
           ].map((stat, i) => (
-            <div key={i} className="bg-white p-8 rounded-[32px] shadow-xl shadow-gray-200/40 border border-gray-100 text-center space-y-2 hover:translate-y-[-4px] transition-all">
+            <div key={i} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-[32px] shadow-xl shadow-gray-200/40 border border-gray-100 dark:border-slate-800 text-center space-y-2 hover:translate-y-[-4px] transition-all">
                <h3 className="text-4xl font-black text-gray-900 leading-none">{stat.val}</h3>
                <p className="text-[10px] font-black uppercase tracking-widest text-primary-600">{stat.label}</p>
                <p className="text-gray-400 text-[8px] font-bold uppercase tracking-tighter">{stat.sub}</p>
@@ -103,7 +103,7 @@ const Research = () => {
               ))
             ) : (
               researchAreas.map((area, idx) => (
-                <div key={idx} className="group card p-12 hover:shadow-2xl hover:border-primary-100 transition-all flex flex-col justify-between h-full bg-white relative overflow-hidden">
+                 <div key={idx} className="group card p-12 hover:shadow-2xl hover:border-primary-100 transition-all flex flex-col justify-between h-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md relative overflow-hidden border-stitch-gold">
                    <div className="absolute top-0 right-0 p-8 text-gray-50 transform translate-x-4 -translate-y-4 group-hover:translate-x-0 group-hover:translate-y-0 transition-all opacity-40 group-hover:opacity-100">
                       <FontAwesomeIcon icon={area.icon || faFlask} className="text-6xl" />
                    </div>
@@ -170,7 +170,7 @@ const Research = () => {
                </div>
              ) : (
                filteredPubs.map((pub, idx) => (
-                 <div key={idx} className="group bg-white p-10 rounded-[40px] border border-gray-100 hover:border-primary-100 hover:shadow-2xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-10">
+                 <div key={idx} className="group bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-10 rounded-[40px] border border-gray-100 dark:border-slate-800 hover:border-primary-100 hover:shadow-2xl transition-all flex flex-col md:flex-row md:items-center justify-between gap-10 border-stitch-gold">
                     <div className="space-y-6 flex-1">
                        <div className="flex items-center gap-6">
                           <span className="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
@@ -195,7 +195,7 @@ const Research = () => {
         </div>
 
         {/* ── RESEARCH PROPOSAL CTA ── */}
-        <div className="bg-gray-900 rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden">
+        <div className="bg-gray-900 bg-textile-linen-dark rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden border-stitch-gold">
            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600 opacity-10 rounded-full blur-[100px] -mr-32 -mt-32" />
            <div className="w-16 h-16 mx-auto bg-primary-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-xl relative z-10">
               <FontAwesomeIcon icon={faLightbulb} />

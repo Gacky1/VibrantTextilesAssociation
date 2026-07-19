@@ -82,7 +82,7 @@ const AboutTextile = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900 overflow-x-hidden">
+    <div className="min-h-screen bg-textile-linen font-sans text-gray-900 dark:text-gray-100 overflow-x-hidden">
       <Navbar />
       
       <PageHero
@@ -95,7 +95,7 @@ const AboutTextile = () => {
         {/* Economic Significance Bar */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mb-32 -mt-12 relative z-10 px-4 md:px-0">
           {economicStats.map((stat, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-[32px] shadow-sm border border-gray-100 text-center space-y-3 hover:shadow-md transition-shadow group">
+            <div key={idx} className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-8 rounded-[32px] shadow-sm border border-gray-100/50 dark:border-slate-800/50 text-center space-y-3 hover:shadow-md transition-shadow group">
               <p className="text-primary-600 font-bold text-[10px] uppercase tracking-widest">{stat.label}</p>
               <h3 className="text-4xl font-black text-gray-900 tracking-tight transition-transform group-hover:scale-105">{stat.val}</h3>
               <p className="text-gray-400 text-[10px] font-bold uppercase tracking-widest">{stat.sub}</p>
@@ -147,7 +147,7 @@ const AboutTextile = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
              {industrySectors.map((sector, idx) => (
-                <div key={idx} className="group p-10 bg-white border border-gray-100 rounded-[40px] hover:shadow-xl hover:border-transparent transition-all duration-500 space-y-8 relative overflow-hidden">
+                <div key={idx} className="group p-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 rounded-[40px] hover:shadow-xl transition-all duration-500 space-y-8 relative overflow-hidden border-stitch">
                    <div className="absolute top-0 right-0 p-8 text-gray-50 group-hover:text-primary-50 transition-colors">
                       <FontAwesomeIcon icon={sector.icon} className="text-7xl" />
                    </div>
@@ -261,7 +261,7 @@ const AboutTextile = () => {
             onClick={() => setSelectedState(null)}
           />
           
-          <div className="relative w-full max-w-6xl bg-white rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-500 max-h-[90vh]">
+          <div className="relative w-full max-w-6xl bg-textile-linen rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-500 max-h-[90vh] border-stitch-gold">
             <button 
               onClick={() => setSelectedState(null)}
               className="absolute top-8 right-8 z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-gray-100 transition-colors shadow-lg"
@@ -270,7 +270,7 @@ const AboutTextile = () => {
             </button>
 
             {/* Left: Content */}
-            <div className="w-full md:w-1/2 p-8 md:p-16 overflow-y-auto space-y-12 bg-white">
+            <div className="w-full md:w-1/2 p-8 md:p-16 overflow-y-auto space-y-12 bg-transparent">
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
                   <div className="badge">{selectedState.region} India</div>

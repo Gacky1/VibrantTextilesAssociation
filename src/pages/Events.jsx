@@ -36,7 +36,7 @@ const Events = () => {
   const featuredEvent = upcoming[0];
 
   return (
-    <div className="min-h-screen bg-[#fafafa] font-sans text-gray-900 overflow-hidden">
+    <div className="min-h-screen bg-textile-linen font-sans text-gray-900 overflow-hidden">
       <Navbar />
       
       {/* Dynamic Background Mesh */}
@@ -154,7 +154,7 @@ const Events = () => {
                   transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
                   onClick={() => setSelectedEvent(event)}
-                  className="group relative bg-white pb-8 rounded-[48px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100"
+                  className="group relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-md pb-8 rounded-[48px] overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-500 cursor-pointer border border-gray-100 dark:border-slate-800 border-stitch"
                 >
                   <div className="h-72 relative overflow-hidden">
                     <img src={event.image_url} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={event.title} />
@@ -219,7 +219,7 @@ const Events = () => {
       {selectedEvent && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12">
           <div className="absolute inset-0 bg-gray-900/60 backdrop-blur-xl animate-in fade-in" onClick={() => setSelectedEvent(null)} />
-          <div className="relative w-full max-w-6xl bg-white rounded-[48px] overflow-hidden flex flex-col md:flex-row max-h-[90vh] shadow-2xl animate-in zoom-in-95">
+          <div className="relative w-full max-w-6xl bg-textile-linen rounded-[48px] overflow-hidden flex flex-col md:flex-row max-h-[90vh] shadow-2xl animate-in zoom-in-95 border-stitch-gold">
              <button onClick={() => setSelectedEvent(null)} className="absolute top-8 right-8 z-20 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-lg hover:bg-gray-50 transition-colors">
                 <FontAwesomeIcon icon={faTimes} />
              </button>
@@ -279,7 +279,7 @@ const Events = () => {
 
       {/* ── CTA SECTION ── */}
       <div className="section-container pb-32">
-        <div className="bg-gray-900 rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden">
+        <div className="bg-gray-900 bg-textile-linen-dark rounded-[50px] px-12 py-24 text-center space-y-12 relative overflow-hidden border-stitch-gold">
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary-600/10 rounded-full blur-[100px] -mr-32 -mt-32" />
           <div className="w-16 h-16 mx-auto bg-primary-600 text-white rounded-2xl flex items-center justify-center text-2xl shadow-xl relative z-10">
             <FontAwesomeIcon icon={faGlobe} />

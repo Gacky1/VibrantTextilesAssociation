@@ -364,3 +364,15 @@ body.dark, .dark body {
     linear-gradient(rgba(255, 255, 255, 0.01) 3px, transparent 3px);
   background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
 }
+
+/* Indigo Textile Linen Weave (Indigo canvas look for headers/hero banners) */
+.bg-textile-linen-indigo {
+  background-color: #1e1b4b; /* indigo-950 base */
+  background-image: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 3px, transparent 3px),
+    linear-gradient(rgba(255, 255, 255, 0.01) 3px, transparent 3px);
+  background-size: 4px 4px, 4px 4px, 12px 12px, 12px 12px;
+}
+
