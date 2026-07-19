@@ -13,20 +13,6 @@ import InteractiveIndiaMap from '../components/InteractiveIndiaMap';
 import { getTextileExplorerData, regions as fallbackRegions, states as fallbackStates } from '../data/textileDatabase';
 
 const TextileExplorer = () => {
-  // Theme state
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    return localStorage.getItem('vta_theme') === 'dark';
-  });
-
-  // Toggle Dark Mode
-  useEffect(() => {
-    if (isDarkMode) {
-      localStorage.setItem('vta_theme', 'dark');
-    } else {
-      localStorage.setItem('vta_theme', 'light');
-    }
-  }, [isDarkMode]);
-
   // Layout View State: grid vs list
   const [viewMode, setViewMode] = useState('grid'); // 'grid' or 'list'
 
@@ -598,7 +584,7 @@ const TextileExplorer = () => {
     <div className="min-h-screen bg-textile-linen font-sans text-slate-900 overflow-x-hidden flex flex-col">
       <Navbar />
 
-      <div className={`flex-1 pt-24 pb-16 transition-colors duration-300 bg-textile-linen ${isDarkMode ? 'dark text-slate-100' : 'text-slate-900'}`}>
+      <div className="flex-1 pt-24 pb-16 transition-colors duration-300 bg-textile-linen text-slate-900">
         <div className="max-w-[90rem] mx-auto px-4 sm:px-8 mt-6">
         
         {/* Top Header Panel: Breadcrumbs, Search, Layout Controllers */}
@@ -663,13 +649,7 @@ const TextileExplorer = () => {
               </button>
             </div>
 
-            {/* Dark Mode Toggle */}
-            <button
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200/50 dark:border-slate-700 rounded-xl transition-all text-slate-600 dark:text-slate-300"
-            >
-              <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
-            </button>
+
 
             {/* Mobile Filter Toggle (Visible only on mobile/tablet) */}
             <button

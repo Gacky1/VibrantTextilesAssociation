@@ -77,7 +77,7 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
   };
 
   return (
-    <div className="w-full relative glass-card p-6 border border-white/10 rounded-[32px] overflow-hidden shadow-2xl bg-white/5 backdrop-blur-xl">
+    <div className="w-full relative bg-textile-linen-dark p-8 border border-stone-850/80 rounded-[32px] overflow-hidden shadow-2xl border-stitch-gold">
       <div className="flex flex-col lg:flex-row items-center gap-8">
         
         {/* Left Side: SVG Map container */}
@@ -174,17 +174,17 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
         {/* Right Side: Map Controls & Details */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center space-y-6 text-left">
           <div>
-            <span className="badge text-[10px] tracking-[0.2em] font-black">Interactive Experience</span>
-            <h3 className="text-3xl font-black text-slate-800 dark:text-white tracking-tight leading-none mt-2">
+            <span className="inline-block px-3 py-1 bg-amber-500/10 text-amber-500 border border-amber-500/20 text-[9px] font-black uppercase tracking-[0.2em] rounded-full">Interactive Experience</span>
+            <h3 className="text-3xl font-black text-stone-100 tracking-tight leading-none mt-2">
               Heritage Map of India
             </h3>
-            <p className="text-sm text-slate-500 dark:text-slate-400 mt-3 leading-relaxed">
+            <p className="text-sm text-stone-300 mt-3 leading-relaxed">
               Hover over the geographic regions of the Indian subcontinent to discover localized weaving styles and materials. Click a region to filter the list below.
             </p>
           </div>
 
           {/* Dynamic Details Box */}
-          <div className="min-h-[140px] p-6 rounded-2xl border border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5 transition-all duration-300">
+          <div className="min-h-[140px] p-6 rounded-2xl border border-white/10 bg-white/5 transition-all duration-300">
             {hoveredRegion || selectedRegion ? (
               (() => {
                 const activeId = hoveredRegion || selectedRegion;
@@ -198,21 +198,21 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
                   >
                     <div className="flex items-center gap-3">
                       <span className={`h-3 w-3 rounded-full bg-gradient-to-r ${rData.color}`} />
-                      <h4 className="font-extrabold text-lg text-slate-800 dark:text-white uppercase tracking-wider">{rData.name}</h4>
+                      <h4 className="font-extrabold text-lg text-stone-100 uppercase tracking-wider">{rData.name}</h4>
                       {selectedRegion === activeId && (
                         <span className="text-[9px] font-black uppercase bg-rose-500 text-white px-2 py-0.5 rounded-full ml-auto">Active Filter</span>
                       )}
                     </div>
                     
-                    <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium">
+                    <p className="text-xs text-stone-300 leading-relaxed font-medium">
                       {regions.find(r => r.name === activeId)?.description}
                     </p>
 
-                    <div className="pt-2 border-t border-slate-100 dark:border-white/5">
-                      <p className="text-[9px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-wider">Associated States:</p>
+                    <div className="pt-2 border-t border-white/10">
+                      <p className="text-[9px] font-black uppercase text-stone-400 tracking-wider">Associated States:</p>
                       <div className="flex flex-wrap gap-1.5 mt-1.5">
                         {rData.states.map((st) => (
-                          <span key={st} className="text-[10px] font-bold px-2 py-0.5 rounded bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+                          <span key={st} className="text-[10px] font-bold px-2 py-0.5 rounded bg-stone-900 border border-stone-850 text-stone-300">
                             {st}
                           </span>
                         ))}
@@ -222,9 +222,9 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
                 );
               })()
             ) : (
-              <div className="h-full flex flex-col justify-center items-center text-center text-slate-400 py-6">
-                <div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 animate-ping mb-3" />
-                <p className="text-xs italic font-medium">No region selected. Hover over the map or click a region to explore details.</p>
+              <div className="h-full flex flex-col justify-center items-center text-center text-stone-400 py-6">
+                <div className="w-1.5 h-1.5 rounded-full bg-stone-600 animate-ping mb-3" />
+                <p className="text-xs italic font-medium text-stone-400">No region selected. Hover over the map or click a region to explore details.</p>
               </div>
             )}
           </div>
@@ -238,7 +238,7 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
                 className={`text-[10px] font-black uppercase tracking-wider px-4 py-2 rounded-full border transition-all duration-300 ${
                   selectedRegion === r.id
                     ? `bg-gradient-to-r ${r.color} text-white border-transparent shadow-lg ${r.shadow}`
-                    : 'bg-white dark:bg-slate-800/50 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-350 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    : 'bg-stone-900/50 border-stone-800 text-stone-300 hover:bg-stone-800'
                 }`}
               >
                 {r.id}
@@ -262,3 +262,4 @@ const InteractiveIndiaMap = ({ selectedRegion, onSelectRegion }) => {
 };
 
 export default InteractiveIndiaMap;
+
