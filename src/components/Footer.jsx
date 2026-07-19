@@ -28,10 +28,13 @@ const Footer = () => {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <footer className="relative bg-slate-950 text-slate-400 py-24 overflow-hidden border-t border-white/5">
+    <footer className="relative bg-slate-950 bg-textile-linen-dark text-slate-400 py-24 overflow-hidden border-t border-white/5">
       
       {/* Decorative gradient accents */}
       <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-rose-500 via-indigo-500 to-teal-500" />
+      <div className="absolute top-[1px] left-0 right-0 z-20">
+        <div className="fringe-divider" />
+      </div>
       <div className="absolute bottom-0 right-0 w-[40vw] h-[40vw] bg-indigo-500/5 rounded-full blur-[140px] pointer-events-none" />
 
       <div className="section-container relative z-10 max-w-7xl">
@@ -49,6 +52,11 @@ const Footer = () => {
             <p className="text-sm leading-relaxed max-w-xs font-normal">
               Uniting artisans, manufacturers, academic bodies, and policy creators since 1998 to define the global standard of sustainability and excellence in textiles.
             </p>
+            <div className="dark flex flex-wrap gap-2 pt-1">
+              <span className="label-woven text-stone-400">Est. 1998</span>
+              <span className="label-woven text-stone-400">100% Handloom</span>
+              <span className="label-woven text-rose-500">Certified VTA</span>
+            </div>
             <div className="flex gap-3 pt-2">
               {socials.map((social, i) => (
                 <a
@@ -127,19 +135,19 @@ const Footer = () => {
               ))}
             </ul>
 
-            {/* Micro email input field for releases */}
-            <div className="pt-2 space-y-2">
-              <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
+            {/* Micro email input field for releases wrapped in a stitched fabric patch card */}
+            <div className="p-4 bg-white/5 rounded-2xl border-stitch-gold space-y-2 mt-4">
+              <span className="text-[10px] font-black text-amber-500/90 uppercase tracking-widest block">
                 Subscribe to Announcements
               </span>
               <div className="relative">
                 <input
                   type="email"
                   placeholder="name@domain.com"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-teal-500 focus:bg-white/10 transition-all"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl pl-4 pr-10 py-2.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:bg-white/10 transition-all"
                 />
                 <button 
-                  className="absolute right-1 top-1 bottom-1 w-8 rounded-lg bg-teal-600 hover:bg-teal-500 text-white flex items-center justify-center shadow-md transition-colors"
+                  className="absolute right-1 top-1 bottom-1 w-8 rounded-lg bg-amber-600 hover:bg-amber-500 text-white flex items-center justify-center shadow-md transition-colors cursor-pointer"
                   aria-label="Subscribe"
                 >
                   <FontAwesomeIcon icon={faArrowRight} className="text-[10px]" />
@@ -158,8 +166,8 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-8">
-            <Link to="/membership" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/about-textile" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors">Terms of Service</Link>
+            <Link to="/membership" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Privacy Policy</Link>
+            <Link to="/about-textile" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Terms of Service</Link>
             <button
               onClick={scrollToTop}
               className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-300 shadow-xl"

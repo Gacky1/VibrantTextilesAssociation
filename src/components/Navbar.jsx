@@ -51,13 +51,11 @@ const Navbar = () => {
     { name: 'Textile Explorer', path: '/textile-explorer' },
     { name: 'Marketplace', path: '/marketplace' },
     { name: 'Research', path: '/research' },
-    { name: 'Contact', path: '/contact' },
   ];
 
   const academyDirectItems = [
     { name: 'Textile Explorer', path: '/textile-explorer' },
     { name: 'Research', path: '/research' },
-    { name: 'Contact', path: '/contact' },
   ];
 
   const newsDropdownItems = [
@@ -249,24 +247,7 @@ const Navbar = () => {
 
 
 
-                      <Link
-                        to="/contact"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-gold ${
-                          location.pathname === '/contact' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
-                        }`}
-                      >
-                        Contact
-                        {location.pathname === '/contact' && (
-                          <motion.div 
-                            layoutId="activeNavLine"
-                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-amber-600"
-                            style={{
-                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
-                              backgroundColor: 'transparent'
-                            }}
-                          />
-                        )}
-                      </Link>
+
                     </>
                   ) : (
                     // Academy Menu with compact Dropdown
@@ -400,24 +381,7 @@ const Navbar = () => {
 
 
 
-                      <Link
-                        to="/contact"
-                        className={`whitespace-nowrap text-[10px] xl:text-[11px] 2xl:text-[12px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
-                          location.pathname === '/contact' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
-                        }`}
-                      >
-                        Contact
-                        {location.pathname === '/contact' && (
-                          <motion.div 
-                            layoutId="activeNavLine"
-                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
-                            style={{
-                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
-                              backgroundColor: 'transparent'
-                            }}
-                          />
-                        )}
-                      </Link>
+
                     </>
                   )}
                 </motion.div>
