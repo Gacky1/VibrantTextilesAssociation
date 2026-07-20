@@ -1,27 +1,93 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faSearch, faArrowRight, faExpandAlt, faTimes, 
+  faSearch, faArrowRight, faTimes, 
   faChartLine, faUsers, faGlobeAmericas, faShoppingBag,
   faCrown, faCogs, faUserNinja, faHome, 
-  faFlask, faLeaf, faBolt 
+  faFlask, faLeaf, faBolt,
+  faBuilding, faLocationDot, faCheckCircle, faGlobe, faSpinner,
+  faExpandAlt
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PageHero from '../components/PageHero';
+import { getVerifiedSuppliers } from '../data/marketplaceDatabase';
 import { textileData } from '../data/textileData';
 
 const AboutTextile = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedState, setSelectedState] = useState(null);
+  const [members, setMembers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [memberSearchQuery, setMemberSearchQuery] = useState('');
+  const [selectedMemberCategory, setSelectedMemberCategory] = useState('');
+  const [selectedMemberState, setSelectedMemberState] = useState('');
 
-  const filteredData = useMemo(() => {
+  // Heritage Discovery Engine states
+  const [heritageSearchQuery, setHeritageSearchQuery] = useState('');
+  const [selectedHeritageState, setSelectedHeritageState] = useState(null);
+
+  useEffect(() => {
+    let active = true;
+    getVerifiedSuppliers().then((res) => {
+      if (!active) return;
+      if (res.success) {
+        setMembers(res.data || []);
+      } else {
+        setError(res.error || 'Failed to fetch verified members.');
+      }
+      setLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const categoryOptions = useMemo(() => {
+    const categories = new Set();
+    members.forEach(member => {
+      if (Array.isArray(member.product_categories)) {
+        member.product_categories.forEach(cat => categories.add(cat));
+      }
+    });
+    return Array.from(categories).sort();
+  }, [members]);
+
+  const stateOptions = useMemo(() => {
+    const states = new Set();
+    members.forEach(member => {
+      if (member.state) states.add(member.state);
+    });
+    return Array.from(states).sort();
+  }, [members]);
+
+  const filteredMembers = useMemo(() => {
+    return members.filter(member => {
+      const matchesSearch = memberSearchQuery.trim() === '' || [
+        member.organization_name,
+        member.short_description,
+        member.city,
+        member.state,
+        ...(member.product_categories || [])
+      ].some(val => val?.toLowerCase().includes(memberSearchQuery.toLowerCase()));
+
+      const matchesCategory = selectedMemberCategory === '' || 
+        (member.product_categories || []).includes(selectedMemberCategory);
+
+      const matchesState = selectedMemberState === '' || 
+        member.state === selectedMemberState;
+
+      return matchesSearch && matchesCategory && matchesState;
+    });
+  }, [members, memberSearchQuery, selectedMemberCategory, selectedMemberState]);
+
+  const filteredHeritageData = useMemo(() => {
     return textileData.filter(item => 
-      item.state.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.famous.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.type.toLowerCase().includes(searchQuery.toLowerCase())
+      item.state.toLowerCase().includes(heritageSearchQuery.toLowerCase()) ||
+      item.famous.toLowerCase().includes(heritageSearchQuery.toLowerCase()) ||
+      item.type.toLowerCase().includes(heritageSearchQuery.toLowerCase())
     );
-  }, [searchQuery]);
+  }, [heritageSearchQuery]);
 
   const economicStats = [
     { label: 'GDP Contribution', val: '~2.3%', sub: 'Of India\'s National GDP' },
@@ -137,41 +203,184 @@ const AboutTextile = () => {
             </div>
           </div>
         </div>
-
-        {/* Strategic Segments Section */}
+             {/* Verified Members Showcase Section */}
         <div className="mb-32 space-y-16">
-          <div className="text-center space-y-4">
-             <div className="badge">Structural Pillars</div>
-             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">Key Industry Segments</h2>
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 border-b border-gray-100 pb-12">
+            <div className="max-w-xl space-y-4">
+              <div className="badge">The VTA Registry</div>
+              <h2 className="text-4xl md:text-5xl font-black tracking-tight text-gray-900">Verified Industry Members</h2>
+              <p className="text-gray-500 text-lg leading-relaxed">
+                Connect with VTA-certified manufacturers, artisan collectives, and export-ready vendors driving the Indian textile civilization.
+              </p>
+            </div>
+            
+            {/* Search and Filters */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-center gap-4 w-full lg:w-auto">
+              {/* Search Bar */}
+              <div className="relative w-full sm:w-72 group">
+                <FontAwesomeIcon icon={faSearch} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-primary-600 transition-colors" />
+                <input 
+                  type="text"
+                  placeholder="Search members by name, city..."
+                  value={memberSearchQuery}
+                  onChange={(e) => setMemberSearchQuery(e.target.value)}
+                  className="w-full pl-11 pr-4 py-3.5 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-medium"
+                />
+              </div>
+
+              {/* Category Dropdown */}
+              <select
+                value={selectedMemberCategory}
+                onChange={(e) => setSelectedMemberCategory(e.target.value)}
+                className="w-full sm:w-48 px-4 py-3.5 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-semibold text-gray-600"
+              >
+                <option value="">All Categories</option>
+                {categoryOptions.map((cat, idx) => (
+                  <option key={idx} value={cat}>{cat}</option>
+                ))}
+              </select>
+
+              {/* State Dropdown */}
+              <select
+                value={selectedMemberState}
+                onChange={(e) => setSelectedMemberState(e.target.value)}
+                className="w-full sm:w-48 px-4 py-3.5 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-semibold text-gray-600"
+              >
+                <option value="">All States</option>
+                {stateOptions.map((st, idx) => (
+                  <option key={idx} value={st}>{st}</option>
+                ))}
+              </select>
+
+              {/* Clear Button */}
+              {(memberSearchQuery || selectedMemberCategory || selectedMemberState) && (
+                <button
+                  onClick={() => {
+                    setMemberSearchQuery('');
+                    setSelectedMemberCategory('');
+                    setSelectedMemberState('');
+                  }}
+                  className="w-full sm:w-auto px-5 py-3.5 bg-gray-200 hover:bg-gray-300 transition-colors text-sm font-bold rounded-xl text-gray-650"
+                >
+                  Clear Filters
+                </button>
+              )}
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-             {industrySectors.map((sector, idx) => (
-                <div key={idx} className="group p-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 rounded-[40px] hover:shadow-xl transition-all duration-500 space-y-8 relative overflow-hidden border-stitch">
-                   <div className="absolute top-0 right-0 p-8 text-gray-50 group-hover:text-primary-50 transition-colors">
-                      <FontAwesomeIcon icon={sector.icon} className="text-7xl" />
-                   </div>
-                    <div className="relative z-10 space-y-6">
-                      <span className="text-[10px] font-black uppercase tracking-widest text-primary-600 bg-primary-50 px-3 py-1 rounded-full">
-                         {sector.tag}
-                      </span>
-                      <h3 className="text-2xl font-bold text-gray-900">{sector.title}</h3>
-                      <div className="space-y-2">
-                        <p className="text-gray-500 text-sm leading-relaxed">
-                           {sector.description}
-                        </p>
-                        <p className="text-gray-400 text-xs italic">
-                           Focus: {sector.focus}
-                        </p>
-                      </div>
-                      <div className="space-y-3 pt-4 border-t border-gray-100">
-                         <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Key Examples</p>
-                         <p className="text-sm font-bold text-gray-700">{sector.examples}</p>
-                      </div>
+          {/* Member Grid */}
+          {loading ? (
+            <div className="py-32 flex flex-col items-center justify-center space-y-4">
+              <FontAwesomeIcon icon={faSpinner} className="animate-spin text-primary-600 text-4xl" />
+              <p className="text-gray-500 font-bold uppercase tracking-widest text-[10px]">Loading Registry...</p>
+            </div>
+          ) : error ? (
+            <div className="py-24 text-center space-y-4">
+              <h3 className="text-xl font-bold text-red-600">Error loading registry</h3>
+              <p className="text-gray-500 italic">{error}</p>
+            </div>
+          ) : filteredMembers.length === 0 ? (
+            <div className="py-32 text-center space-y-4">
+              <h3 className="text-2xl font-bold text-gray-900">No members match your criteria</h3>
+              <p className="text-gray-500 italic">Try adjusting your filters or search terms.</p>
+              <button 
+                onClick={() => {
+                  setMemberSearchQuery('');
+                  setSelectedMemberCategory('');
+                  setSelectedMemberState('');
+                }}
+                className="text-primary-600 font-bold hover:underline"
+              >
+                Reset filters
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredMembers.map((member) => {
+                const getInitials = (name) => {
+                  if (!name) return 'VTA';
+                  return name
+                    .split(' ')
+                    .map(word => word[0])
+                    .join('')
+                    .slice(0, 3)
+                    .toUpperCase();
+                };
+
+                return (
+                  <div 
+                    key={member.id}
+                    className="group relative bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-gray-100 dark:border-slate-800 rounded-[40px] hover:shadow-xl transition-all duration-500 p-10 flex flex-col justify-between overflow-hidden border-stitch"
+                  >
+                    {/* Verified Badge */}
+                    <div className="absolute top-8 right-8 flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border border-green-200">
+                      <FontAwesomeIcon icon={faCheckCircle} />
+                      <span>VTA Verified</span>
                     </div>
-                </div>
-             ))}
-          </div>
+
+                    <div className="space-y-6">
+                      {/* Logo / Initials */}
+                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center text-primary-700 font-black text-lg shadow-sm overflow-hidden">
+                        {member.logo_url ? (
+                          <img src={member.logo_url} alt={member.organization_name} className="w-full h-full object-cover" />
+                        ) : (
+                          getInitials(member.organization_name)
+                        )}
+                      </div>
+
+                      {/* Title & Metadata */}
+                      <div className="space-y-2">
+                        <h3 className="text-2xl font-bold text-gray-900 leading-tight group-hover:text-primary-600 transition-colors">
+                          {member.organization_name}
+                        </h3>
+                        <div className="flex flex-wrap gap-2 text-[10px] font-black uppercase tracking-wider text-gray-400">
+                          <span>{member.organization_type}</span>
+                          {member.is_exporter && (
+                            <span className="text-primary-600 bg-primary-50 px-2 py-0.5 rounded-md flex items-center gap-1">
+                              <FontAwesomeIcon icon={faGlobe} /> Export Ready
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Location */}
+                      <div className="flex items-center gap-2 text-xs font-semibold text-gray-500">
+                        <FontAwesomeIcon icon={faLocationDot} className="text-gray-400" />
+                        <span>{[member.city, member.state].filter(Boolean).join(', ')}</span>
+                      </div>
+
+                      {/* Description */}
+                      <p className="text-gray-500 text-sm leading-relaxed line-clamp-3">
+                        {member.short_description || 'A verified industry member of Vibrant Textiles Association.'}
+                      </p>
+
+                      {/* Category Pills */}
+                      {Array.isArray(member.product_categories) && member.product_categories.length > 0 && (
+                        <div className="flex flex-wrap gap-2 pt-2">
+                          {member.product_categories.map((cat, i) => (
+                            <span key={i} className="px-3 py-1 bg-gray-50 rounded-full text-[10px] font-bold text-gray-450 uppercase tracking-widest border border-gray-100">
+                              {cat}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Card Footer CTA */}
+                    <div className="pt-8 mt-6 border-t border-gray-100 flex items-center justify-between">
+                      <Link 
+                        to={`/marketplace/suppliers/${member.slug}`}
+                        className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-primary-600 group-hover:gap-5 transition-all w-full"
+                      >
+                        View Supplier Profile
+                        <FontAwesomeIcon icon={faArrowRight} />
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </div>
 
         {/* Heritage Grid Introduction */}
@@ -190,8 +399,8 @@ const AboutTextile = () => {
               <input 
                 type="text"
                 placeholder="Search heritage, states, or techniques..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                value={heritageSearchQuery}
+                onChange={(e) => setHeritageSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-6 py-5 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-primary-600/20 focus:bg-white transition-all text-sm font-medium"
               />
             </div>
@@ -200,10 +409,10 @@ const AboutTextile = () => {
 
         {/* State-wise Heritage Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredData.map((item, idx) => (
+          {filteredHeritageData.map((item, idx) => (
             <div 
               key={idx}
-              onClick={() => setSelectedState(item)}
+              onClick={() => setSelectedHeritageState(item)}
               className="group relative h-[400px] rounded-[40px] overflow-hidden cursor-pointer bg-gray-100 hover:-translate-y-2 transition-all duration-500 shadow-sm hover:shadow-2xl"
             >
               <img 
@@ -239,12 +448,12 @@ const AboutTextile = () => {
           ))}
         </div>
 
-        {filteredData.length === 0 && (
+        {filteredHeritageData.length === 0 && (
           <div className="py-32 text-center space-y-4">
-            <h3 className="text-2xl font-bold text-gray-900">No results matching "{searchQuery}"</h3>
+            <h3 className="text-2xl font-bold text-gray-900">No results matching "{heritageSearchQuery}"</h3>
             <p className="text-gray-500 italic">Try searching for state names, silk varieties, or weaving techniques.</p>
             <button 
-              onClick={() => setSearchQuery('')}
+              onClick={() => setHeritageSearchQuery('')}
               className="text-primary-600 font-bold hover:underline"
             >
               Reset search
@@ -254,16 +463,16 @@ const AboutTextile = () => {
       </div>
 
       {/* State Detail Modal */}
-      {selectedState && (
+      {selectedHeritageState && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-12 overflow-hidden">
           <div 
             className="absolute inset-0 bg-gray-900/60 backdrop-blur-xl transition-opacity animate-in fade-in duration-300"
-            onClick={() => setSelectedState(null)}
+            onClick={() => setSelectedHeritageState(null)}
           />
           
           <div className="relative w-full max-w-6xl bg-textile-linen rounded-[40px] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-in zoom-in-95 duration-500 max-h-[90vh] border-stitch-gold">
             <button 
-              onClick={() => setSelectedState(null)}
+              onClick={() => setSelectedHeritageState(null)}
               className="absolute top-8 right-8 z-10 w-12 h-12 bg-white rounded-full flex items-center justify-center text-gray-900 hover:bg-gray-100 transition-colors shadow-lg"
             >
               <FontAwesomeIcon icon={faTimes} />
@@ -273,28 +482,28 @@ const AboutTextile = () => {
             <div className="w-full md:w-1/2 p-8 md:p-16 overflow-y-auto space-y-12 bg-transparent">
               <div className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <div className="badge">{selectedState.region} India</div>
-                  <div className="text-[10px] font-black uppercase tracking-widest text-primary-600">{selectedState.type} Heritage</div>
+                  <div className="badge">{selectedHeritageState.region} India</div>
+                  <div className="text-[10px] font-black uppercase tracking-widest text-primary-600">{selectedHeritageState.type} Heritage</div>
                 </div>
-                <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-gray-900">{selectedState.state}</h1>
-                <p className="text-xl text-primary-600 font-black tracking-tight">{selectedState.famous}</p>
+                <h1 className="text-5xl md:text-6xl font-black tracking-tighter text-gray-900">{selectedHeritageState.state}</h1>
+                <p className="text-xl text-primary-600 font-black tracking-tight">{selectedHeritageState.famous}</p>
               </div>
 
               <div className="space-y-6">
                 <h4 className="text-[10px] font-black uppercase tracking-[0.3em] text-gray-400 border-b border-gray-100 pb-4">The Narrative</h4>
                 <p className="text-gray-600 text-lg leading-relaxed italic border-l-4 border-primary-600 pl-8">
-                  {selectedState.description}
+                  {selectedHeritageState.description}
                 </p>
               </div>
 
               <div className="grid grid-cols-2 gap-8">
                 <div className="space-y-2">
                   <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Craft Type</p>
-                  <p className="font-bold">{selectedState.type}</p>
+                  <p className="font-bold">{selectedHeritageState.type}</p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-[10px] font-black uppercase tracking-widest text-gray-400">Staple Weaves</p>
-                  <p className="font-bold">{selectedState.famous.split(',')[0]}</p>
+                  <p className="font-bold">{selectedHeritageState.famous.split(',')[0]}</p>
                 </div>
               </div>
             </div>
@@ -302,8 +511,8 @@ const AboutTextile = () => {
             {/* Right: Image */}
             <div className="hidden md:block w-1/2 relative bg-gray-100">
               <img 
-                src={selectedState.image} 
-                alt={selectedState.state} 
+                src={selectedHeritageState.image} 
+                alt={selectedHeritageState.state} 
                 className="absolute inset-0 w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src = "https://images.unsplash.com/photo-1582142401825-783286395b4f?q=80&w=1470&auto=format&fit=crop";
