@@ -9,9 +9,14 @@ import { ErrorState, LoadingSkeleton, ProductCard, VerifiedBadge } from '../comp
 
 function getSafeWebsite(value) {
   try {
-    const website = new URL(value || '');
-    return ['http:', 'https:'].includes(website.protocol) ? website.href : '';
-  } catch { return ''; }
+    const raw = String(value || '').trim();
+    if (!raw) return null;
+    const website = new URL(raw);
+    if (!['http:', 'https:'].includes(website.protocol)) return null;
+    const host = website.hostname.toLowerCase();
+    if (host.includes('example.com') || host.includes('dummy.com') || host.includes('localhost')) return null;
+    return website.href;
+  } catch { return null; }
 }
 
 export default function MarketplaceSupplier() {
@@ -54,14 +59,22 @@ export default function MarketplaceSupplier() {
             <h1 className="mt-5 text-4xl font-black md:text-5xl">{supplier.organization_name}</h1>
             <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">{supplier.full_description || supplier.short_description}</p>
             <div className="mt-7 flex flex-wrap gap-5 text-sm text-slate-300">
-              <span><FontAwesomeIcon icon={faBuilding} /> {supplier.organization_type}</span>
+              <span><FontAwesomeIcon icon={faBuilding} /> {supplier.organization_type || 'Textile Supplier'}</span>
               <span><FontAwesomeIcon icon={faLocationDot} /> {[supplier.city, supplier.state, supplier.country].filter(Boolean).join(', ')}</span>
               {supplier.year_established && <span><FontAwesomeIcon icon={faCalendar} /> Established {supplier.year_established}</span>}
               {supplier.is_exporter && <span><FontAwesomeIcon icon={faGlobe} /> Export ready</span>}
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link to={`/account/enquiries/new?supplier=${supplier.id}`} className="btn-primary">Contact supplier</Link>
-              {website && <a href={website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/30 px-5 py-3 font-bold text-white transition hover:bg-white/10">Visit website <FontAwesomeIcon icon={faArrowUpRightFromSquare} /></a>}
+              {website ? (
+                <a href={website} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-xl border border-white/30 px-5 py-3 font-bold text-white transition hover:bg-white/10">
+                  Visit website <FontAwesomeIcon icon={faArrowUpRightFromSquare} />
+                </a>
+              ) : (
+                <span className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-xs font-bold text-slate-400 opacity-90 cursor-not-allowed" title="Supplier has not provided a custom website link">
+                  <FontAwesomeIcon icon={faGlobe} className="text-slate-500" /> Website not updated
+                </span>
+              )}
             </div>
           </div>
         </div>

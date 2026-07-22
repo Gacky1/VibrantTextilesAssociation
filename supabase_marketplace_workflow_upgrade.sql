@@ -65,4 +65,21 @@ end $$;
 
 revoke all on function public.buyer_review_quotation(uuid,text,text) from public;
 grant execute on function public.buyer_review_quotation(uuid,text,text) to authenticated;
+
+-- Fix foreign key delete behavior for marketplace products
+alter table public.marketplace_enquiries 
+  drop constraint if exists marketplace_enquiries_product_id_fkey,
+  add constraint marketplace_enquiries_product_id_fkey 
+  foreign key (product_id) references public.marketplace_products(id) on delete set null;
+
+alter table public.marketplace_quotation_items 
+  drop constraint if exists marketplace_quotation_items_product_id_fkey,
+  add constraint marketplace_quotation_items_product_id_fkey 
+  foreign key (product_id) references public.marketplace_products(id) on delete set null;
+
+alter table public.saved_marketplace_products
+  drop constraint if exists saved_marketplace_products_product_id_fkey,
+  add constraint saved_marketplace_products_product_id_fkey
+  foreign key (product_id) references public.marketplace_products(id) on delete cascade;
+
 notify pgrst, 'reload schema';
