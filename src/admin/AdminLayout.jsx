@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
+import logoRect from '../assets/LogoRectTransparent.png';
 
 const navItems = [
   { to: '/admin/marketplace', label: 'Marketplace', icon: '◆' },
@@ -32,9 +33,7 @@ const AdminLayout = () => {
       <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} flex-shrink-0 bg-gray-900 flex flex-col transition-all duration-300`}>
         {/* Logo */}
         <div className="h-16 flex items-center gap-3 px-4 border-b border-gray-700">
-          <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-xs font-bold">VT</span>
-          </div>
+          <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain flex-shrink-0" />
           {sidebarOpen && (
             <div>
               <p className="text-white text-sm font-bold leading-tight">Vibrant Textiles</p>

@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBuilding, faShieldHalved, faUser, faEnvelope, faFileInvoiceDollar, faHeart, faGlobe, faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import favicon from '../assets/Favicon.png';
+import logoRect from '../assets/LogoRectTransparent.png';
 
 const loginModes = {
   buyer: { label: 'Buyer', role: 'user', icon: faUser, description: 'Access enquiries, quotations and saved products.', destination: '/account' },
@@ -106,6 +108,7 @@ export function AccountLogin() {
         </div>
 
         <div className="text-center mb-8">
+          <img src={favicon} alt="VTA Favicon" className="mx-auto h-16 w-16 mb-4 object-contain" />
           <div className={`mx-auto h-14 w-14 rounded-2xl flex items-center justify-center text-xl shadow-inner mb-4 transition-transform duration-500 hover:scale-110 ${
             modeKey === 'admin' 
               ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)]' 
@@ -282,7 +285,8 @@ function Shell({ title, subtitle, isMember = false, children }) {
     <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
       <header className={`border-b ${isMember ? 'bg-slate-950 border-slate-900 text-white' : 'bg-white border-slate-100 text-slate-900'}`}>
         <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-2">
+          <Link to="/marketplace" className="flex items-center gap-3">
+            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
             <span className="font-black text-base tracking-tight uppercase">
               VTA <span className={isMember ? 'text-primary-400' : 'text-primary-700'}>Marketplace</span>
             </span>

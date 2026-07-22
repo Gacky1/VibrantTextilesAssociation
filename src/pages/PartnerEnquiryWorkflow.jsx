@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
+import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faCalendar, faMoneyBillWave, faTruck, faFileInvoiceDollar, faInbox, faPlus, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 
@@ -34,7 +35,8 @@ function Shell({ title, subtitle, children }) {
     <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
       <header className="border-b bg-slate-950 border-slate-900 text-white">
         <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-2">
+          <Link to="/marketplace" className="flex items-center gap-3">
+            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
             <span className="font-black text-base tracking-tight uppercase">
               VTA <span className="text-primary-400">Partner Portal</span>
             </span>

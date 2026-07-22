@@ -8,7 +8,7 @@ const empty = {
   image_url: '', 
   sort_order: 0, 
   is_active: true,
-  category: 'board' 
+  category: 'academic' 
 };
 
 const AdminMembers = () => {
@@ -18,7 +18,7 @@ const AdminMembers = () => {
   const [form, setForm] = useState(empty);
   const [saving, setSaving] = useState(false);
   const [imgFile, setImgFile] = useState(null);
-  const [activeTab, setActiveTab] = useState('council'); // 'council' or 'partners'
+  const [activeTab, setActiveTab] = useState('academic'); // 'academic', 'industry', 'stakeholder', or 'buyer'
 
   const fetch = async () => {
     setLoading(true);
@@ -30,7 +30,7 @@ const AdminMembers = () => {
   useEffect(() => { fetch(); }, []);
 
   const openAdd = () => { 
-    setForm({ ...empty, category: activeTab === 'council' ? 'board' : 'academic' }); 
+    setForm({ ...empty, category: activeTab }); 
     setImgFile(null); 
     setModal(true); 
   };
@@ -70,10 +70,7 @@ const AdminMembers = () => {
     fetch();
   };
 
-  const filteredMembers = members.filter(m => {
-    if (activeTab === 'council') return ['board', 'executive'].includes(m.category);
-    return ['academic', 'stakeholder', 'industry'].includes(m.category);
-  });
+  const filteredMembers = members.filter(m => m.category === activeTab);
 
   const inp = 'w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary-400 transition-all';
 
@@ -82,7 +79,7 @@ const AdminMembers = () => {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Member Registry</h1>
-          <p className="text-gray-500 text-sm mt-0.5">Manage council leadership and industrial partners</p>
+          <p className="text-gray-500 text-sm mt-0.5">Manage partner classifications and buyers</p>
         </div>
         <button onClick={openAdd} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl font-semibold text-sm hover:bg-primary-700 transition-colors shadow-sm">
           + Add New Entry
@@ -90,26 +87,46 @@ const AdminMembers = () => {
       </div>
 
       {/* Tabs */}
-      <div className="flex border-b border-gray-200 mb-6">
+      <div className="flex border-b border-gray-200 mb-6 overflow-x-auto">
         <button
-          onClick={() => setActiveTab('council')}
-          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all ${
-            activeTab === 'council' 
+          onClick={() => setActiveTab('academic')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === 'academic' 
             ? 'border-primary-600 text-primary-600' 
             : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}
         >
-          Leadership Council
+          Academic Partners
         </button>
         <button
-          onClick={() => setActiveTab('partners')}
-          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all ${
-            activeTab === 'partners' 
+          onClick={() => setActiveTab('industry')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === 'industry' 
             ? 'border-primary-600 text-primary-600' 
             : 'border-transparent text-gray-400 hover:text-gray-600'
           }`}
         >
-          Industrial & Academic Partners
+          Industry Partners
+        </button>
+        <button
+          onClick={() => setActiveTab('stakeholder')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === 'stakeholder' 
+            ? 'border-primary-600 text-primary-600' 
+            : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          Stakeholders
+        </button>
+        <button
+          onClick={() => setActiveTab('buyer')}
+          className={`px-6 py-3 text-sm font-bold border-b-2 transition-all whitespace-nowrap ${
+            activeTab === 'buyer' 
+            ? 'border-primary-600 text-primary-600' 
+            : 'border-transparent text-gray-400 hover:text-gray-600'
+          }`}
+        >
+          Buyers
         </button>
       </div>
 
@@ -121,7 +138,7 @@ const AdminMembers = () => {
           <div className="p-12 text-center text-gray-400">
             <p className="text-4xl mb-3">👥</p>
             <p className="font-semibold">No entries in this segment</p>
-            <p className="text-sm mt-1">Switch tabs or add a new entry to the {activeTab === 'council' ? 'Council' : 'Partners'} list.</p>
+            <p className="text-sm mt-1">Switch tabs or add a new entry to the active registry category.</p>
           </div>
         ) : (
           <table className="w-full text-sm">
@@ -203,15 +220,10 @@ const AdminMembers = () => {
                   onChange={e => setForm({ ...form, category: e.target.value })} 
                   className={inp}
                 >
-                  <optgroup label="Leadership Council">
-                    <option value="board">Board of Directors</option>
-                    <option value="executive">Executive Team</option>
-                  </optgroup>
-                  <optgroup label="Registry Partners">
-                    <option value="academic">Academic Partnership</option>
-                    <option value="stakeholder">Stakeholder</option>
-                    <option value="industry">Industry Partnership</option>
-                  </optgroup>
+                  <option value="academic">Academic Partnership</option>
+                  <option value="industry">Industry Partnership</option>
+                  <option value="stakeholder">Stakeholder</option>
+                  <option value="buyer">Buyer</option>
                 </select>
               </div>
 

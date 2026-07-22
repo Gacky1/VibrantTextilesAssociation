@@ -18,7 +18,7 @@ const Navbar = () => {
   const [textIndex, setTextIndex] = useState(0);
   const brandTexts = [
     { main: "Vibrant Textiles", sub: "Association" },
-    { main: "वाइब्रेंट वस्त्र", sub: "संगठन" }
+    { main: "वाइब्रेंट वस्त्र", sub: "संघ" }
   ];
 
   useEffect(() => {
@@ -54,7 +54,6 @@ const Navbar = () => {
   ];
 
   const academyDirectItems = [
-    { name: 'Textile Explorer', path: '/textile-explorer' },
     { name: 'Research', path: '/research' },
   ];
 
@@ -63,10 +62,12 @@ const Navbar = () => {
     { name: 'News & Press Releases', path: '/media' },
   ];
 
-  // For Academy, group related items into a dropdown to prevent crowding/overflow
-  const academyDropdownItems = [
+  const academicsDropdownItems = [
     { name: 'Education', path: '/about-textile' },
     { name: 'Affiliation', path: '/membership' },
+  ];
+
+  const skillingDropdownItems = [
     { name: 'Skilling (RPL, Assessments)', path: '/skill-development' },
     { name: 'Upskilling', path: '/skill-development' },
     { name: 'Apprenticeships', path: '/skill-development' },
@@ -250,32 +251,31 @@ const Navbar = () => {
 
                     </>
                   ) : (
-                    // Academy Menu with compact Dropdown
                     <>
-                      {/* Academics & Skilling Dropdown */}
+                      {/* Academics Dropdown */}
                       <div className="relative">
                         <button
-                          onClick={() => setActiveDropdown(activeDropdown === 'academy' ? null : 'academy')}
+                          onClick={() => setActiveDropdown(activeDropdown === 'academics' ? null : 'academics')}
                           className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
-                            activeDropdown === 'academy' || academyDropdownItems.some(item => location.pathname === item.path)
+                            activeDropdown === 'academics' || academicsDropdownItems.some(item => location.pathname === item.path)
                               ? 'text-rose-600' 
                               : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                           }`}
                         >
-                          Academics & Skilling
-                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'academy' ? 'rotate-180' : ''}`} />
+                          Academics
+                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'academics' ? 'rotate-180' : ''}`} />
                         </button>
 
                         <AnimatePresence>
-                          {activeDropdown === 'academy' && (
+                          {activeDropdown === 'academics' && (
                             <motion.div
                               initial={{ opacity: 0, y: 10, scale: 0.95 }}
                               animate={{ opacity: 1, y: 0, scale: 1 }}
                               exit={{ opacity: 0, y: 10, scale: 0.95 }}
                               transition={{ duration: 0.18 }}
-                              className="!absolute left-0 top-full mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
+                              className="!absolute left-0 top-full mt-2 w-64 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
                             >
-                              {academyDropdownItems.map((item) => {
+                              {academicsDropdownItems.map((item) => {
                                 const isActive = location.pathname === item.path;
                                 return (
                                   <Link
@@ -297,14 +297,60 @@ const Navbar = () => {
                         </AnimatePresence>
                       </div>
 
+                      {/* Skilling & Training Dropdown */}
+                      <div className="relative">
+                        <button
+                          onClick={() => setActiveDropdown(activeDropdown === 'skilling' ? null : 'skilling')}
+                          className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-colors py-2 flex items-center gap-1.5 focus:outline-none nav-thread-rose ${
+                            activeDropdown === 'skilling' || skillingDropdownItems.some(item => location.pathname === item.path)
+                              ? 'text-rose-600' 
+                              : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                          }`}
+                        >
+                          Skilling & Training
+                          <FontAwesomeIcon icon={faChevronDown} className={`text-[9px] transition-transform duration-350 ${activeDropdown === 'skilling' ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <AnimatePresence>
+                          {activeDropdown === 'skilling' && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                              transition={{ duration: 0.18 }}
+                              className="!absolute left-0 top-full mt-2 w-72 rounded-2xl bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 shadow-2xl p-4 space-y-1 z-50 border-stitch"
+                            >
+                              {skillingDropdownItems.map((item) => {
+                                const isActive = location.pathname === item.path;
+                                return (
+                                  <Link
+                                    key={item.name}
+                                    to={item.path}
+                                    onClick={() => setActiveDropdown(null)}
+                                    className={`block text-[11px] font-bold uppercase tracking-wider py-2.5 px-4 rounded-xl transition-all ${
+                                      isActive 
+                                        ? 'bg-rose-50 dark:bg-rose-950/20 text-rose-600' 
+                                        : 'text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white'
+                                    }`}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                );
+                              })}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+
+                      {/* Research direct link */}
                       <Link
-                        to="/textile-explorer"
+                        to="/research"
                         className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
-                          location.pathname === '/textile-explorer' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
+                          location.pathname === '/research' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-905 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
-                        Textile Explorer
-                        {location.pathname === '/textile-explorer' && (
+                        Research
+                        {location.pathname === '/research' && (
                           <motion.div 
                             layoutId="activeNavLine"
                             className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
@@ -359,29 +405,6 @@ const Navbar = () => {
                           )}
                         </AnimatePresence>
                       </div>
-
-                      <Link
-                        to="/research"
-                        className={`whitespace-nowrap text-[10.5px] xl:text-[11.5px] 2xl:text-[12.5px] font-black uppercase tracking-wider transition-all relative py-2 nav-thread-rose ${
-                          location.pathname === '/research' ? 'text-rose-600' : 'text-slate-600 hover:text-slate-905 dark:text-slate-350 dark:hover:text-white'
-                        }`}
-                      >
-                        Research
-                        {location.pathname === '/research' && (
-                          <motion.div 
-                            layoutId="activeNavLine"
-                            className="absolute bottom-0 left-0 right-0 h-[2px] bg-rose-600"
-                            style={{
-                              backgroundImage: `repeating-linear-gradient(90deg, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)`,
-                              backgroundColor: 'transparent'
-                            }}
-                          />
-                        )}
-                      </Link>
-
-
-
-
                     </>
                   )}
                 </motion.div>
@@ -557,10 +580,10 @@ const Navbar = () => {
                   </>
                 ) : (
                   <>
-                    {/* Academics & Skilling Group */}
+                    {/* Academics Group */}
                     <div className="space-y-3">
-                      <span className="text-[10px] font-black text-slate-455 dark:text-slate-500 uppercase tracking-wider block">Academics & Skilling</span>
-                      {academyDropdownItems.map((item, idx) => (
+                      <span className="text-[10px] font-black text-slate-455 dark:text-slate-500 uppercase tracking-wider block">Academics</span>
+                      {academicsDropdownItems.map((item, idx) => (
                         <Link
                           key={idx}
                           to={item.path}
@@ -572,9 +595,24 @@ const Navbar = () => {
                       ))}
                     </div>
 
-                    {/* General Links */}
+                    {/* Skilling & Training Group */}
                     <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
-                      <span className="text-[10px] font-black text-slate-455 dark:text-slate-500 uppercase tracking-wider block">Explorer & Research</span>
+                      <span className="text-[10px] font-black text-slate-455 dark:text-slate-500 uppercase tracking-wider block">Skilling & Training</span>
+                      {skillingDropdownItems.map((item, idx) => (
+                        <Link
+                          key={idx}
+                          to={item.path}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="block text-lg font-extrabold text-slate-700 dark:text-slate-300 hover:text-rose-600 dark:hover:text-rose-455 pl-4 transition-colors"
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+
+                    {/* Research Link */}
+                    <div className="space-y-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+                      <span className="text-[10px] font-black text-slate-455 dark:text-slate-500 uppercase tracking-wider block">Research</span>
                       {academyDirectItems.map((item, idx) => (
                         <Link
                           key={idx}

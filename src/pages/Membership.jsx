@@ -527,6 +527,84 @@ const FreelanceTrainerForm = ({ onResumeChange, resumeName }) => {
   );
 };
 
+const BuyerForm = () => (
+  <div className="grid gap-6 animate-fade-in">
+    <div className="space-y-6">
+       <h4 className="text-lg font-bold text-stone-900 dark:text-white border-b border-stone-100 dark:border-stone-800 pb-4 flex items-center gap-2">
+         <FontAwesomeIcon icon={faBuilding} className="text-rose-500" />
+         Buyer Enterprise Details
+       </h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faBuilding}>Company / Brand Name *</Label>
+            <input type="text" name="org_name" required placeholder="Company Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faUsersGear}>Business Type *</Label>
+            <select name="sub_sector" required className={sel}>
+              <option value="">Select Business Type</option>
+              <option>Retailer & Boutique</option>
+              <option>Wholesaler & Distributor</option>
+              <option>Apparel Brand</option>
+              <option>Buying Agent & House</option>
+              <option>Export House</option>
+              <option>Designer Label</option>
+              <option>Other</option>
+            </select>
+          </div>
+       </div>
+       <div>
+          <Label icon={faMapMarkerAlt}>Business Address *</Label>
+          <textarea name="org_address" required rows="2" placeholder="Full business address" className={`${inp} resize-none`} />
+       </div>
+       <div>
+          <Label icon={faHandshake}>Primary Sourcing Interest *</Label>
+          <select name="partnering_interest" required className={sel}>
+            <option value="">Select Sourcing Interest</option>
+            <option>Handloom Fabrics</option>
+            <option>Apparels & Garments</option>
+            <option>Home Textiles</option>
+            <option>Yarns & Fibres</option>
+            <option>GI Tagged Artisanal Products</option>
+            <option>Multiple Categories</option>
+          </select>
+       </div>
+    </div>
+
+    <div className="space-y-6 pt-6">
+       <h4 className="text-lg font-bold text-stone-900 dark:text-white border-b border-stone-100 dark:border-stone-800 pb-4 flex items-center gap-2">
+         <FontAwesomeIcon icon={faUser} className="text-rose-500" />
+         Decision Maker / Contact Person
+       </h4>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faUser}>Name *</Label>
+            <input type="text" name="decision_maker" required placeholder="Full Name" className={inp} />
+          </div>
+          <div>
+            <Label icon={faBriefcase}>Designation *</Label>
+            <input type="text" name="designation" required placeholder="e.g. Sourcing Manager" className={inp} />
+          </div>
+       </div>
+       <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <Label icon={faPhone}>Contact Number *</Label>
+            <input type="tel" name="phone" required placeholder="+91 XXXXX XXXXX" className={inp} />
+          </div>
+          <div>
+            <Label icon={faEnvelope}>Business Email *</Label>
+            <input type="email" name="email" required placeholder="sourcing@company.com" className={inp} />
+          </div>
+       </div>
+    </div>
+
+    <div>
+       <Label icon={faInfoCircle}>Additional Information</Label>
+       <textarea name="additional_info" rows="3" placeholder="Specify your annual sourcing requirements or custom inquiries..." className={`${inp} resize-none`} />
+    </div>
+  </div>
+);
+
 /* ─── Main Membership Component ─── */
 
 const Membership = () => {
@@ -567,6 +645,14 @@ const Membership = () => {
       tagline: 'Collaborators, NGOs & Policy Support', 
       desc: 'Join the advisory network to assist with grassroots artisan clusters, handloom welfare campaigns, and research initiatives.',
       color: 'indigo'
+    },
+    { 
+      id: 'buyer', 
+      name: 'Buyer', 
+      icon: faUser, 
+      tagline: 'Retailers, Wholesalers & Brand Sourcing', 
+      desc: 'Join as a verified buyer to post sourcing enquiries, request quotations, and buy directly from weavers and mills.',
+      color: 'emerald'
     }
   ];
 
@@ -576,7 +662,7 @@ const Membership = () => {
         const { data } = await supabase
           .from('members')
           .select('*')
-          .in('category', ['academic', 'stakeholder', 'industry'])
+          .in('category', ['academic', 'stakeholder', 'industry', 'buyer'])
           .eq('is_active', true)
           .order('sort_order');
         
@@ -719,12 +805,13 @@ const Membership = () => {
 
              {/* Registry Filters */}
              <div className="flex flex-wrap justify-center gap-3 pt-6">
-                {[
-                  { id: 'all', label: 'All Registry' },
-                  { id: 'academic', label: 'Academic' },
-                  { id: 'industry', label: 'Industry' },
-                  { id: 'stakeholder', label: 'Stakeholders' }
-                ].map(tab => (
+                 {[
+                   { id: 'all', label: 'All Registry' },
+                   { id: 'academic', label: 'Academic' },
+                   { id: 'industry', label: 'Industry' },
+                   { id: 'stakeholder', label: 'Stakeholders' },
+                   { id: 'buyer', label: 'Buyers' }
+                 ].map(tab => (
                   <button
                     key={tab.id}
                     onClick={() => setRosterTab(tab.id)}
@@ -780,7 +867,8 @@ const Membership = () => {
                          icon={
                            m.category === 'academic' ? faGraduationCap :
                            m.category === 'industry' ? faIndustry :
-                           m.category === 'stakeholder' ? faHandshake : faUserTie
+                           m.category === 'stakeholder' ? faHandshake :
+                           m.category === 'buyer' ? faUser : faUserTie
                          } 
                          className="text-stone-400 dark:text-stone-600 text-xs" 
                        />
@@ -810,7 +898,7 @@ const Membership = () => {
               </p>
             </div>
   
-            <div className="grid md:grid-cols-3 max-w-6xl mx-auto gap-8 relative z-10">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 max-w-7xl mx-auto gap-6 relative z-10">
               {categories.map((cat) => {
                 let borderTheme = 'border-stone-800 hover:border-rose-500/30';
                 let iconTheme = 'text-rose-400 border-rose-500/20';
@@ -940,6 +1028,7 @@ const Membership = () => {
                       )}
                       {selectedCategory === 'industry' && <IndustryForm />}
                       {selectedCategory === 'stakeholder' && <StakeholderForm />}
+                      {selectedCategory === 'buyer' && <BuyerForm />}
                       {selectedCategory === 'trainer' && (
                         <FreelanceTrainerForm 
                           onResumeChange={(file) => setResumeFile(file)} 

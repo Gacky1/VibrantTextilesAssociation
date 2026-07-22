@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
+import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faCalendar, faMapMarkerAlt, faTag, faPlus, faHeart, faGlobe, faBoxOpen } from '@fortawesome/free-solid-svg-icons';
 
@@ -13,8 +14,9 @@ function Shell({ title, subtitle, action, children }) {
     <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
       <header className="border-b bg-white border-slate-100">
         <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="font-black text-base tracking-tight uppercase">
-            VTA <span className="text-primary-700">Marketplace</span>
+          <Link to="/marketplace" className="flex items-center gap-3 font-black text-base tracking-tight uppercase">
+            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
+            <span>VTA <span className="text-primary-700">Marketplace</span></span>
           </Link>
           <nav className="flex gap-5 text-xs font-black uppercase tracking-wider">
             {nav.map(([x, to]) => (
