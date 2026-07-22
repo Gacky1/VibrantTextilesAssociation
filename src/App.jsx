@@ -35,7 +35,8 @@ import { IndustryMemberRoute, RoleProtectedRoute, UserRoute } from './auth/RoleR
 import AdminMarketplace from './admin/AdminMarketplace';
 import AdminAccountRegistry from './admin/AdminAccountRegistry';
 import AdminTextiles from './admin/AdminTextiles';
-import { MemberEnquiries, MemberProducts, MemberProfile, MemberQuotations, MemberVerification } from './pages/MemberPortalPages';
+import { MemberEnquiries, MemberProducts, MemberQuotations, MemberVerification } from './pages/MemberPortalPages';
+import MemberCompanyProfile from './pages/MemberCompanyProfile';
 import { BuyerEnquiries, BuyerQuotations, BuyerSavedProducts, NewBuyerEnquiry } from './pages/BuyerMarketplacePages';
 
 function App() {
@@ -73,7 +74,7 @@ function App() {
         <Route path="/member/products" element={<IndustryMemberRoute><MemberProducts /></IndustryMemberRoute>} />
         <Route path="/member/enquiries" element={<IndustryMemberRoute><MemberEnquiries /></IndustryMemberRoute>} />
         <Route path="/member/quotations" element={<IndustryMemberRoute><MemberQuotations /></IndustryMemberRoute>} />
-        <Route path="/member/profile" element={<IndustryMemberRoute><MemberProfile /></IndustryMemberRoute>} />
+        <Route path="/member/profile" element={<IndustryMemberRoute><MemberCompanyProfile /></IndustryMemberRoute>} />
         <Route path="/member/verification" element={<IndustryMemberRoute><MemberVerification /></IndustryMemberRoute>} />
 
         {/* ── Admin Routes ── */}

@@ -116,7 +116,7 @@ New Auth users receive a profile through `public.handle_new_user()`. Self-regist
 - `/member/products` — product drafts, review submission, unpublish and archive
 - `/member/enquiries` — assigned buyer enquiries and status management
 - `/member/quotations` — quotation and version registry
-- `/member/profile` — company profile editor
+- `/member/profile` — company profile editor with logo upload/URL fallback and website management
 - `/member/verification` — verification status and onboarding guidance
 
 The member routes are backed by Supabase and owner-scoped RLS. Advanced multi-step product editing, threaded messaging, and the quotation builder remain staged.
@@ -297,7 +297,7 @@ Still incomplete or intentionally staged:
 
 - Full buyer registration/profile completion form
 - Industry membership application-to-Auth onboarding automation
-- Member company-profile editor and document uploader
+- Industry verification document uploader
 - Multi-step member product editor
 - Buyer and member enquiry-thread pages
 - Quotation builder, revision UI, printable/PDF workflow

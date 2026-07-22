@@ -28,4 +28,6 @@ export const previewMarketplaceSupplier = {
   certifications: ['VTA Verified'],
   manufacturing_capabilities: ['Handloom weaving', 'Natural dyeing', 'Custom design development'],
   is_exporter: true,
+  website: 'https://example.com',
+  logo_url: '',
 };
