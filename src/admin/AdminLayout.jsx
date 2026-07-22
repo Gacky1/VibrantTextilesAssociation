@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
-import logoRect from '../assets/LogoRectTransparent.png';
+import logoRect from '../assets/TextTransWhite.svg';
+import favicon from '../assets/Favicon.png';
+import vtcLogo from '../assets/VTC TRANSPARENT.svg';
 
 const navItems = [
   { to: '/admin/marketplace', label: 'Marketplace', icon: '◆' },
@@ -32,8 +34,7 @@ const AdminLayout = () => {
       {/* Sidebar */}
       <aside className={`${sidebarOpen ? 'w-60' : 'w-16'} flex-shrink-0 bg-gray-900 flex flex-col transition-all duration-300`}>
         {/* Logo */}
-        <div className="h-16 flex items-center gap-3 px-4 border-b border-gray-700">
-          <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain flex-shrink-0" />
+        <div className="h-16 flex items-center px-4 border-b border-gray-700">
           {sidebarOpen && (
             <div>
               <p className="text-white text-sm font-bold leading-tight">Vibrant Textiles</p>
@@ -93,10 +94,11 @@ const AdminLayout = () => {
           >
             ☰
           </button>
+          <img src={vtcLogo} alt="VTA Brand Logo" className="h-8 w-auto object-contain" />
           <div className="flex-1" />
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-full flex items-center justify-center">
-              <span className="text-white text-xs font-bold">A</span>
+            <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-200 flex items-center justify-center bg-gray-50">
+              <img src={favicon} alt="VTA Avatar" className="w-5 h-5 object-contain" />
             </div>
             <span className="text-sm font-medium text-gray-700">Admin</span>
           </div>

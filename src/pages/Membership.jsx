@@ -726,10 +726,24 @@ const Membership = () => {
       };
     } else {
       // Standard mapping for other categories
+      let additional = data.additional_info || '';
+      if (selectedCategory === 'academic' && academicType === 'institute') {
+        additional = `${additional}\n\nConstitution: ${data.constitution || ''}\nLine of Business: ${data.business_activity || ''}`.trim();
+      }
+
       payload = { 
-        ...data, 
         category: selectedCategory,
-        org_type: selectedCategory === 'academic' ? academicType : (selectedCategory === 'industry' ? data.sub_sector : null)
+        org_name: data.org_name || '',
+        org_type: selectedCategory === 'academic' ? academicType : (selectedCategory === 'industry' || selectedCategory === 'buyer' ? data.sub_sector : null),
+        org_address: data.org_address || '',
+        state: data.state || '',
+        partnering_interest: data.partnering_interest || null,
+        decision_maker: data.decision_maker || '',
+        designation: data.designation || null,
+        phone: data.phone || '',
+        email: data.email || '',
+        additional_info: additional,
+        status: 'pending'
       };
     }
 

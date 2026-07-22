@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase';
 const AdminApplications = () => {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedApp, setSelectedApp] = useState(null);
 
   useEffect(() => {
     fetchApplications();
@@ -113,11 +114,18 @@ const AdminApplications = () => {
                       </span>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end gap-2">
+                      <div className="flex justify-end items-center gap-3">
+                        <button
+                          onClick={() => setSelectedApp(app)}
+                          className="px-2.5 py-1 text-xs font-bold text-primary-600 hover:text-primary-800 bg-primary-50 hover:bg-primary-100 rounded-md transition-colors"
+                          title="Watch Application Details"
+                        >
+                          👁 Watch
+                        </button>
                         {app.status !== 'approved' && (
                           <button
                             onClick={() => updateStatus(app.id, 'approved')}
-                            className="text-green-600 hover:text-green-900"
+                            className="text-green-600 hover:text-green-950 font-bold"
                             title="Approve"
                           >
                             ✓
@@ -126,7 +134,7 @@ const AdminApplications = () => {
                         {app.status !== 'rejected' && (
                           <button
                             onClick={() => updateStatus(app.id, 'rejected')}
-                            className="text-red-600 hover:text-red-900"
+                            className="text-red-600 hover:text-red-955 font-bold"
                             title="Reject"
                           >
                             ×
@@ -135,7 +143,7 @@ const AdminApplications = () => {
                         {app.status !== 'pending' && (
                           <button
                             onClick={() => updateStatus(app.id, 'pending')}
-                            className="text-gray-400 hover:text-gray-600"
+                            className="text-gray-400 hover:text-gray-650"
                             title="Mark as Pending"
                           >
                             ↺
@@ -150,8 +158,154 @@ const AdminApplications = () => {
           </table>
         </div>
       </div>
+
+      {/* Modal */}
+      {selectedApp && (
+        <div className="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-white rounded-[32px] shadow-2xl w-full max-w-2xl my-8 overflow-hidden">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between p-8 border-b border-gray-100 bg-gray-900 text-white">
+              <div>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black uppercase tracking-widest bg-primary-600 text-white mb-2">
+                  {selectedApp.category} Application
+                </span>
+                <h2 className="text-xl font-bold tracking-tight">{selectedApp.org_name}</h2>
+              </div>
+              <button 
+                onClick={() => setSelectedApp(null)} 
+                className="text-gray-400 hover:text-white text-2xl transition-colors cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="p-8 space-y-6 max-h-[70vh] overflow-y-auto">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Category / Entity Type</span>
+                  <span className="text-sm font-bold text-gray-900 capitalize">{selectedApp.category} {selectedApp.org_type ? `(${selectedApp.org_type})` : ''}</span>
+                </div>
+                <div>
+                  <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Application Date</span>
+                  <span className="text-sm font-bold text-gray-900">{new Date(selectedApp.created_at).toLocaleString()}</span>
+                </div>
+              </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-2">Location & Address</span>
+                <div className="text-sm text-gray-950 font-bold leading-relaxed">{selectedApp.org_address}</div>
+                {selectedApp.state && (
+                  <div className="text-xs text-gray-500 font-medium mt-1">State: <span className="font-bold text-gray-700">{selectedApp.state}</span></div>
+                )}
+              </div>
+
+              <div className="border-t border-gray-100 pt-6">
+                <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">Key Contact Person</span>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <span className="block text-[10px] font-bold text-gray-400">Name</span>
+                    <span className="text-sm font-bold text-gray-900">{selectedApp.decision_maker}</span>
+                  </div>
+                  {selectedApp.designation && (
+                    <div>
+                      <span className="block text-[10px] font-bold text-gray-400">Designation</span>
+                      <span className="text-sm font-bold text-gray-900">{selectedApp.designation}</span>
+                    </div>
+                  )}
+                  <div>
+                    <span className="block text-[10px] font-bold text-gray-400">Email Address</span>
+                    <a href={`mailto:${selectedApp.email}`} className="text-sm font-bold text-primary-600 hover:underline">{selectedApp.email}</a>
+                  </div>
+                  <div>
+                    <span className="block text-[10px] font-bold text-gray-400">Contact Number</span>
+                    <a href={`tel:${selectedApp.phone}`} className="text-sm font-bold text-primary-600 hover:underline">{selectedApp.phone}</a>
+                  </div>
+                </div>
+              </div>
+
+              {selectedApp.partnering_interest && (
+                <div className="border-t border-gray-100 pt-6">
+                  <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-1">Interest / Sourcing Category</span>
+                  <span className="text-sm font-bold text-gray-900">{selectedApp.partnering_interest}</span>
+                </div>
+              )}
+
+              <div className="border-t border-gray-100 pt-6">
+                <span className="block text-[10px] font-black uppercase tracking-widest text-gray-400 mb-3">Narrative & Additional Details</span>
+                {renderAdditionalInfo(selectedApp.additional_info)}
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-6 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
+              <div className="flex gap-2">
+                <span className="text-xs text-gray-500 font-bold uppercase">Status:</span>
+                <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-black uppercase tracking-wider
+                  ${selectedApp.status === 'approved' ? 'bg-green-100 text-green-800' : 
+                    selectedApp.status === 'rejected' ? 'bg-red-100 text-red-800' : 
+                    'bg-yellow-100 text-yellow-800'
+                  }`}
+                >
+                  {selectedApp.status || 'pending'}
+                </span>
+              </div>
+              <div className="flex gap-3">
+                <button 
+                  onClick={() => setSelectedApp(null)} 
+                  className="px-5 py-2.5 bg-white border border-gray-200 rounded-xl font-bold text-xs uppercase text-gray-500 hover:bg-gray-50 cursor-pointer transition-colors"
+                >
+                  Close
+                </button>
+                {selectedApp.status !== 'approved' && (
+                  <button 
+                    onClick={() => { updateStatus(selectedApp.id, 'approved'); setSelectedApp(null); }} 
+                    className="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold text-xs uppercase cursor-pointer transition-colors"
+                  >
+                    Approve
+                  </button>
+                )}
+                {selectedApp.status !== 'rejected' && (
+                  <button 
+                    onClick={() => { updateStatus(selectedApp.id, 'rejected'); setSelectedApp(null); }} 
+                    className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-xs uppercase cursor-pointer transition-colors"
+                  >
+                    Reject
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
+};
+
+const renderAdditionalInfo = (infoStr) => {
+  if (!infoStr) return <span className="text-gray-400 italic">None</span>;
+  try {
+    if (infoStr.startsWith('{') && infoStr.endsWith('}')) {
+      const info = JSON.parse(infoStr);
+      return (
+        <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl text-xs border border-gray-100 font-medium text-gray-700">
+          {info.dob && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Date of Birth</span>{info.dob}</div>}
+          {info.gender && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Gender</span>{info.gender}</div>}
+          {info.social_category && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Social Category</span>{info.social_category}</div>}
+          {info.district && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">District</span>{info.district}</div>}
+          {info.experience_years && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Experience (Years)</span>{info.experience_years}</div>}
+          {info.highest_qualification && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Highest Qualification</span>{info.highest_qualification}</div>}
+          {info.passing_year && <div><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Passing Year</span>{info.passing_year}</div>}
+          {info.resume_name && <div className="col-span-2"><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Attached Resume Reference</span><span className="text-blue-600 font-bold">{info.resume_name}</span></div>}
+          {info.trainer_types && info.trainer_types.length > 0 && <div className="col-span-2"><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Trainer Types</span>{info.trainer_types.join(', ')}</div>}
+          {info.additional_notes && <div className="col-span-2 border-t border-gray-200/50 pt-2"><span className="font-bold text-gray-400 block uppercase text-[10px] tracking-wider mb-1">Additional Notes</span><p className="whitespace-pre-wrap leading-relaxed">{info.additional_notes}</p></div>}
+        </div>
+      );
+    }
+  } catch (e) {
+    // Fallback to text
+  }
+  return <p className="text-gray-700 whitespace-pre-wrap text-sm leading-relaxed">{infoStr}</p>;
 };
 
 export default AdminApplications;

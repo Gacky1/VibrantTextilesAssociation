@@ -423,7 +423,7 @@ const TextileDetail = () => {
               <div className="space-y-4">
                 <h4 className="font-extrabold text-lg text-slate-800 dark:text-white flex items-center gap-2">
                   <FontAwesomeIcon icon={faUsers} className="text-rose-500 text-base" />
-                  Master Artisans
+                  Master Artisans / उस्ताद
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {textile.artisans?.map(art => (
