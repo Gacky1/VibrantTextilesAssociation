@@ -147,7 +147,8 @@ Apply SQL files in this order:
 3. `supabase_marketplace_setup.sql` — profiles, roles, industry members, marketplace, enquiries, quotations, notifications, audit logs, storage, and RLS.
 4. `supabase_verification_upgrade.sql` — buyer verification fields, admin verification RPCs, audit behavior, and additional policies.
 5. `supabase_textile_admin_upgrade.sql` — Master Admin write policies for Textile Explorer records and related tables.
-6. Optional: `supabase_marketplace_seed.sql` — realistic verified supplier and published product demonstration data.
+6. `supabase_marketplace_workflow_upgrade.sql` — quotation write policies and controlled buyer quotation decisions.
+7. Optional: `supabase_marketplace_seed.sql` — realistic verified supplier and published product demonstration data.
 
 The seed requires a Supabase Auth user with email `marketplace.demo@vta.local`. It assigns that dedicated account the `industry_member` role. Use a separate Auth account for Master Admin testing.
 
@@ -298,9 +299,9 @@ Still incomplete or intentionally staged:
 - Full buyer registration/profile completion form
 - Industry membership application-to-Auth onboarding automation
 - Industry verification document uploader
-- Multi-step member product editor
-- Buyer and member enquiry-thread pages
-- Quotation builder, revision UI, printable/PDF workflow
+- Multi-step member product editor beyond the current image-backed draft form
+- Buyer and member enquiry-thread messaging pages
+- Multi-line quotation builder and printable/PDF workflow (single-line quotation, revision, and buyer decisions are implemented)
 - Saved-product UI
 - Realtime notifications and notification dropdown
 - Detailed analytics charts

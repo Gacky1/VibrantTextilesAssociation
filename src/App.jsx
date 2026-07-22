@@ -35,9 +35,12 @@ import { IndustryMemberRoute, RoleProtectedRoute, UserRoute } from './auth/RoleR
 import AdminMarketplace from './admin/AdminMarketplace';
 import AdminAccountRegistry from './admin/AdminAccountRegistry';
 import AdminTextiles from './admin/AdminTextiles';
-import { MemberEnquiries, MemberProducts, MemberQuotations, MemberVerification } from './pages/MemberPortalPages';
+import { MemberVerification } from './pages/MemberPortalPages';
 import MemberCompanyProfile from './pages/MemberCompanyProfile';
-import { BuyerEnquiries, BuyerQuotations, BuyerSavedProducts, NewBuyerEnquiry } from './pages/BuyerMarketplacePages';
+import { BuyerEnquiries, BuyerSavedProducts, NewBuyerEnquiry } from './pages/BuyerMarketplacePages';
+import PartnerProducts from './pages/PartnerProducts';
+import { PartnerEnquiries, PartnerQuotations } from './pages/PartnerEnquiryWorkflow';
+import BuyerQuotations from './pages/BuyerQuotations';
 
 function App() {
   return (
@@ -71,9 +74,9 @@ function App() {
         <Route path="/account/quotations" element={<UserRoute><BuyerQuotations /></UserRoute>} />
         <Route path="/account/saved" element={<UserRoute><BuyerSavedProducts /></UserRoute>} />
         <Route path="/member" element={<IndustryMemberRoute><MemberHome /></IndustryMemberRoute>} />
-        <Route path="/member/products" element={<IndustryMemberRoute><MemberProducts /></IndustryMemberRoute>} />
-        <Route path="/member/enquiries" element={<IndustryMemberRoute><MemberEnquiries /></IndustryMemberRoute>} />
-        <Route path="/member/quotations" element={<IndustryMemberRoute><MemberQuotations /></IndustryMemberRoute>} />
+        <Route path="/member/products" element={<IndustryMemberRoute><PartnerProducts /></IndustryMemberRoute>} />
+        <Route path="/member/enquiries" element={<IndustryMemberRoute><PartnerEnquiries /></IndustryMemberRoute>} />
+        <Route path="/member/quotations" element={<IndustryMemberRoute><PartnerQuotations /></IndustryMemberRoute>} />
         <Route path="/member/profile" element={<IndustryMemberRoute><MemberCompanyProfile /></IndustryMemberRoute>} />
         <Route path="/member/verification" element={<IndustryMemberRoute><MemberVerification /></IndustryMemberRoute>} />
 
