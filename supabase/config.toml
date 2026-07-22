@@ -1,0 +1,4 @@
+[functions.admin-create-account]
+# The function verifies the bearer token and Master Admin profile itself.
+# Disabling gateway verification allows browser OPTIONS preflight through.
+verify_jwt = false

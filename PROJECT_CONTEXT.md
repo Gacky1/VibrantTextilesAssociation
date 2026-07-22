@@ -237,6 +237,7 @@ Adapters return predictable `{ data, error, success }` structures and wrap Supab
 - `src/admin/AdminMarketplace.jsx` — product moderation plus enquiry and quotation registries
 - `src/admin/AdminTextiles.jsx` — create, search, edit, preview, and remove Textile Explorer records
 - `src/admin/AccountCreateModal.jsx` and `supabase/functions/admin-create-account/index.ts` — secure Master Admin creation of Buyer and Industry Partner Auth accounts. The service-role key exists only inside the deployed Edge Function.
+- `supabase/config.toml` disables gateway JWT verification for `admin-create-account` so CORS preflight reaches the function; the function itself validates the bearer token, active account status, and `master_admin` role.
 - `src/admin/AdminMembers.jsx` — older council/public-partner CMS, intentionally retained separately
 - `src/admin/AdminLayout.jsx` — responsive admin shell and navigation
 

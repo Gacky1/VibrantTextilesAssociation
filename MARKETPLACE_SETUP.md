@@ -19,10 +19,12 @@ Create a Supabase Auth user with email `marketplace.demo@vta.local`, then run `s
 Deploy the secure Edge Function used by **Partner Verification → Create account**:
 
 ```bash
-supabase functions deploy admin-create-account
+supabase functions deploy admin-create-account --no-verify-jwt
 ```
 
-Supabase supplies `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. Never add the service-role key to `.env` or frontend code. The function independently verifies that the caller has an active `master_admin` profile before creating an Auth user, profile, optional industry-member record, and audit log.
+Supabase supplies `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. Never add the service-role key to `.env` or frontend code. Gateway JWT verification is disabled only so browser `OPTIONS` preflight can pass; the function independently validates the bearer token and requires an active `master_admin` profile before creating an Auth user, profile, optional industry-member record, and audit log.
+
+If deploying through the Supabase Dashboard, create/update the `admin-create-account` function and disable its **Verify JWT** gateway option. The function performs stricter authorization internally. After deployment, verify that an `OPTIONS` request returns HTTP 204 with `Access-Control-Allow-Origin: *`.
 
 The migration creates profile/member/catalog/enquiry/quotation/notification/audit tables, indexes, the Auth-to-profile trigger, RLS policies, seven storage buckets, and category seed records. Public buckets are limited to product and member presentation assets. Attachments, quotations, product documents, and verification documents remain private and should be accessed using short-lived signed URLs.
 
