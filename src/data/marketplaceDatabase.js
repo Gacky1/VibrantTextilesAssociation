@@ -3,17 +3,66 @@ import { fail, ok } from './databaseResult';
 import { previewMarketplaceCategories, previewMarketplaceProducts, previewMarketplaceSupplier } from './marketplacePreviewData';
 
 export const isMarketplaceSchemaReady = import.meta.env.VITE_MARKETPLACE_SCHEMA_READY === 'true';
+
+export function getProductCluster(product) {
+  const city = (product.origin_city || product.industry_members?.city || '').toLowerCase();
+  const state = (product.origin_state || product.industry_members?.state || '').toLowerCase();
+  const name = (product.name || '').toLowerCase();
+  
+  if (city.includes('varanasi') || name.includes('banarasi')) return 'Varanasi Silk Cluster';
+  if (city.includes('kanchipuram') || name.includes('kanchipuram')) return 'Kanchipuram Silk Cluster';
+  if (city.includes('surat') || name.includes('surat')) return 'Surat Textile Cluster';
+  if (city.includes('tiruppur') || name.includes('tiruppur')) return 'Tiruppur Knitwear Cluster';
+  if (city.includes('panipat') || name.includes('panipat')) return 'Panipat Home Textile Cluster';
+  if (city.includes('bhilwara') || name.includes('bhilwara')) return 'Bhilwara Textile Cluster';
+  if (city.includes('patan') || name.includes('patola')) return 'Patan Patola Cluster';
+  if (city.includes('chanderi') || name.includes('chanderi')) return 'Chanderi Cluster';
+  if (city.includes('pochampally') || name.includes('pochampally') || name.includes('ikat')) return 'Pochampally Ikat Cluster';
+  if (city.includes('sualkuchi') || name.includes('muga')) return 'Sualkuchi Silk Cluster';
+  if (city.includes('sambalpur') || name.includes('sambalpuri')) return 'Sambalpur Ikat Cluster';
+  if (city.includes('kota') || name.includes('doria')) return 'Kota Doria Cluster';
+  if (city.includes('bagru') || name.includes('bagru')) return 'Bagru Print Cluster';
+  if (city.includes('sanganer') || name.includes('sanganeri')) return 'Sanganer Print Cluster';
+  if (city.includes('bhagalpur') || name.includes('bhagalpuri')) return 'Bhagalpur Silk Cluster';
+  if (city.includes('maheshwar') || name.includes('maheshwari')) return 'Maheshwar Handloom Cluster';
+  if (city.includes('paithan') || name.includes('paithani')) return 'Paithan Paithani Cluster';
+  if (city.includes('lucknow') || name.includes('chikankari')) return 'Lucknow Chikankari Cluster';
+  if (city.includes('kutch') || name.includes('ajrakh') || name.includes('bandhani')) return 'Kutch Textile Craft Cluster';
+  if (city.includes('karur') || name.includes('karur')) return 'Karur Home Textile Cluster';
+  
+  if (state.includes('andhra')) return 'Kalamkari / Venkatagiri Cluster';
+  
+  return 'General Textile Cluster';
+}
+
 const getPreviewProducts = (filters = {}) => previewMarketplaceProducts.filter((product) => {
   const term = filters.search?.trim().toLowerCase();
-  const matchesSearch = !term || [product.name, product.short_description, product.origin_state].some((value) => value?.toLowerCase().includes(term));
-  return matchesSearch && (!filters.category || product.marketplace_categories?.slug === filters.category);
+  if (!term) return !filters.category || product.marketplace_categories?.slug === filters.category;
+  
+  let matches = false;
+  if (filters.searchType === 'member') {
+    matches = product.industry_members?.organization_name?.toLowerCase().includes(term);
+  } else if (filters.searchType === 'location') {
+    matches = [product.origin_state, product.origin_city, product.industry_members?.state, product.industry_members?.city]
+      .some(val => val?.toLowerCase().includes(term));
+  } else if (filters.searchType === 'textile') {
+    matches = [product.name, product.material, product.marketplace_categories?.name]
+      .some(val => val?.toLowerCase().includes(term));
+  } else if (filters.searchType === 'cluster') {
+    const clusterName = getProductCluster(product);
+    matches = clusterName.toLowerCase().includes(term) || (product.origin_city || '').toLowerCase().includes(term);
+  } else {
+    matches = [product.name, product.short_description, product.material]
+      .some(val => val?.toLowerCase().includes(term));
+  }
+  return matches && (!filters.category || product.marketplace_categories?.slug === filters.category);
 });
 
 const productSelect = `*, marketplace_categories(name,slug), industry_members(id,organization_name,slug,logo_url,city,state,verification_status)`;
 export async function getMarketplaceProducts(filters = {}) {
   if (!isMarketplaceSchemaReady) return ok(getPreviewProducts(filters));
   try {
-    const activeSelect = `*, marketplace_categories${filters.category ? '!inner' : ''}(name,slug), industry_members(id,organization_name,slug,logo_url,city,state,verification_status)`;
+    const activeSelect = `*, marketplace_categories(name,slug), industry_members(id,organization_name,slug,logo_url,city,state,verification_status)`;
     let query = supabase.from('marketplace_products')
       .select(activeSelect)
       .eq('status', 'published')
@@ -22,7 +71,43 @@ export async function getMarketplaceProducts(filters = {}) {
 
     if (filters.search) {
       const term = `%${filters.search}%`;
-      query = query.or(`name.ilike.${term},short_description.ilike.${term},material.ilike.${term}`);
+      if (filters.searchType === 'member') {
+        const { data: members } = await supabase.from('industry_members')
+          .select('id')
+          .ilike('organization_name', term);
+        const memberIds = (members || []).map(m => m.id);
+        if (memberIds.length > 0) {
+          query = query.in('industry_member_id', memberIds);
+        } else {
+          return ok([]);
+        }
+      } else if (filters.searchType === 'location') {
+        const { data: members } = await supabase.from('industry_members')
+          .select('id')
+          .or(`state.ilike.${term},city.ilike.${term}`);
+        const memberIds = (members || []).map(m => m.id);
+        
+        let orCond = `origin_state.ilike.${term},origin_city.ilike.${term}`;
+        if (memberIds.length > 0) {
+          orCond += `,industry_member_id.in.(${memberIds.map(id => `"${id}"`).join(',')})`;
+        }
+        query = query.or(orCond);
+      } else if (filters.searchType === 'textile') {
+        const { data: cats } = await supabase.from('marketplace_categories')
+          .select('id')
+          .ilike('name', term);
+        const catIds = (cats || []).map(c => c.id);
+        
+        let orCond = `material.ilike.${term},name.ilike.${term}`;
+        if (catIds.length > 0) {
+          orCond += `,category_id.in.(${catIds.map(id => `"${id}"`).join(',')})`;
+        }
+        query = query.or(orCond);
+      } else if (filters.searchType === 'cluster') {
+        query = query.or(`origin_city.ilike.${term},gi_name.ilike.${term}`);
+      } else {
+        query = query.or(`name.ilike.${term},short_description.ilike.${term},material.ilike.${term}`);
+      }
     }
     if (filters.category) {
       query = query.eq('marketplace_categories.slug', filters.category);

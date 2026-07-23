@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faSliders, faStore } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faMagnifyingGlass, faSliders, faStore, 
+  faTags, faBuilding, faMapMarkerAlt, faScissors, faSitemap 
+} from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { getMarketplaceCategories, getMarketplaceProducts } from '../data/marketplaceDatabase';
+import { getMarketplaceCategories, getMarketplaceProducts, getProductCluster } from '../data/marketplaceDatabase';
 import { EmptyState, ErrorState, LoadingSkeleton, ProductCard } from '../components/marketplace/MarketplaceUI';
 
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [search, setSearch] = useState('');
+  const [searchType, setSearchType] = useState('default');
   const [category, setCategory] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -17,7 +21,7 @@ export default function Marketplace() {
   const load = async () => {
     setLoading(true);
     const [p, c] = await Promise.all([
-      getMarketplaceProducts({ search, category }),
+      getMarketplaceProducts({ search, category, searchType }),
       getMarketplaceCategories()
     ]);
     setProducts(p.data || []);
@@ -29,7 +33,30 @@ export default function Marketplace() {
   useEffect(() => {
     const timer = setTimeout(load, 250);
     return () => clearTimeout(timer);
-  }, [search, category]);
+  }, [search, category, searchType]);
+
+  const groupedProducts = useMemo(() => {
+    if (searchType === 'default') return null;
+    const groups = {};
+    products.forEach((p) => {
+      let key = 'Other';
+      if (searchType === 'member') {
+        key = p.industry_members?.organization_name || 'Unassigned Supplier';
+      } else if (searchType === 'location') {
+        const city = p.origin_city || p.industry_members?.city || '';
+        const state = p.origin_state || p.industry_members?.state || '';
+        key = [city, state].filter(Boolean).join(', ') || 'Unknown Location';
+      } else if (searchType === 'textile') {
+        key = p.marketplace_categories?.name || p.material || 'General Textiles';
+      } else if (searchType === 'cluster') {
+        key = getProductCluster(p);
+      }
+
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(p);
+    });
+    return Object.entries(groups).sort((a, b) => b[1].length - a[1].length);
+  }, [products, searchType]);
 
   return (
     <>
@@ -64,7 +91,13 @@ export default function Marketplace() {
                   className="w-full bg-transparent py-3 outline-none text-sm font-bold placeholder-slate-450 dark:placeholder-slate-500 text-slate-900 dark:text-white" 
                   value={search} 
                   onChange={e => setSearch(e.target.value)} 
-                  placeholder="Search products, weaving materials, signature techniques…"
+                  placeholder={
+                    searchType === 'member' ? 'Search by Industry Member / supplier organization name…' :
+                    searchType === 'location' ? 'Search by origin state, city or supplier location…' :
+                    searchType === 'textile' ? 'Search by textile type, material name or category…' :
+                    searchType === 'cluster' ? 'Search by traditional craft cluster name…' :
+                    'Search products, weaving materials, signature techniques…'
+                  }
                 />
               </label>
               
@@ -82,6 +115,30 @@ export default function Marketplace() {
                 </select>
               </label>
             </div>
+
+            {/* Option Pills for Search/Grouping Mode */}
+            <div className="mt-6 flex flex-wrap items-center gap-2 max-w-4xl">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-350 dark:text-slate-400 mr-2">Search & Group By:</span>
+              {[
+                { id: 'default', label: 'Products', icon: faTags },
+                { id: 'member', label: 'Supplier', icon: faBuilding },
+                { id: 'location', label: 'Location', icon: faMapMarkerAlt },
+                { id: 'textile', label: 'Textile', icon: faScissors }
+              ].map(opt => (
+                <button
+                  key={opt.id}
+                  onClick={() => setSearchType(opt.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider border transition-all cursor-pointer ${
+                    searchType === opt.id
+                      ? 'bg-amber-500 border-amber-600 text-slate-950 font-black shadow-[0_2px_10px_rgba(245,158,11,0.25)]'
+                      : 'bg-white/10 border-white/10 text-slate-200 hover:bg-white/20 hover:text-white'
+                  }`}
+                >
+                  <FontAwesomeIcon icon={opt.icon} className="text-xs" />
+                  {opt.label}
+                </button>
+              ))}
+            </div>
           </div>
         </section>
 
@@ -96,7 +153,13 @@ export default function Marketplace() {
                 <FontAwesomeIcon icon={faStore} className="text-sm" />
                 <span className="text-[10px] font-black uppercase tracking-widest">Verified Listings</span>
               </div>
-              <h2 className="text-3xl font-black uppercase tracking-tight">Marketplace Directory</h2>
+              <h2 className="text-3xl font-black uppercase tracking-tight">
+                {searchType === 'member' ? 'Grouped by Industry Partner' :
+                 searchType === 'location' ? 'Grouped by Craft Location' :
+                 searchType === 'textile' ? 'Grouped by Textile Type' :
+                 searchType === 'cluster' ? 'Grouped by Textile Cluster' :
+                 'Sourcing Hub Directory'}
+              </h2>
             </div>
             
             <div className="label-woven text-[9px] bg-white dark:bg-stone-900 px-3 py-1.5">
@@ -109,11 +172,43 @@ export default function Marketplace() {
           ) : error ? (
             <ErrorState message={error} retry={load} />
           ) : products.length ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {products.map(p => (
-                <ProductCard key={p.id} product={p} />
-              ))}
-            </div>
+            searchType === 'default' ? (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {products.map(p => (
+                  <ProductCard key={p.id} product={p} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-16">
+                {groupedProducts.map(([groupName, groupItems]) => (
+                  <div key={groupName} className="space-y-6">
+                    {/* Styled group divider with stitch border */}
+                    <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/80 pb-3">
+                      <h3 className="text-sm font-black uppercase tracking-tight flex items-center gap-2 text-slate-850 dark:text-slate-200">
+                        <FontAwesomeIcon 
+                          icon={
+                            searchType === 'member' ? faBuilding :
+                            searchType === 'location' ? faMapMarkerAlt :
+                            searchType === 'textile' ? faScissors :
+                            faSitemap
+                          } 
+                          className="text-xs text-rose-600 dark:text-rose-455"
+                        />
+                        {groupName}
+                      </h3>
+                      <span className="rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 px-2.5 py-0.5 text-[10px] font-black text-slate-500">
+                        {groupItems.length} {groupItems.length === 1 ? 'item' : 'items'}
+                      </span>
+                    </div>
+                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {groupItems.map(p => (
+                        <ProductCard key={p.id} product={p} />
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )
           ) : (
             <EmptyState />
           )}
