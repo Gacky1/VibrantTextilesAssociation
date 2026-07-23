@@ -1,13 +1,111 @@
 import { useEffect, useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faMagnifyingGlass, faSliders, faStore, 
-  faTags, faBuilding, faMapMarkerAlt, faScissors, faSitemap 
+  faTags, faBuilding, faMapMarkerAlt, faScissors, faSitemap,
+  faCheckCircle, faGlobe, faArrowRight
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { getMarketplaceCategories, getMarketplaceProducts, getProductCluster } from '../data/marketplaceDatabase';
 import { EmptyState, ErrorState, LoadingSkeleton, ProductCard } from '../components/marketplace/MarketplaceUI';
+
+function SupplierHeaderCard({ groupName, items }) {
+  const supplier = items[0]?.industry_members;
+  if (!supplier) {
+    return (
+      <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/80 rounded-2xl relative overflow-hidden">
+        <div className="absolute inset-0.5 border border-dashed border-slate-200/20 dark:border-slate-850 pointer-events-none rounded-[14px]" />
+        <h3 className="text-sm font-black uppercase tracking-tight flex items-center gap-2 text-slate-850 dark:text-slate-200 relative z-10">
+          <FontAwesomeIcon icon={faBuilding} className="text-rose-600 dark:text-rose-455 text-xs" />
+          {groupName}
+        </h3>
+        <span className="rounded-full bg-white dark:bg-slate-950 border border-slate-200/50 dark:border-slate-850 px-2.5 py-0.5 text-[10px] font-black text-slate-500 relative z-10">
+          {items.length} {items.length === 1 ? 'item' : 'items'}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-6 bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl shadow-sm relative overflow-hidden w-full gap-4">
+      {/* Stitch boundary decoration */}
+      <div className="absolute inset-1 border border-dashed border-slate-100 dark:border-slate-800/80 pointer-events-none rounded-[22px]" />
+      <div className="flex items-center gap-4 relative z-10">
+        <div className="h-12 w-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-900/50 flex items-center justify-center text-lg font-bold flex-shrink-0">
+          {supplier.logo_url ? (
+            <img src={supplier.logo_url} alt="" className="h-full w-full object-cover rounded-2xl" />
+          ) : (
+            <FontAwesomeIcon icon={faBuilding} />
+          )}
+        </div>
+        <div>
+          <div className="flex items-center gap-2">
+            <h3 className="text-base font-black text-slate-900 dark:text-white uppercase tracking-tight">{supplier.organization_name}</h3>
+            {supplier.verification_status === 'verified' && (
+              <span className="text-emerald-600 dark:text-emerald-500 text-xs flex items-center" title="Verified Member">
+                <FontAwesomeIcon icon={faCheckCircle} />
+              </span>
+            )}
+          </div>
+          <p className="text-xs font-semibold text-slate-500 mt-0.5 flex items-center gap-1.5">
+            <FontAwesomeIcon icon={faMapMarkerAlt} className="text-[10px] text-slate-400" />
+            {[supplier.city, supplier.state].filter(Boolean).join(', ')}
+          </p>
+        </div>
+      </div>
+      
+      <div className="flex items-center gap-4 relative z-10 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-4 sm:pt-0 border-slate-100 dark:border-slate-800">
+        <span className="rounded-full bg-slate-100 dark:bg-slate-950 border border-slate-200/50 dark:border-slate-800 px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider text-slate-500">
+          {items.length} {items.length === 1 ? 'Product' : 'Products'}
+        </span>
+        <Link 
+          to={`/marketplace/suppliers/${supplier.slug}`}
+          className="flex items-center gap-1 text-[10px] font-black uppercase tracking-widest text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-350 transition-colors"
+        >
+          <span>View Profile</span>
+          <FontAwesomeIcon icon={faArrowRight} className="text-[9px]" />
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+function LocationHeaderCard({ groupName, items }) {
+  return (
+    <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/80 rounded-2xl relative overflow-hidden">
+      <div className="absolute inset-0.5 border border-dashed border-slate-200/20 dark:border-slate-855 pointer-events-none rounded-[14px]" />
+      <div className="flex items-center gap-3 relative z-10">
+        <div className="h-9 w-9 rounded-xl bg-rose-50 dark:bg-rose-950/20 text-rose-600 dark:text-rose-455 flex items-center justify-center text-sm font-bold">
+          <FontAwesomeIcon icon={faMapMarkerAlt} />
+        </div>
+        <h3 className="text-sm font-black uppercase tracking-wider text-slate-850 dark:text-slate-200">{groupName}</h3>
+      </div>
+      <span className="rounded-full bg-white dark:bg-slate-950 border border-slate-200/50 dark:border-slate-855 px-2.5 py-0.5 text-[10px] font-black text-slate-500 relative z-10">
+        {items.length} {items.length === 1 ? 'item' : 'items'}
+      </span>
+    </div>
+  );
+}
+
+function TextileHeaderCard({ groupName, items }) {
+  return (
+    <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-900/40 border border-slate-200/50 dark:border-slate-800/80 rounded-2xl relative overflow-hidden">
+      <div className="absolute inset-0.5 border border-dashed border-slate-200/20 dark:border-slate-855 pointer-events-none rounded-[14px]" />
+      <div className="flex items-center gap-3 relative z-10">
+        <div className="h-9 w-9 rounded-xl bg-amber-50 dark:bg-amber-950/20 text-amber-600 dark:text-amber-400 flex items-center justify-center text-sm font-bold">
+          <FontAwesomeIcon icon={faScissors} />
+        </div>
+        <h3 className="text-sm font-black uppercase tracking-wider text-slate-850 dark:text-slate-200">{groupName}</h3>
+      </div>
+      <span className="rounded-full bg-white dark:bg-slate-950 border border-slate-200/50 dark:border-slate-855 px-2.5 py-0.5 text-[10px] font-black text-slate-500 relative z-10">
+        {items.length} {items.length === 1 ? 'item' : 'items'}
+      </span>
+    </div>
+  );
+}
 
 export default function Marketplace() {
   const [products, setProducts] = useState([]);
@@ -116,28 +214,39 @@ export default function Marketplace() {
               </label>
             </div>
 
-            {/* Option Pills for Search/Grouping Mode */}
-            <div className="mt-6 flex flex-wrap items-center gap-2 max-w-4xl">
-              <span className="text-[10px] font-black uppercase tracking-widest text-slate-350 dark:text-slate-400 mr-2">Search & Group By:</span>
-              {[
-                { id: 'default', label: 'Products', icon: faTags },
-                { id: 'member', label: 'Supplier', icon: faBuilding },
-                { id: 'location', label: 'Location', icon: faMapMarkerAlt },
-                { id: 'textile', label: 'Textile', icon: faScissors }
-              ].map(opt => (
-                <button
-                  key={opt.id}
-                  onClick={() => setSearchType(opt.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-black uppercase tracking-wider border transition-all cursor-pointer ${
-                    searchType === opt.id
-                      ? 'bg-amber-500 border-amber-600 text-slate-950 font-black shadow-[0_2px_10px_rgba(245,158,11,0.25)]'
-                      : 'bg-white/10 border-white/10 text-slate-200 hover:bg-white/20 hover:text-white'
-                  }`}
-                >
-                  <FontAwesomeIcon icon={opt.icon} className="text-xs" />
-                  {opt.label}
-                </button>
-              ))}
+            {/* Segmented control for search/grouping type */}
+            <div className="mt-6 flex flex-wrap items-center gap-4 max-w-4xl">
+              <span className="text-[10px] font-black uppercase tracking-widest text-slate-350 dark:text-slate-400">Search & Group By:</span>
+              <div className="flex bg-slate-950/40 dark:bg-slate-950/60 border border-white/5 rounded-full p-1 shadow-inner relative overflow-hidden">
+                {[
+                  { id: 'default', label: 'Products', icon: faTags },
+                  { id: 'member', label: 'Supplier', icon: faBuilding },
+                  { id: 'location', label: 'Location', icon: faMapMarkerAlt },
+                  { id: 'textile', label: 'Textile', icon: faScissors }
+                ].map(opt => {
+                  const isActive = searchType === opt.id;
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => setSearchType(opt.id)}
+                      className={`flex items-center gap-2 px-4 py-2 rounded-full text-[10px] sm:text-xs font-black uppercase tracking-wider whitespace-nowrap transition-all duration-300 relative z-10 focus:outline-none cursor-pointer ${
+                        isActive ? 'text-slate-950' : 'text-slate-300 hover:text-white'
+                      }`}
+                    >
+                      <FontAwesomeIcon icon={opt.icon} className="text-xs" />
+                      {opt.label}
+                      
+                      {isActive && (
+                        <motion.div
+                          layoutId="activeGroupingBackground"
+                          transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                          className="absolute inset-0 bg-amber-500 rounded-full -z-10 shadow-[0_2px_10px_rgba(245,158,11,0.25)] border border-amber-600"
+                        />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </section>
@@ -182,24 +291,13 @@ export default function Marketplace() {
               <div className="space-y-16">
                 {groupedProducts.map(([groupName, groupItems]) => (
                   <div key={groupName} className="space-y-6">
-                    {/* Styled group divider with stitch border */}
-                    <div className="flex items-center justify-between border-b border-slate-200/60 dark:border-slate-800/80 pb-3">
-                      <h3 className="text-sm font-black uppercase tracking-tight flex items-center gap-2 text-slate-850 dark:text-slate-200">
-                        <FontAwesomeIcon 
-                          icon={
-                            searchType === 'member' ? faBuilding :
-                            searchType === 'location' ? faMapMarkerAlt :
-                            searchType === 'textile' ? faScissors :
-                            faSitemap
-                          } 
-                          className="text-xs text-rose-600 dark:text-rose-455"
-                        />
-                        {groupName}
-                      </h3>
-                      <span className="rounded-full bg-slate-100 dark:bg-slate-900 border border-slate-200/50 dark:border-slate-800 px-2.5 py-0.5 text-[10px] font-black text-slate-500">
-                        {groupItems.length} {groupItems.length === 1 ? 'item' : 'items'}
-                      </span>
-                    </div>
+                    {searchType === 'member' ? (
+                      <SupplierHeaderCard groupName={groupName} items={groupItems} />
+                    ) : searchType === 'location' ? (
+                      <LocationHeaderCard groupName={groupName} items={groupItems} />
+                    ) : (
+                      <TextileHeaderCard groupName={groupName} items={groupItems} />
+                    )}
                     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                       {groupItems.map(p => (
                         <ProductCard key={p.id} product={p} />
