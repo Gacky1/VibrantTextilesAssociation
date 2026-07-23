@@ -41,6 +41,8 @@ import { BuyerEnquiries, BuyerSavedProducts, NewBuyerEnquiry } from './pages/Buy
 import PartnerProducts from './pages/PartnerProducts';
 import { PartnerEnquiries, PartnerQuotations } from './pages/PartnerEnquiryWorkflow';
 import BuyerQuotations from './pages/BuyerQuotations';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 function App() {
   return (
@@ -59,6 +61,8 @@ function App() {
         <Route path="/research" element={<Research />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/membership" element={<Membership />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-of-service" element={<TermsOfService />} />
         <Route path="/textile-explorer" element={<TextileExplorer />} />
         <Route path="/textile-explorer/:slug" element={<TextileDetail />} />
         <Route path="/marketplace" element={<Marketplace />} />

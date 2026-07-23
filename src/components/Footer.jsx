@@ -166,8 +166,8 @@ const Footer = () => {
           </div>
 
           <div className="flex items-center gap-8">
-            <Link to="/membership" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Privacy Policy</Link>
-            <Link to="/about-textile" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Terms of Service</Link>
+            <Link to="/privacy-policy" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-white transition-colors relative py-1 nav-thread-rose">Terms of Service</Link>
             <button
               onClick={scrollToTop}
               className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-300 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all duration-300 shadow-xl"

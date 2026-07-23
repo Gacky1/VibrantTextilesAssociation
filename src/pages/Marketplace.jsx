@@ -49,7 +49,7 @@ export default function Marketplace() {
             </div>
             
             <h1 className="max-w-4xl text-4xl font-black tracking-tight md:text-6xl uppercase">
-              Source Exceptional Indian Textiles.
+              Source Exceptional Indian Textiles
             </h1>
             <p className="mt-5 max-w-2xl text-base text-slate-300 font-medium leading-relaxed">
               Discover verified manufacturers, heritage handloom collectives, direct exporters, and specialist textile services. Send secure enquiries and RFQs in seconds.

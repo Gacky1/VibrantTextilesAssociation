@@ -48,8 +48,8 @@ const Navbar = () => {
   // Define Navbar options dynamically based on active Portal Mode
   const industryDirectItems = [
     { name: 'Industry', path: '/about-textile' },
-    { name: 'Textile Explorer', path: '/textile-explorer' },
-    { name: 'Marketplace', path: '/marketplace' },
+    { name: 'Cluster', path: '/textile-explorer' },
+    { name: 'Sourcing Hub', path: '/marketplace' },
     { name: 'Research', path: '/research' },
   ];
 
@@ -151,7 +151,7 @@ const Navbar = () => {
                           location.pathname === '/textile-explorer' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
-                        Textile Explorer
+                        Cluster
                         {location.pathname === '/textile-explorer' && (
                           <motion.div 
                             layoutId="activeNavLine"
@@ -170,7 +170,7 @@ const Navbar = () => {
                           location.pathname === '/marketplace' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
-                        Marketplace
+                        Sourcing Hub
                         {location.pathname === '/marketplace' && (
                           <motion.div 
                             layoutId="activeNavLine"

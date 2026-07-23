@@ -109,15 +109,6 @@ export function AccountLogin() {
 
         <div className="text-center mb-8">
           <img src={favicon} alt="VTA Favicon" className="mx-auto h-16 w-16 mb-4 object-contain" />
-          <div className={`mx-auto h-14 w-14 rounded-2xl flex items-center justify-center text-xl shadow-inner mb-4 transition-transform duration-500 hover:scale-110 ${
-            modeKey === 'admin' 
-              ? 'bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.15)]' 
-              : modeKey === 'buyer'
-                ? 'bg-rose-500/10 text-rose-600 border border-rose-500/20'
-                : 'bg-indigo-500/10 text-indigo-600 border border-indigo-500/20'
-          }`}>
-            <FontAwesomeIcon icon={mode.icon} />
-          </div>
           <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight">
             {mode.label} Sign In
           </h1>
