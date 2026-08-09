@@ -9,7 +9,7 @@ export default function TermsOfService() {
       <PageHero
         eyebrow="Rules of Engagement"
         title="Terms of Service"
-        subtitle="The binding rules and guidelines governing the use of the VTA Sourcing Hub, Cluster Database, and trade communication portals."
+        subtitle="The binding rules and guidelines governing the use of the VTA Market Place, Cluster Database, and trade communication portals."
       />
 
       <div className="section-container py-24 max-w-4xl mx-auto">
@@ -20,7 +20,7 @@ export default function TermsOfService() {
               1. Acceptance of Terms
             </h2>
             <p className="text-slate-600 leading-relaxed">
-              These Terms of Service (<strong>"Terms"</strong>) constitute a binding agreement between you and the Vibrant Textiles Association (<strong>"VTA"</strong>). By registering an account, browsing the traditional textile Cluster Database, listing products, or initiating RFQs through the Sourcing Hub, you agree to comply with and be bound by these Terms.
+              These Terms of Service (<strong>"Terms"</strong>) constitute a binding agreement between you and the Vibrant Textiles Association (<strong>"VTA"</strong>). By registering an account, browsing the traditional textile Cluster Database, listing products, or initiating RFQs through the Market Place, you agree to comply with and be bound by these Terms.
             </p>
           </section>
 
@@ -36,7 +36,7 @@ export default function TermsOfService() {
                 <strong>Cluster Database:</strong> A public repository detailing Geographical Indication (GI) tagged textiles, weaving techniques, material compositions, and historical origin regions.
               </li>
               <li>
-                <strong>Sourcing Hub:</strong> A B2B trade matching portal that enables buyers to discover suppliers, request quotations (RFQs), submit quotations, and exchange technical specifications.
+                <strong>Market Place:</strong> A B2B trade matching portal that enables buyers to discover suppliers, request quotations (RFQs), submit quotations, and exchange technical specifications.
               </li>
               <li>
                 <strong>VTA Academy:</strong> Informative guidelines, educational resources, and skilling training programs for members.

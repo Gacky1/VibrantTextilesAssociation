@@ -20,7 +20,7 @@ export default function PrivacyPolicy() {
               1. Overview & Scope
             </h2>
             <p className="text-slate-600 leading-relaxed">
-              The Vibrant Textiles Association (<strong>VTA</strong>), established in 1998, connects traditional handloom and industrial textile clusters across India with international B2B buyers and commercial partners. This Privacy Policy details how we collect, store, and process personal and professional information across our <strong>Cluster Database</strong>, <strong>Sourcing Hub</strong>, and <strong>VTA Academy</strong>.
+              The Vibrant Textiles Association (<strong>VTA</strong>), established in 1998, connects traditional handloom and industrial textile clusters across India with international B2B buyers and commercial partners. This Privacy Policy details how we collect, store, and process personal and professional information across our <strong>Cluster Database</strong>, <strong>Market Place</strong>, and <strong>VTA Academy</strong>.
             </p>
             <p className="text-slate-600 leading-relaxed">
               By accessing our platform, registering as an Industry Partner (Member), or submitting an RFQ as a Buyer, you consent to the data collection and usage practices described in this document.
@@ -42,7 +42,7 @@ export default function PrivacyPolicy() {
                 <strong>Industry Partners (Members):</strong> Official business name, manufacturing license, regional weaver cluster affiliations, GST/VAT/Tax ID registration, product catalogs, and verification documents.
               </li>
               <li>
-                <strong>Sourcing Data:</strong> Request for Quotations (RFQs), formal price negotiations, product interest bookmarks, and messaging history exchanged within the Sourcing Hub.
+                <strong>Sourcing Data:</strong> Request for Quotations (RFQs), formal price negotiations, product interest bookmarks, and messaging history exchanged within the Market Place.
               </li>
             </ul>
           </section>

@@ -6,9 +6,11 @@
 2. In the Supabase SQL editor, run `supabase_marketplace_setup.sql` once.
 3. Run `supabase_verification_upgrade.sql` to enable buyer verification and the admin verification operations.
 4. Run `supabase_textile_admin_upgrade.sql` to let Master Admin manage Textile Explorer records under RLS.
-5. Keep `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`. Never add a service-role key to Vite.
-6. After the migration succeeds, set `VITE_MARKETPLACE_SCHEMA_READY=true` and restart Vite. Until then, the catalog uses explicit local preview records and does not request missing marketplace tables.
-7. Build with `npm run build` and deploy the generated `dist` directory.
+5. Run `supabase_marketplace_workflow_upgrade.sql` for the enquiry and quotation lifecycle.
+6. Run `supabase_state_stakeholder_role.sql` by itself and allow it to commit, then run `supabase_state_stakeholder_upgrade.sql` for the ministry dashboard and state-scoped RPC.
+7. Keep `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` in `.env`. Never add a service-role key to Vite.
+8. After the migration succeeds, set `VITE_MARKETPLACE_SCHEMA_READY=true` and restart Vite. Until then, the catalog uses explicit local preview records and does not request missing marketplace tables.
+9. Build with `npm run build` and deploy the generated `dist` directory.
 
 ## Demo data
 
@@ -22,7 +24,7 @@ Deploy the secure Edge Function used by **Partner Verification → Create accoun
 supabase functions deploy admin-create-account --no-verify-jwt
 ```
 
-Supabase supplies `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. Never add the service-role key to `.env` or frontend code. Gateway JWT verification is disabled only so browser `OPTIONS` preflight can pass; the function independently validates the bearer token and requires an active `master_admin` profile before creating an Auth user, profile, optional industry-member record, and audit log.
+Supabase supplies `SUPABASE_URL`, `SUPABASE_ANON_KEY`, and `SUPABASE_SERVICE_ROLE_KEY` to deployed Edge Functions. Never add the service-role key to `.env` or frontend code. Gateway JWT verification is disabled only so browser `OPTIONS` preflight can pass; the function independently validates the bearer token and requires an active `master_admin` profile before creating an Auth user, profile, optional industry-member/state-stakeholder record, and audit log.
 
 If deploying through the Supabase Dashboard, create/update the `admin-create-account` function and disable its **Verify JWT** gateway option. The function performs stricter authorization internally. After deployment, verify that an `OPTIONS` request returns HTTP 204 with `Access-Control-Allow-Origin: *`.
 
@@ -48,6 +50,7 @@ Future role changes should be made from a trusted administrative operation. Do n
 - Verified industry member: can manage only its organization's products and commercial records.
 - Suspended member: account/member guards and database publication checks deny sensitive actions.
 - Master admin: can access `/admin/marketplace` and read moderation/audit data.
+- State stakeholder: can access `/stakeholder`; the RPC derives the assigned state from the database and returns aggregate/public state data only. Test that browser request changes cannot retrieve another state or private Buyer/quotation details.
 
 Use separate browser profiles for role tests. Attempt direct REST queries for another user's UUID to confirm RLS, not just hidden navigation.
 

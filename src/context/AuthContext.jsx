@@ -65,6 +65,7 @@ export function AuthProvider({ children }) {
     signOut: () => supabase.auth.signOut(), refreshProfile: () => loadProfile(user),
     hasRole: (...roles) => roles.includes(profile?.role),
     isMasterAdmin: profile?.role === 'master_admin',
+    isStateStakeholder: profile?.role === 'state_stakeholder',
     isIndustryMember: profile?.role === 'industry_member',
     isVerifiedIndustryMember: profile?.role === 'industry_member' && memberProfile?.verification_status === 'verified',
     isVerifiedBuyer: profile?.role === 'user' && profile?.buyer_verification_status === 'verified',

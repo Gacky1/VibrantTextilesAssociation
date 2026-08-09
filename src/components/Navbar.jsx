@@ -49,7 +49,7 @@ const Navbar = () => {
   const industryDirectItems = [
     { name: 'Industry', path: '/about-textile' },
     { name: 'Cluster', path: '/textile-explorer' },
-    { name: 'Sourcing Hub', path: '/marketplace' },
+    { name: 'Market Place', path: '/marketplace' },
     { name: 'Research', path: '/research' },
   ];
 
@@ -170,7 +170,7 @@ const Navbar = () => {
                           location.pathname === '/marketplace' ? 'text-amber-600' : 'text-slate-600 hover:text-slate-900 dark:text-slate-350 dark:hover:text-white'
                         }`}
                       >
-                        Sourcing Hub
+                        Market Place
                         {location.pathname === '/marketplace' && (
                           <motion.div 
                             layoutId="activeNavLine"

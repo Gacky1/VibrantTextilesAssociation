@@ -31,10 +31,11 @@ import Marketplace from './pages/Marketplace';
 import MarketplaceProduct from './pages/MarketplaceProduct';
 import MarketplaceSupplier from './pages/MarketplaceSupplier';
 import { AccountHome, AccountLogin, AccountStatus, BuyerVerification, MemberHome, Unauthorized } from './pages/AccountPages';
-import { IndustryMemberRoute, RoleProtectedRoute, UserRoute } from './auth/RoleRoutes';
+import { IndustryMemberRoute, RoleProtectedRoute, StateStakeholderRoute, UserRoute } from './auth/RoleRoutes';
 import AdminMarketplace from './admin/AdminMarketplace';
 import AdminAccountRegistry from './admin/AdminAccountRegistry';
 import AdminTextiles from './admin/AdminTextiles';
+import AdminStakeholders from './admin/AdminStakeholders';
 import { MemberVerification } from './pages/MemberPortalPages';
 import MemberCompanyProfile from './pages/MemberCompanyProfile';
 import { BuyerEnquiries, BuyerSavedProducts, NewBuyerEnquiry } from './pages/BuyerMarketplacePages';
@@ -43,6 +44,7 @@ import { PartnerEnquiries, PartnerQuotations } from './pages/PartnerEnquiryWorkf
 import BuyerQuotations from './pages/BuyerQuotations';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import StateStakeholderDashboard from './pages/StateStakeholderDashboard';
 
 function App() {
   return (
@@ -77,6 +79,7 @@ function App() {
         <Route path="/account/enquiries/new" element={<UserRoute><NewBuyerEnquiry /></UserRoute>} />
         <Route path="/account/quotations" element={<UserRoute><BuyerQuotations /></UserRoute>} />
         <Route path="/account/saved" element={<UserRoute><BuyerSavedProducts /></UserRoute>} />
+        <Route path="/stakeholder" element={<StateStakeholderRoute><StateStakeholderDashboard /></StateStakeholderRoute>} />
         <Route path="/member" element={<IndustryMemberRoute><MemberHome /></IndustryMemberRoute>} />
         <Route path="/member/products" element={<IndustryMemberRoute><PartnerProducts /></IndustryMemberRoute>} />
         <Route path="/member/enquiries" element={<IndustryMemberRoute><PartnerEnquiries /></IndustryMemberRoute>} />
@@ -100,6 +103,7 @@ function App() {
           <Route path="marketplace" element={<AdminMarketplace />} />
           <Route path="textiles" element={<AdminTextiles />} />
           <Route path="members" element={<AdminAccountRegistry />} />
+          <Route path="stakeholders" element={<AdminStakeholders />} />
           <Route path="council-members" element={<AdminMembers />} />
           <Route path="events" element={<AdminEvents />} />
           <Route path="media" element={<AdminMedia />} />

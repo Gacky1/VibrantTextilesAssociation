@@ -1,6 +1,6 @@
 # Project Context: Vibrant Textiles Association (VTA)
 
-Last updated: 18 July 2026
+Last updated: 10 August 2026
 
 This document is the current source of truth for developers and coding assistants working on the VTA application. The project has evolved from a public association website and CMS into a multi-portal platform with a Supabase-backed Textile Explorer, B2B Marketplace, buyer accounts, verified industry partners, and a role-protected Master Admin system.
 
@@ -11,7 +11,7 @@ VTA connects textile artisans, manufacturers, exporters, designers, buyers, educ
 1. Public website and dual Industry/Academy navigation.
 2. Textile Explorer for India's textile traditions and related research data.
 3. B2B Marketplace for verified supplier discovery, enquiries, RFQs, and quotations.
-4. Authenticated Buyer, Industry Partner, and Master Admin portals.
+4. Authenticated Buyer, Industry Partner, State Stakeholder, and Master Admin portals.
 
 The Marketplace is enquiry-led, not transactional e-commerce. Do not add carts, online payments, inventory deduction, logistics, or order fulfilment without a new business requirement.
 
@@ -40,6 +40,7 @@ Roles are stored in `public.profiles.role` using the `public.app_role` enum:
 - `master_admin`
 - `industry_member`
 - `user`
+- `state_stakeholder`
 
 The frontend role selector only chooses a sign-in destination. It must never write or infer a role. Supabase profiles and RLS are authoritative.
 
@@ -53,6 +54,7 @@ The frontend role selector only chooses a sign-in destination. It must never wri
 - `IndustryMemberRoute`
 - `VerifiedMemberRoute`
 - `UserRoute`
+- `StateStakeholderRoute`
 
 Buyer dashboard access requires `buyer_verification_status = verified`. Industry product publication requires a verified and active industry member at the database-policy level.
 
@@ -75,10 +77,11 @@ The public navbar uses `src/components/auth/SignInMenu.jsx` and offers:
 - Buyer → `/account/login?as=buyer`
 - Industry Partner → `/account/login?as=member`
 - Administration → `/account/login?as=admin`
+- Government Stakeholder → `/account/login?as=stakeholder`
 
 `src/pages/AccountPages.jsx` validates the selected portal against the authenticated profile role and redirects to the correct dashboard. A role mismatch signs the session out and displays an error. `/admin/login` redirects to the unified Administration login.
 
-New Auth users receive a profile through `public.handle_new_user()`. Self-registration always defaults to role `user`; users cannot self-assign `industry_member` or `master_admin`.
+New Auth users receive a profile through `public.handle_new_user()`. Self-registration always defaults to role `user`; users cannot self-assign `industry_member`, `state_stakeholder`, or `master_admin`.
 
 ## 5. Current routes
 
@@ -121,6 +124,12 @@ New Auth users receive a profile through `public.handle_new_user()`. Self-regist
 
 The member routes are backed by Supabase and owner-scoped RLS. Advanced multi-step product editing, threaded messaging, and the quotation builder remain staged.
 
+### State stakeholder
+
+- `/stakeholder` — state-scoped ministry intelligence dashboard
+
+The state assignment is controlled by Master Admin and enforced inside `get_state_stakeholder_dashboard()`. Stakeholders receive public/state aggregate heritage and marketplace indicators, not Buyer identities, private enquiry contents, quotation details, or another state's data.
+
 ### Master Admin
 
 - `/admin/dashboard`
@@ -135,6 +144,7 @@ The member routes are backed by Supabase and owner-scoped RLS. Advanced multi-st
 - `/admin/research`
 - `/admin/applications`
 - `/admin/content`
+- `/admin/stakeholders` — ministry account registry and state-scope management
 
 All `/admin` routes are wrapped by `MasterAdminRoute`.
 
@@ -148,7 +158,9 @@ Apply SQL files in this order:
 4. `supabase_verification_upgrade.sql` — buyer verification fields, admin verification RPCs, audit behavior, and additional policies.
 5. `supabase_textile_admin_upgrade.sql` — Master Admin write policies for Textile Explorer records and related tables.
 6. `supabase_marketplace_workflow_upgrade.sql` — quotation write policies and controlled buyer quotation decisions.
-7. Optional: `supabase_marketplace_seed.sql` — realistic verified supplier and published product demonstration data.
+7. `supabase_state_stakeholder_role.sql` — adds the stakeholder enum role; allow it to commit before the next migration.
+8. `supabase_state_stakeholder_upgrade.sql` — state assignments, RLS, indexes, and aggregate dashboard RPC.
+9. Optional: `supabase_marketplace_seed.sql` — realistic verified supplier and published product demonstration data.
 
 The seed requires a Supabase Auth user with email `marketplace.demo@vta.local`. It assigns that dedicated account the `industry_member` role. Use a separate Auth account for Master Admin testing.
 
@@ -169,6 +181,7 @@ The seed requires a Supabase Auth user with email `marketplace.demo@vta.local`. 
 - `marketplace_quotation_items`
 - `notifications`
 - `audit_logs`
+- `state_stakeholders`
 
 ### Textile Explorer tables
 
@@ -241,6 +254,12 @@ Adapters return predictable `{ data, error, success }` structures and wrap Supab
 - `supabase/config.toml` disables gateway JWT verification for `admin-create-account` so CORS preflight reaches the function; the function itself validates the bearer token, active account status, and `master_admin` role.
 - `src/admin/AdminMembers.jsx` — older council/public-partner CMS, intentionally retained separately
 - `src/admin/AdminLayout.jsx` — responsive admin shell and navigation
+- `src/admin/AdminStakeholders.jsx` — ministry account registry, assigned-state management, and access control
+
+### State stakeholder intelligence
+
+- `src/pages/StateStakeholderDashboard.jsx` — state KPIs, heritage and cluster coverage, export series, supplier ecosystem, aggregate marketplace activity, and CSV export
+- `public.get_state_stakeholder_dashboard()` — security-definer RPC deriving its state from the authenticated account and returning only aggregate/public state data
 
 ### Textile Explorer
 

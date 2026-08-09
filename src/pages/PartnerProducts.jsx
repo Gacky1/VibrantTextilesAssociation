@@ -4,7 +4,12 @@ import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faBox, faGlobe, faInfoCircle, faArrowRight, faEdit, faTrash, faExclamationTriangle, faTag, faLeaf, faCheck, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faPlus, faBox, faGlobe, faInfoCircle, faArrowRight, faEdit, 
+  faTrash, faExclamationTriangle, faTag, faLeaf, faCheck, faTrashAlt,
+  faClock, faCheckCircle, faTimesCircle, faEye, faPaperPlane 
+} from '@fortawesome/free-solid-svg-icons';
+import PortalShell from '../components/PortalShell';
 
 const emptyForm = {
   name: '',
@@ -35,70 +40,19 @@ const emptyForm = {
 
 const priceUnitOptions = ['metre', 'piece', 'kg', 'roll', 'set', 'yard', 'pack', 'pair'];
 
-function Shell({ children, open }) { 
-  const auth = useAuth(); 
-  const links = [
-    ['Overview', '/member'],
-    ['Products', '/member/products'],
-    ['Enquiries', '/member/enquiries'],
-    ['Quotations', '/member/quotations'],
-    ['Company profile', '/member/profile']
-  ];
-  return (
-    <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
-      <header className="border-b bg-slate-950 border-slate-900 text-white">
-        <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-3">
-            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-base tracking-tight uppercase">
-              VTA <span className="text-primary-400">Partner Portal</span>
-            </span>
-          </Link>
-          <nav className="flex flex-wrap gap-5 text-xs font-black uppercase tracking-wider">
-            {links.map(([label, to]) => (
-              <Link key={to} to={to} className="text-slate-300 hover:text-white transition-colors">
-                {label}
-              </Link>
-            ))}
-          </nav>
-          <button 
-            onClick={auth.signOut} 
-            className="text-xs font-black uppercase tracking-widest px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:text-white transition-all"
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-      
-      <section className="section-container py-12">
-        <div className="mb-10 relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-sm">
-          <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[20px]" />
-          
-          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
-            <div>
-              <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Products</h1>
-              <p className="mt-2 text-sm font-medium text-slate-500 max-w-xl leading-relaxed">Create, update, and manage your public B2B marketplace listings, specifications, and catalog drafts.</p>
-            </div>
-            <button onClick={open} className="btn-primary text-xs font-black uppercase tracking-wider relative z-10 px-5 py-3 flex items-center gap-1.5">
-              <FontAwesomeIcon icon={faPlus} /> Add Product
-            </button>
-          </div>
-        </div>
-
-        {children}
-      </section>
-    </main>
-  ); 
-}
-
 const Status = ({ value }) => {
-  const styles = 
-    value === 'published' || value === 'approved' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-    value === 'submitted' || value === 'pending_review' ? 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse border' :
-    value === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-200' :
-    'bg-slate-50 text-slate-600 border-slate-200';
+  const configs = {
+    published: { style: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: faGlobe },
+    approved: { style: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: faCheckCircle },
+    submitted: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse', icon: faClock },
+    pending_review: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse', icon: faClock },
+    rejected: { style: 'bg-rose-50 text-rose-700 border-rose-200', icon: faExclamationTriangle }
+  };
+  const config = configs[value] || { style: 'bg-slate-50 text-slate-600 border-slate-200', icon: faBox };
+
   return (
-    <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${styles}`}>
+    <span className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${config.style}`}>
+      <FontAwesomeIcon icon={config.icon} className="text-[9px]" />
       {(value || 'unknown').replaceAll('_', ' ')}
     </span>
   );
@@ -366,7 +320,16 @@ export default function PartnerProducts() {
   const inputStyle = "mt-1 w-full rounded-xl border border-slate-200 bg-white p-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-600 transition-all";
 
   return (
-    <Shell open={openAddModal}>
+    <PortalShell 
+      title="Products Catalog" 
+      subtitle="Create, update, and manage your public B2B marketplace listings, specifications, and catalog drafts."
+      isMember={true}
+      action={
+        <button onClick={openAddModal} className="btn-primary text-xs font-black uppercase tracking-wider relative z-10 px-5 py-3 flex items-center gap-1.5 shadow-[0_4px_12px_rgba(79,70,229,0.25)] bg-indigo-600 hover:bg-indigo-700">
+          <FontAwesomeIcon icon={faPlus} /> Add Product
+        </button>
+      }
+    >
       <div className="col-span-full">
         {error && <p className="mb-6 rounded-xl bg-red-50 border border-red-200 p-4 text-xs font-bold text-red-700">{error}</p>}
         
@@ -376,18 +339,17 @@ export default function PartnerProducts() {
           </div>
         ) : rows.length === 0 ? (
           <div className="text-center p-16 bg-white rounded-3xl border border-slate-200/85 shadow-sm max-w-md mx-auto">
-            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
+            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-200">
               <FontAwesomeIcon icon={faBox} className="text-lg" />
             </div>
-            <h3 className="font-black text-slate-900">No products uploaded</h3>
+            <h3 className="font-black text-slate-905">No products uploaded</h3>
             <p className="text-xs text-slate-500 mt-2">Publish drafts or add items to catalog lists to establish your presence.</p>
             <button onClick={openAddModal} className="btn-primary mt-6 text-xs font-black uppercase tracking-wider inline-block">Add First Product</button>
           </div>
         ) : (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {rows.map(row => (
-              <article key={row.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between group relative">
-                <div className="absolute inset-1 border border-dashed border-transparent group-hover:border-slate-200 pointer-events-none rounded-[22px] transition-colors duration-300" />
+              <article key={row.id} className="overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative">
                 
                 <div>
                   <div className="aspect-[4/3] bg-slate-100 overflow-hidden relative border-b">
@@ -788,6 +750,6 @@ export default function PartnerProducts() {
           </div>
         </div>
       )}
-    </Shell>
+    </PortalShell>
   );
 }

@@ -4,7 +4,12 @@ import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faCalendar, faMoneyBillWave, faTruck, faFileInvoiceDollar, faInbox, faPlus, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faEnvelope, faCalendar, faMoneyBillWave, faTruck, faFileInvoiceDollar, 
+  faInbox, faPlus, faPaperPlane, faClock, faCheckCircle, faTimesCircle, 
+  faUndo, faEye, faTags, faMapMarkerAlt, faBoxOpen 
+} from '@fortawesome/free-solid-svg-icons';
+import PortalShell from '../components/PortalShell';
 
 const blank = {
   item_name: '',
@@ -22,66 +27,21 @@ const blank = {
   terms_and_conditions: ''
 };
 
-function Shell({ title, subtitle, children }) { 
-  const auth = useAuth(); 
-  const links = [
-    ['Overview', '/member'],
-    ['Products', '/member/products'],
-    ['Enquiries', '/member/enquiries'],
-    ['Quotations', '/member/quotations'],
-    ['Company profile', '/member/profile']
-  ];
-  return (
-    <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
-      <header className="border-b bg-slate-950 border-slate-900 text-white">
-        <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-3">
-            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-base tracking-tight uppercase">
-              VTA <span className="text-primary-400">Partner Portal</span>
-            </span>
-          </Link>
-          <nav className="flex flex-wrap gap-5 text-xs font-black uppercase tracking-wider">
-            {links.map(([label, to]) => (
-              <Link key={to} to={to} className="text-slate-300 hover:text-white transition-colors">
-                {label}
-              </Link>
-            ))}
-          </nav>
-          <button 
-            onClick={auth.signOut} 
-            className="text-xs font-black uppercase tracking-widest px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:text-white transition-all"
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-      
-      <section className="section-container py-12">
-        <div className="mb-10 relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-sm">
-          <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[20px]" />
-          
-          <div className="relative z-10">
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
-            <p className="mt-2 text-sm font-medium text-slate-500 max-w-2xl leading-relaxed">{subtitle}</p>
-          </div>
-        </div>
-
-        {children}
-      </section>
-    </main>
-  ); 
-}
-
 const Status = ({ value }) => {
-  const styles = 
-    value === 'accepted' || value === 'published' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-    value === 'rejected' || value === 'spam' ? 'bg-rose-50 text-rose-700 border-rose-200' :
-    value === 'revision_requested' ? 'bg-amber-50 text-amber-700 border-amber-200' :
-    value === 'sent' || value === 'viewed' ? 'bg-indigo-50 text-indigo-700 border-indigo-200 border animate-pulse' :
-    'bg-slate-50 text-slate-600 border-slate-250';
+  const configs = {
+    accepted: { style: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: faCheckCircle },
+    published: { style: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: faCheckCircle },
+    rejected: { style: 'bg-rose-50 text-rose-700 border-rose-200', icon: faTimesCircle },
+    spam: { style: 'bg-rose-50 text-rose-700 border-rose-200', icon: faTimesCircle },
+    revision_requested: { style: 'bg-amber-55 text-amber-700 border-amber-200', icon: faUndo },
+    sent: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse', icon: faPaperPlane },
+    viewed: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200', icon: faEye }
+  };
+  const config = configs[value] || { style: 'bg-slate-50 text-slate-600 border-slate-200', icon: faClock };
+
   return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${styles}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${config.style}`}>
+      <FontAwesomeIcon icon={config.icon} className="text-[10px]" />
       {(value || 'unknown').replaceAll('_', ' ')}
     </span>
   );
@@ -204,9 +164,10 @@ export function PartnerEnquiries() {
   const inputStyle = "mt-1 w-full rounded-xl border border-slate-200 bg-white p-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-600 transition-all";
 
   return (
-    <Shell 
+    <PortalShell 
       title="Enquiry Inbox" 
       subtitle="Review custom specification requirements, B2B inquiries and RFQs assigned to your organization."
+      isMember={true}
     >
       <div className="col-span-full space-y-6">
         {error && <p className="rounded-xl bg-red-50 border border-red-200 p-4 text-sm font-semibold text-red-700">{error}</p>}
@@ -217,7 +178,7 @@ export function PartnerEnquiries() {
           </div>
         ) : rows.length === 0 ? (
           <div className="text-center p-16 bg-white rounded-3xl border border-slate-200/80 shadow-sm max-w-md mx-auto">
-            <div className="h-12 w-12 rounded-full bg-slate-105 text-slate-400 flex items-center justify-center mx-auto mb-4">
+            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-200">
               <FontAwesomeIcon icon={faInbox} className="text-lg" />
             </div>
             <h3 className="font-black text-slate-900">Inbox is empty</h3>
@@ -226,9 +187,7 @@ export function PartnerEnquiries() {
         ) : (
           <div className="grid gap-5">
             {rows.map(row => (
-              <article key={row.id} className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
-                <div className="absolute inset-1 border border-dashed border-slate-100 pointer-events-none rounded-[22px]" />
-                
+              <article key={row.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4 relative z-10">
                   <div className="space-y-1.5">
                     <div className="flex flex-wrap gap-2 items-center">
@@ -236,10 +195,10 @@ export function PartnerEnquiries() {
                       <Status value={row.status} />
                     </div>
                     <h2 className="text-lg font-black text-slate-900 leading-tight">{row.subject}</h2>
-                    <p className="text-xs text-slate-500">
-                      Enquiry ID: <span className="font-mono">{row.enquiry_number}</span> · Buyer: <b>{row.buyer_name || 'N/A'}</b>
+                    <p className="text-xs text-slate-500 font-semibold">
+                      Enquiry ID: <span className="font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{row.enquiry_number}</span> · Buyer: <b className="text-slate-800">{row.buyer_name || 'N/A'}</b>
                       {row.marketplace_products?.name && (
-                        <> · Target Product: <b>{row.marketplace_products.name}</b></>
+                        <> · Target Product: <b className="text-slate-800">{row.marketplace_products.name}</b></>
                       )}
                     </p>
                   </div>
@@ -247,7 +206,7 @@ export function PartnerEnquiries() {
                   {!['won', 'lost', 'closed', 'spam'].includes(row.status) && (
                     <button 
                       onClick={() => open(row)} 
-                      className="btn-primary text-xs font-black uppercase tracking-wider relative z-10 px-5 py-2.5 shrink-0"
+                      className="btn-primary text-xs font-black uppercase tracking-wider relative z-10 px-5 py-2.5 shrink-0 bg-indigo-600 hover:bg-indigo-700 shadow-[0_4px_12px_rgba(79,70,229,0.2)]"
                     >
                       {row.status === 'quotation_sent' ? 'Send Revision' : 'Reply with Quotation'}
                     </button>
@@ -261,28 +220,48 @@ export function PartnerEnquiries() {
                   </p>
                 </div>
 
-                <div className="grid gap-4 rounded-2xl bg-slate-50/50 border border-slate-100 p-4 text-xs text-slate-600 sm:grid-cols-2 md:grid-cols-4 relative z-10 mt-2">
-                  <div className="space-y-1">
-                    <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Requested Quantity</span>
-                    <b className="text-slate-800 text-sm font-black">{row.quantity || '—'} {row.quantity_unit || ''}</b>
+                <div className="grid gap-4 rounded-2xl bg-slate-50 border border-slate-200/50 p-4 text-xs text-slate-600 sm:grid-cols-2 md:grid-cols-4 relative z-10 mt-2">
+                  <div className="flex items-start gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faBoxOpen} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Requested Quantity</span>
+                      <b className="text-slate-850 text-xs font-black">{row.quantity || '—'} {row.quantity_unit || ''}</b>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Target Price</span>
-                    <b className="text-slate-800 text-sm font-black">
-                      {row.target_price ? `${row.currency || 'INR'} ${Number(row.target_price).toLocaleString('en-IN')}` : 'Flexible'}
-                    </b>
+                  <div className="flex items-start gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faTags} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Target Price</span>
+                      <b className="text-slate-850 text-xs font-black">
+                        {row.target_price ? `${row.currency || 'INR'} ${Number(row.target_price).toLocaleString('en-IN')}` : 'Flexible'}
+                      </b>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Expected Delivery</span>
-                    <b className="text-slate-800 text-sm font-black">
-                      {row.expected_delivery_date ? new Date(row.expected_delivery_date).toLocaleDateString() : 'Flexible'}
-                    </b>
+                  <div className="flex items-start gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faCalendar} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Expected Delivery</span>
+                      <b className="text-slate-850 text-xs font-black">
+                        {row.expected_delivery_date ? new Date(row.expected_delivery_date).toLocaleDateString() : 'Flexible'}
+                      </b>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Shipment Destination</span>
-                    <b className="text-slate-800 text-sm font-black">
-                      {[row.delivery_city, row.delivery_state].filter(Boolean).join(', ') || 'N/A'}
-                    </b>
+                  <div className="flex items-start gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faMapMarkerAlt} />
+                    </div>
+                    <div className="space-y-0.5">
+                      <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Shipment Destination</span>
+                      <b className="text-slate-850 text-xs font-black">
+                        {[row.delivery_city, row.delivery_state].filter(Boolean).join(', ') || 'N/A'}
+                      </b>
+                    </div>
                   </div>
                 </div>
               </article>
@@ -407,7 +386,7 @@ export function PartnerEnquiries() {
           </form>
         </div>
       )}
-    </Shell>
+    </PortalShell>
   );
 }
 
@@ -433,9 +412,10 @@ export function PartnerQuotations() {
   }, [auth.memberProfile?.id]);
 
   return (
-    <Shell 
+    <PortalShell 
       title="Sent Quotations" 
       subtitle="Track sent commercial proposals, check revision workflows and buyer decisions."
+      isMember={true}
     >
       <div className="col-span-full space-y-6">
         {error && <p className="rounded-xl bg-red-50 border border-red-205 p-4 text-sm font-semibold text-red-700">{error}</p>}
@@ -446,7 +426,7 @@ export function PartnerQuotations() {
           </div>
         ) : rows.length === 0 ? (
           <div className="text-center p-16 bg-white rounded-3xl border border-slate-200/80 shadow-sm max-w-md mx-auto">
-            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
+            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-200">
               <FontAwesomeIcon icon={faFileInvoiceDollar} className="text-lg" />
             </div>
             <h3 className="font-black text-slate-900">No quotations sent</h3>
@@ -456,8 +436,6 @@ export function PartnerQuotations() {
           <div className="grid gap-5">
             {rows.map(row => (
               <article key={row.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
-                <div className="absolute inset-1 border border-dashed border-slate-100 pointer-events-none rounded-[22px]" />
-                
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4 relative z-10">
                   <div className="space-y-1.5">
                     <div className="flex flex-wrap gap-2 items-center">
@@ -466,11 +444,11 @@ export function PartnerQuotations() {
                         Version {row.version}
                       </span>
                     </div>
-                    <h2 className="text-lg font-black text-slate-900 leading-tight">
-                      Quotation Ref: <span className="font-mono">{row.quotation_number}</span>
+                    <h2 className="text-lg font-extrabold text-slate-900 leading-tight">
+                      Quotation Ref: <span className="font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{row.quotation_number}</span>
                     </h2>
-                    <p className="text-xs text-slate-500">
-                      Buyer: <b>{row.marketplace_enquiries?.buyer_name}</b> · Enquiry: <b>{row.marketplace_enquiries?.subject}</b>
+                    <p className="text-xs text-slate-550 font-semibold">
+                      Buyer: <b className="text-slate-800">{row.marketplace_enquiries?.buyer_name}</b> · Enquiry: <b className="text-slate-700">{row.marketplace_enquiries?.subject}</b>
                     </p>
                   </div>
                   <div className="text-right">
@@ -481,43 +459,49 @@ export function PartnerQuotations() {
 
                 <div className="mt-5 space-y-4 relative z-10">
                   <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">Quoted Items</span>
-                  <div className="divide-y border rounded-2xl overflow-hidden bg-slate-50/20">
+                  <div className="divide-y border border-slate-250 rounded-2xl overflow-hidden bg-slate-50/20">
                     {row.marketplace_quotation_items?.map(i => (
-                      <div key={i.id} className="flex justify-between gap-4 p-4 text-sm bg-white">
+                      <div key={i.id} className="flex justify-between gap-4 p-4 text-sm bg-white hover:bg-slate-50/50 transition-colors">
                         <span>
-                          <b className="text-slate-850 block">{i.item_name}</b>
-                          {i.description && <span className="block text-xs text-slate-500 mt-0.5">{i.description}</span>}
-                          <span className="block text-[11px] text-slate-400 font-medium mt-1">
+                          <b className="text-slate-800 block font-bold">{i.item_name}</b>
+                          {i.description && <span className="block text-xs text-slate-550 mt-0.5">{i.description}</span>}
+                          <span className="block text-[11px] text-slate-400 font-semibold mt-1">
                             Quantity: {i.quantity} {i.unit} × {row.currency} {Number(i.unit_price).toLocaleString('en-IN')}
                           </span>
                         </span>
-                        <b className="text-slate-900 self-center shrink-0">{row.currency} {Number(i.line_total).toLocaleString('en-IN')}</b>
+                        <b className="text-slate-900 self-center shrink-0 font-extrabold">{row.currency} {Number(i.line_total).toLocaleString('en-IN')}</b>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Logistics breakdown */}
-                <div className="mt-4 grid gap-4 rounded-2xl bg-slate-50/50 border border-slate-100 p-4 text-xs text-slate-600 sm:grid-cols-3 relative z-10">
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCalendar} className="text-slate-455 text-xs" />
+                <div className="mt-4 grid gap-4 rounded-2xl bg-slate-50 border border-slate-200/50 p-4 text-xs text-slate-600 sm:grid-cols-3 relative z-10">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faCalendar} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Validity</span>
-                      <b className="text-slate-800">{row.valid_until ? new Date(row.valid_until).toLocaleDateString() : 'N/A'}</b>
+                      <b className="text-slate-800 font-bold">{row.valid_until ? new Date(row.valid_until).toLocaleDateString() : 'N/A'}</b>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faMoneyBillWave} className="text-slate-455 text-xs" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-400">
+                      <FontAwesomeIcon icon={faMoneyBillWave} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Payment Terms</span>
-                      <b className="text-slate-800">{row.payment_terms || 'Flexible'}</b>
+                      <b className="text-slate-800 font-bold">{row.payment_terms || 'Flexible'}</b>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faTruck} className="text-slate-455 text-xs" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center shrink-0 text-slate-405">
+                      <FontAwesomeIcon icon={faTruck} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Delivery Lead Time</span>
-                      <b className="text-slate-800">{row.delivery_timeline || 'N/A'}</b>
+                      <b className="text-slate-800 font-bold">{row.delivery_timeline || 'N/A'}</b>
                     </div>
                   </div>
                 </div>
@@ -526,15 +510,15 @@ export function PartnerQuotations() {
                 {(row.notes || row.terms_and_conditions) && (
                   <div className="mt-4 border-t border-slate-100 pt-4 space-y-3 relative z-10">
                     {row.notes && (
-                      <div className="rounded-xl bg-slate-50/35 border border-slate-100 p-4">
+                      <div className="rounded-xl bg-slate-50 border border-slate-200/50 p-4">
                         <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Supplier Notes</span>
-                        <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">{row.notes}</p>
+                        <p className="text-xs text-slate-750 whitespace-pre-wrap leading-relaxed">{row.notes}</p>
                       </div>
                     )}
                     {row.terms_and_conditions && (
-                      <div className="rounded-xl bg-slate-50/20 border border-slate-100 p-4">
+                      <div className="rounded-xl bg-slate-50/50 border border-slate-200/50 p-4">
                         <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Quotation Terms & Conditions</span>
-                        <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">{row.terms_and_conditions}</p>
+                        <p className="text-xs text-slate-750 whitespace-pre-wrap leading-relaxed">{row.terms_and_conditions}</p>
                       </div>
                     )}
                   </div>
@@ -542,7 +526,7 @@ export function PartnerQuotations() {
 
                 {/* Buyer feedback */}
                 {(row.rejection_reason || row.revision_request) && (
-                  <div className="mt-4 rounded-2xl bg-amber-50/60 border border-amber-200/50 p-4 relative z-10 flex gap-2">
+                  <div className="mt-4 rounded-2xl bg-amber-50 border border-amber-200/60 p-4 relative z-10 flex gap-2">
                     <div className="text-amber-600 font-bold text-sm">⚠</div>
                     <div>
                       <span className="block text-[9px] font-black uppercase tracking-wider text-amber-600">Buyer Decision Feedback</span>
@@ -557,6 +541,6 @@ export function PartnerQuotations() {
           </div>
         )}
       </div>
-    </Shell>
+    </PortalShell>
   );
 }

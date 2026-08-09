@@ -30,18 +30,19 @@ Deno.serve(async (request) => {
     if (profileLookupError || callerProfile?.role !== 'master_admin' || callerProfile.account_status !== 'active') return reply({ error: 'Active Master Admin access required' }, 403);
 
     const body = await request.json();
-    const { accountType, email, password, fullName, phone, companyName, city, state, organizationName, organizationType, verificationStatus = 'verified' } = body;
-    if (!['buyer', 'industry_member'].includes(accountType)) return reply({ error: 'Invalid account type', code: 'INVALID_ACCOUNT_TYPE' }, 400);
+    const { accountType, email, password, fullName, phone, companyName, city, state, organizationName, organizationType, ministryName, designation, verificationStatus = 'verified' } = body;
+    if (!['buyer', 'industry_member', 'state_stakeholder'].includes(accountType)) return reply({ error: 'Invalid account type', code: 'INVALID_ACCOUNT_TYPE' }, 400);
     if (!email || !password || !fullName) return reply({ error: 'Email, password and full name are required', code: 'MISSING_REQUIRED_FIELDS' }, 400);
     if (password.length < 8) return reply({ error: 'Password must contain at least 8 characters', code: 'WEAK_PASSWORD' }, 400);
     if (accountType === 'industry_member' && !organizationName) return reply({ error: 'Organization name is required', code: 'MISSING_ORGANIZATION' }, 400);
+    if (accountType === 'state_stakeholder' && (!ministryName || !state)) return reply({ error: 'Ministry/department and assigned state are required', code: 'MISSING_STAKEHOLDER_SCOPE' }, 400);
 
     const admin = createClient(url, serviceKey, { auth: { autoRefreshToken: false, persistSession: false } });
     const { data: created, error: createError } = await admin.auth.admin.createUser({ email: email.trim().toLowerCase(), password, email_confirm: true, user_metadata: { full_name: fullName } });
     if (createError) return reply({ error: createError.message, code: createError.code || 'AUTH_CREATE_FAILED' }, createError.status || 400);
     const userId = created.user.id;
     try {
-      const role = accountType === 'buyer' ? 'user' : 'industry_member';
+      const role = accountType === 'buyer' ? 'user' : accountType === 'industry_member' ? 'industry_member' : 'state_stakeholder';
       const buyerStatus = accountType === 'buyer' ? verificationStatus : 'verified';
       const { error: profileError } = await admin.from('profiles').upsert({ id: userId, full_name: fullName, email: email.trim().toLowerCase(), phone: phone || null, company_name: companyName || organizationName || null, city: city || null, state: state || null, role, account_status: 'active', buyer_verification_status: buyerStatus, buyer_verified_by: buyerStatus === 'verified' ? caller.id : null, buyer_verified_at: buyerStatus === 'verified' ? new Date().toISOString() : null });
       if (profileError) throw profileError;
@@ -49,6 +50,10 @@ Deno.serve(async (request) => {
         const memberStatus = ['pending', 'under_review', 'verified'].includes(verificationStatus) ? verificationStatus : 'pending';
         const { error: memberError } = await admin.from('industry_members').insert({ user_id: userId, organization_name: organizationName, slug: `${slugify(organizationName)}-${userId.slice(0, 6)}`, organization_type: organizationType || null, business_email: email.trim().toLowerCase(), business_phone: phone || null, city: city || null, state: state || null, verification_status: memberStatus, verified_by: memberStatus === 'verified' ? caller.id : null, verified_at: memberStatus === 'verified' ? new Date().toISOString() : null, is_active: true });
         if (memberError) throw memberError;
+      }
+      if (accountType === 'state_stakeholder') {
+        const { error: stakeholderError } = await admin.from('state_stakeholders').insert({ user_id: userId, ministry_name: ministryName.trim(), designation: designation || null, state: state.trim(), is_active: true, created_by: caller.id });
+        if (stakeholderError) throw stakeholderError;
       }
       await admin.from('audit_logs').insert({ actor_user_id: caller.id, actor_role: 'master_admin', action: `admin_created_${accountType}`, entity_type: 'profile', entity_id: userId, new_values: { email, full_name: fullName, role, verification_status: verificationStatus } });
       return reply({ success: true, user: { id: userId, email, role } }, 201);

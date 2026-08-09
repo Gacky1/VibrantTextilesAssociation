@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabase';
 import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faBuilding, faGlobe, faTag, faPlus } from '@fortawesome/free-solid-svg-icons';
+import PortalShell from '../components/PortalShell';
 
 const links = [['Overview', '/member'], ['Products', '/member/products'], ['Enquiries', '/member/enquiries'], ['Quotations', '/member/quotations'], ['Company profile', '/member/profile']];
 const listFields = ['product_categories', 'materials', 'techniques', 'certifications', 'manufacturing_capabilities'];
@@ -45,42 +46,6 @@ const presetChips = {
   certifications: ['Silk Mark', 'Handloom Mark', 'GI Tagged', 'ISO 9001', 'OEKO-TEX', 'GOTS Certified', 'Fair Trade Certified'],
   manufacturing_capabilities: ['Custom Weaving', 'Bulk Manufacturing', 'Sample Development', 'Export Quality Packaging', 'Private Labeling', 'Dyeing & Finishing']
 };
-
-function MemberShell({ children }) {
-  const auth = useAuth();
-  return (
-    <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
-      <header className="border-b bg-slate-950 border-slate-900 text-white">
-        <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-3">
-            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-base tracking-tight uppercase">
-              VTA <span className="text-primary-400">Partner Portal</span>
-            </span>
-          </Link>
-          <nav className="flex flex-wrap gap-5 text-xs font-black uppercase tracking-wider">
-            {links.map(([label, to]) => (
-              <Link key={to} to={to} className="text-slate-300 hover:text-white transition-colors">
-                {label}
-              </Link>
-            ))}
-          </nav>
-          <button 
-            type="button" 
-            onClick={auth.signOut} 
-            className="text-xs font-black uppercase tracking-widest px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:text-white transition-all"
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-      
-      <section className="section-container py-12">
-        {children}
-      </section>
-    </main>
-  );
-}
 
 function normalizeUrl(value, label) {
   const trimmed = String(value || '').trim();
@@ -191,45 +156,38 @@ export default function MemberCompanyProfile() {
     finally { setSaving(false); }
   };
 
-  if (!form) return <MemberShell><p className="p-10 text-center text-slate-500">Loading company profile…</p></MemberShell>;
+  if (!form) return <PortalShell isMember={true} title="Company Profile"><p className="p-10 text-center text-slate-500 animate-pulse">Loading company profile…</p></PortalShell>;
   const displayedLogo = logoPreview || form.logo_url;
-  const inputStyle = "mt-1 w-full rounded-xl border border-slate-200 bg-white p-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-600 transition-all";
+  const inputStyle = "mt-1 w-full rounded-xl border border-slate-200 bg-white p-3.5 text-sm font-medium outline-none focus:ring-2 focus:ring-primary-400 focus:border-primary-605 transition-all";
 
   return (
-    <MemberShell>
-      <div className="mb-10 relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-sm">
-        <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[20px]" />
-        
-        <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div>
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">Company Profile</h1>
-            <p className="mt-2 text-sm font-medium text-slate-500 max-w-xl leading-relaxed">Manage your organization details, logo, certifications, and capabilities visible on the B2B directory.</p>
+    <PortalShell 
+      title="Company Profile" 
+      subtitle="Manage your organization details, logo, certifications, and capabilities visible on the B2B directory."
+      isMember={true}
+      action={
+        <div className="w-full md:w-72 space-y-2 shrink-0">
+          <div className="flex justify-between text-xs font-bold text-slate-700">
+            <span>Profile Completion</span>
+            <span>{completion}%</span>
           </div>
-
-          <div className="w-full md:w-72 space-y-2 shrink-0">
-            <div className="flex justify-between text-xs font-bold text-slate-700">
-              <span>Profile Completion</span>
-              <span>{completion}%</span>
-            </div>
-            <div className="h-2 rounded-full bg-slate-100 overflow-hidden border">
-              <div 
-                className={`h-full rounded-full transition-all duration-500 ${
-                  completion >= 80 ? 'bg-gradient-to-r from-emerald-500 to-teal-500' :
-                  completion >= 50 ? 'bg-gradient-to-r from-amber-500 to-indigo-600' :
-                  'bg-gradient-to-r from-rose-500 to-amber-500'
-                }`} 
-                style={{ width: `${completion}%` }} 
-              />
-            </div>
+          <div className="h-2 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
+            <div 
+              className={`h-full rounded-full transition-all duration-500 ${
+                completion >= 80 ? 'bg-gradient-to-r from-emerald-500 to-teal-500' :
+                completion >= 50 ? 'bg-gradient-to-r from-amber-500 to-indigo-650' :
+                'bg-gradient-to-r from-rose-500 to-amber-500'
+              }`} 
+              style={{ width: `${completion}%` }} 
+            />
           </div>
         </div>
-      </div>
-
+      }
+    >
       {error && <p className="mb-6 rounded-2xl bg-red-50 border border-red-200 p-4 text-xs font-bold text-red-700">{error}</p>}
       {message && <p className="mb-6 rounded-2xl bg-emerald-50 border border-emerald-200 p-4 text-xs font-bold text-emerald-700">{message}</p>}
 
-      <form onSubmit={save} className="grid gap-6 rounded-3xl border border-slate-200/80 bg-white p-7 md:p-8 shadow-sm sm:grid-cols-2 relative overflow-hidden">
-        <div className="absolute inset-1 border border-dashed border-slate-100 pointer-events-none rounded-[22px]" />
+      <form onSubmit={save} className="grid gap-6 rounded-3xl border border-slate-200 bg-white p-7 md:p-8 shadow-sm sm:grid-cols-2 relative overflow-hidden">
 
         {/* Company Logo Section */}
         <section className="sm:col-span-2 rounded-2xl border border-slate-200/80 bg-slate-50/50 p-6 relative z-10 space-y-4">
@@ -389,6 +347,6 @@ export default function MemberCompanyProfile() {
           </button>
         </div>
       </form>
-    </MemberShell>
+    </PortalShell>
   );
 }

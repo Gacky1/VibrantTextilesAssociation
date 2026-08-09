@@ -11,6 +11,7 @@ const navItems = [
   { to: '/admin/dashboard', label: 'Dashboard', icon: '📊' },
   { to: '/admin/members', label: 'Partner Verification', icon: '✓' },
   { to: '/admin/council-members', label: 'Council Registry', icon: '👥' },
+  { to: '/admin/stakeholders', label: 'Gov. Stakeholders', icon: '🏛' },
   { to: '/admin/events', label: 'Events', icon: '📅' },
   { to: '/admin/skill-dev', label: 'Skill Dev', icon: '🎓' },
   { to: '/admin/research', label: 'Research', icon: '🔬' },

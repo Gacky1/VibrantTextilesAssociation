@@ -7,6 +7,8 @@ function Guard({ children, roles, verified = false, verifiedBuyer = false }) {
   if (auth.loading) return <div className="min-h-screen grid place-items-center"><div className="h-10 w-10 animate-spin rounded-full border-4 border-primary-200 border-t-primary-600" /></div>;
   const loginPath = roles?.includes('master_admin')
     ? '/account/login?as=admin'
+    : roles?.includes('state_stakeholder')
+      ? '/account/login?as=stakeholder'
     : roles?.includes('industry_member')
       ? '/account/login?as=member'
       : '/account/login?as=buyer';
@@ -24,3 +26,4 @@ export const MasterAdminRoute = ({ children }) => <Guard roles={['master_admin']
 export const IndustryMemberRoute = ({ children }) => <Guard roles={['industry_member']}>{children}</Guard>;
 export const VerifiedMemberRoute = ({ children }) => <Guard roles={['industry_member']} verified>{children}</Guard>;
 export const UserRoute = ({ children }) => <Guard roles={['user']} verifiedBuyer>{children}</Guard>;
+export const StateStakeholderRoute = ({ children }) => <Guard roles={['state_stakeholder']}>{children}</Guard>;

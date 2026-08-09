@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faChevronDown, faRightFromBracket, faShieldHalved, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faBuilding, faChevronDown, faLandmark, faRightFromBracket, faShieldHalved, faUser } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 
 const entries = [
   { label: 'Buyer', description: 'Enquiries and quotations', to: '/account/login?as=buyer', icon: faUser },
   { label: 'Industry Partner', description: 'Products and supplier portal', to: '/account/login?as=member', icon: faBuilding },
+  { label: 'Government Stakeholder', description: 'State textile intelligence', to: '/account/login?as=stakeholder', icon: faLandmark },
   { label: 'Administration', description: 'Authorised VTA team only', to: '/account/login?as=admin', icon: faShieldHalved },
 ];
 
@@ -20,7 +21,7 @@ export default function SignInMenu({ mobile = false, onNavigate }) {
     return () => document.removeEventListener('mousedown', close);
   }, []);
 
-  const dashboard = auth.role === 'master_admin' ? '/admin/dashboard' : auth.role === 'industry_member' ? '/member' : '/account';
+  const dashboard = auth.role === 'master_admin' ? '/admin/dashboard' : auth.role === 'industry_member' ? '/member' : auth.role === 'state_stakeholder' ? '/stakeholder' : '/account';
   if (auth.user) return <div className={mobile ? 'space-y-3' : 'flex items-center gap-2'}><Link onClick={onNavigate} to={dashboard} className={mobile ? 'block rounded-xl bg-white p-4 font-black text-slate-800' : 'whitespace-nowrap rounded-full border border-slate-200 px-4 py-2 text-xs font-extrabold text-slate-700'}>My dashboard</Link>{mobile && <button onClick={() => auth.signOut()} className="flex items-center gap-2 text-sm font-bold text-red-600"><FontAwesomeIcon icon={faRightFromBracket} /> Sign out</button>}</div>;
 
   if (mobile) return <div><p className="mb-3 text-[10px] font-black uppercase tracking-widest text-slate-400">Sign in</p><div className="grid gap-2">{entries.map((entry) => <Link key={entry.label} to={entry.to} onClick={onNavigate} className="flex items-center gap-4 rounded-xl border border-slate-200 bg-white p-4"><span className="grid h-10 w-10 place-items-center rounded-xl bg-primary-50 text-primary-700"><FontAwesomeIcon icon={entry.icon} /></span><span><b className="block text-sm text-slate-900">{entry.label}</b><span className="text-xs text-slate-500">{entry.description}</span></span></Link>)}</div></div>;

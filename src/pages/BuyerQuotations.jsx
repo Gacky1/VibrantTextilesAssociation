@@ -4,61 +4,26 @@ import { useAuth } from '../context/AuthContext';
 import { supabase } from '../lib/supabase';
 import logoRect from '../assets/LogoRectTransparent.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFileInvoiceDollar, faCalendar, faMoneyBillWave, faTruck, faUserCheck, faGlobe, faBoxOpen, faClipboardList, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
-const nav = [['Overview', '/account'], ['Enquiries', '/account/enquiries'], ['Quotations', '/account/quotations'], ['Saved', '/account/saved']];
-
-function Shell({ title, subtitle, children }) { 
-  const auth = useAuth(); 
-  return (
-    <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
-      <header className="border-b bg-white border-slate-100">
-        <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-3 font-black text-base tracking-tight uppercase">
-            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
-            <span>VTA <span className="text-primary-700">Marketplace</span></span>
-          </Link>
-          <nav className="flex gap-5 text-xs font-black uppercase tracking-wider">
-            {nav.map(([x, to]) => (
-              <Link className="font-black text-slate-500 hover:text-slate-955 transition-colors" key={to} to={to}>
-                {x}
-              </Link>
-            ))}
-          </nav>
-          <button 
-            onClick={auth.signOut} 
-            className="text-xs font-black uppercase tracking-widest px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all"
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-      
-      <section className="section-container py-12">
-        <div className="mb-10 relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-sm">
-          <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[20px]" />
-          
-          <div className="relative z-10">
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
-            <p className="mt-2 text-sm font-medium text-slate-500 max-w-xl leading-relaxed">{subtitle}</p>
-          </div>
-        </div>
-
-        {children}
-      </section>
-    </main>
-  ); 
-}
+import { 
+  faFileInvoiceDollar, faCalendar, faMoneyBillWave, faTruck, 
+  faUserCheck, faGlobe, faBoxOpen, faClipboardList, faChevronRight,
+  faEye, faPaperPlane, faUndo, faCheckCircle, faTimesCircle, faClock 
+} from '@fortawesome/free-solid-svg-icons';
+import PortalShell from '../components/PortalShell';
 
 const Status = ({ value }) => {
-  const styles = 
-    value === 'accepted' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-    value === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-200' :
-    value === 'revision_requested' ? 'bg-amber-50 text-amber-750 border-amber-200' :
-    value === 'sent' || value === 'viewed' ? 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse border' :
-    'bg-slate-55 text-slate-600 border-slate-200';
+  const configs = {
+    accepted: { style: 'bg-emerald-50 text-emerald-700 border-emerald-200', icon: faCheckCircle },
+    rejected: { style: 'bg-rose-50 text-rose-700 border-rose-200', icon: faTimesCircle },
+    revision_requested: { style: 'bg-amber-50 text-amber-750 border-amber-200', icon: faUndo },
+    sent: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200 animate-pulse', icon: faPaperPlane },
+    viewed: { style: 'bg-indigo-50 text-indigo-700 border-indigo-200', icon: faEye }
+  };
+  const config = configs[value] || { style: 'bg-slate-50 text-slate-600 border-slate-200', icon: faClock };
+
   return (
-    <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${styles}`}>
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider ${config.style}`}>
+      <FontAwesomeIcon icon={config.icon} className="text-[10px]" />
       {(value || 'unknown').replaceAll('_', ' ')}
     </span>
   );
@@ -115,7 +80,7 @@ export default function BuyerQuotations() {
   };
 
   return (
-    <Shell 
+    <PortalShell 
       title="My Quotations" 
       subtitle="Review custom price proposals, check delivery times and payment clauses, then approve or request modifications."
     >
@@ -128,7 +93,7 @@ export default function BuyerQuotations() {
           </div>
         ) : rows.length === 0 ? (
           <div className="text-center p-16 bg-white rounded-3xl border border-slate-200/80 shadow-sm max-w-md mx-auto">
-            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4">
+            <div className="h-12 w-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-4 border border-slate-200">
               <FontAwesomeIcon icon={faFileInvoiceDollar} className="text-lg" />
             </div>
             <h3 className="font-black text-slate-900">No quotations received</h3>
@@ -138,8 +103,6 @@ export default function BuyerQuotations() {
           <div className="grid gap-6">
             {rows.map(row => (
               <article key={row.id} className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm hover:shadow-md transition-all duration-300 relative overflow-hidden">
-                <div className="absolute inset-1 border border-dashed border-slate-100 pointer-events-none rounded-[22px]" />
-                
                 {/* Header block */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4 relative z-10">
                   <div className="space-y-1.5">
@@ -149,11 +112,11 @@ export default function BuyerQuotations() {
                         Version {row.version}
                       </span>
                     </div>
-                    <h2 className="text-lg font-black text-slate-900 leading-tight">
-                      Quotation: <span className="font-mono">{row.quotation_number}</span>
+                    <h2 className="text-lg font-black text-slate-905 leading-tight">
+                      Quotation: <span className="font-mono text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded">{row.quotation_number}</span>
                     </h2>
-                    <p className="text-xs text-slate-550">
-                      Supplier: <Link to={`/marketplace/suppliers/${row.industry_members?.slug}`} className="text-primary-700 font-bold hover:underline">{row.industry_members?.organization_name}</Link> · Enquiry: <b>{row.marketplace_enquiries?.subject}</b>
+                    <p className="text-xs text-slate-500 font-semibold">
+                      Supplier: <Link to={`/marketplace/suppliers/${row.industry_members?.slug}`} className="text-rose-605 font-extrabold hover:underline">{row.industry_members?.organization_name}</Link> · Enquiry: <b className="text-slate-800">{row.marketplace_enquiries?.subject}</b>
                     </p>
                   </div>
                   <div className="text-right">
@@ -166,28 +129,28 @@ export default function BuyerQuotations() {
                 <div className="mt-5 flex flex-col lg:flex-row gap-6 justify-between items-start relative z-10">
                   <div className="flex-1 w-full space-y-2.5">
                     <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block">Quoted Line Items</span>
-                    <div className="divide-y rounded-2xl border border-slate-150 overflow-hidden bg-white">
+                    <div className="divide-y rounded-2xl border border-slate-200 overflow-hidden bg-white">
                       {row.marketplace_quotation_items?.map(item => (
-                        <div key={item.id} className="flex justify-between gap-4 p-4 text-sm hover:bg-slate-50/30 transition-colors">
+                        <div key={item.id} className="flex justify-between gap-4 p-4 text-sm hover:bg-slate-50/50 transition-colors">
                           <span>
-                            <b className="text-slate-850 block">{item.item_name}</b>
+                            <b className="text-slate-800 block font-bold">{item.item_name}</b>
                             {item.description && <span className="block text-xs text-slate-500 mt-0.5 leading-relaxed">{item.description}</span>}
-                            <span className="block text-[11px] text-slate-400 font-medium mt-1">
+                            <span className="block text-[11px] text-slate-400 font-semibold mt-1">
                               Quantity: {item.quantity} {item.unit || 'units'} × {row.currency} {Number(item.unit_price).toLocaleString('en-IN')}
                             </span>
                           </span>
-                          <b className="text-slate-900 self-center shrink-0">{row.currency} {Number(item.line_total).toLocaleString('en-IN')}</b>
+                          <b className="text-slate-900 self-center shrink-0 font-extrabold">{row.currency} {Number(item.line_total).toLocaleString('en-IN')}</b>
                         </div>
                       ))}
                     </div>
                   </div>
 
                   {/* Financial Receipt Summary Card */}
-                  <div className="w-full lg:w-80 rounded-2xl bg-slate-50 border border-slate-150/60 p-5 text-xs space-y-3 shrink-0">
-                    <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block border-b pb-1.5">Financial Breakdown</span>
-                    <div className="flex justify-between text-slate-600">
+                  <div className="w-full lg:w-80 rounded-2xl bg-slate-50 border border-slate-200 p-5 text-xs space-y-3 shrink-0">
+                    <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block border-b pb-1.5 border-slate-200">Financial Breakdown</span>
+                    <div className="flex justify-between text-slate-650 font-medium">
                       <span>Subtotal</span>
-                      <span>{row.currency} {Number(row.subtotal || 0).toLocaleString('en-IN')}</span>
+                      <span className="text-slate-850 font-bold">{row.currency} {Number(row.subtotal || 0).toLocaleString('en-IN')}</span>
                     </div>
                     {row.discount_amount > 0 && (
                       <div className="flex justify-between text-emerald-650 font-bold">
@@ -196,18 +159,18 @@ export default function BuyerQuotations() {
                       </div>
                     )}
                     {row.tax_amount > 0 && (
-                      <div className="flex justify-between text-slate-600">
+                      <div className="flex justify-between text-slate-655 font-medium">
                         <span>Estimated Tax</span>
-                        <span>{row.currency} {Number(row.tax_amount).toLocaleString('en-IN')}</span>
+                        <span className="text-slate-850 font-bold">{row.currency} {Number(row.tax_amount).toLocaleString('en-IN')}</span>
                       </div>
                     )}
                     {row.shipping_amount > 0 && (
-                      <div className="flex justify-between text-slate-600">
+                      <div className="flex justify-between text-slate-655 font-medium">
                         <span>Shipping / Freight</span>
-                        <span>{row.currency} {Number(row.shipping_amount).toLocaleString('en-IN')}</span>
+                        <span className="text-slate-850 font-bold">{row.currency} {Number(row.shipping_amount).toLocaleString('en-IN')}</span>
                       </div>
                     )}
-                    <div className="flex justify-between text-sm font-black text-slate-900 border-t pt-2.5">
+                    <div className="flex justify-between text-sm font-black text-slate-900 border-t pt-2.5 border-slate-200">
                       <span>Grand Total</span>
                       <span>{row.currency} {Number(row.grand_total || 0).toLocaleString('en-IN')}</span>
                     </div>
@@ -215,41 +178,47 @@ export default function BuyerQuotations() {
                 </div>
 
                 {/* Logistics grid block */}
-                <div className="mt-5 grid gap-4 rounded-2xl bg-slate-50/50 border border-slate-100 p-4 text-xs text-slate-600 sm:grid-cols-3 relative z-10">
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faCalendar} className="text-slate-450 text-xs" />
+                <div className="mt-5 grid gap-4 rounded-2xl bg-slate-50 border border-slate-200 p-4 text-xs text-slate-600 sm:grid-cols-3 relative z-10">
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center text-slate-400">
+                      <FontAwesomeIcon icon={faCalendar} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Offer Valid Until</span>
-                      <b className="text-slate-800">{row.valid_until ? new Date(row.valid_until).toLocaleDateString() : 'N/A'}</b>
+                      <b className="text-slate-800 font-bold">{row.valid_until ? new Date(row.valid_until).toLocaleDateString() : 'N/A'}</b>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faMoneyBillWave} className="text-slate-455 text-xs" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center text-slate-400">
+                      <FontAwesomeIcon icon={faMoneyBillWave} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Payment Terms</span>
-                      <b className="text-slate-800">{row.payment_terms || 'Flexible'}</b>
+                      <b className="text-slate-800 font-bold">{row.payment_terms || 'Flexible'}</b>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <FontAwesomeIcon icon={faTruck} className="text-slate-455 text-xs" />
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-8 w-8 rounded-lg bg-white border flex items-center justify-center text-slate-400">
+                      <FontAwesomeIcon icon={faTruck} className="text-xs" />
+                    </div>
                     <div>
                       <span className="block text-slate-400 font-bold uppercase tracking-wider text-[8px]">Delivery Lead Time</span>
-                      <b className="text-slate-800">{row.delivery_timeline || 'N/A'}</b>
+                      <b className="text-slate-800 font-bold">{row.delivery_timeline || 'N/A'}</b>
                     </div>
                   </div>
                 </div>
 
-                {/* Supplier notes & terms (Crucial addition for issue #3!) */}
+                {/* Supplier notes & terms */}
                 {(row.notes || row.terms_and_conditions) && (
                   <div className="mt-5 border-t border-slate-100 pt-4 space-y-3 relative z-10">
                     {row.notes && (
-                      <div className="rounded-xl bg-slate-50/50 border border-slate-100 p-4">
+                      <div className="rounded-xl bg-slate-50 border border-slate-200/50 p-4">
                         <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Supplier Notes</span>
                         <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">{row.notes}</p>
                       </div>
                     )}
                     {row.terms_and_conditions && (
-                      <div className="rounded-xl bg-slate-50/30 border border-slate-100 p-4">
+                      <div className="rounded-xl bg-slate-50/50 border border-slate-200/50 p-4">
                         <span className="text-[9px] font-black uppercase tracking-wider text-slate-400 block mb-1">Quotation Terms & Conditions</span>
                         <p className="text-xs text-slate-700 whitespace-pre-wrap leading-relaxed">{row.terms_and_conditions}</p>
                       </div>
@@ -268,13 +237,13 @@ export default function BuyerQuotations() {
                     </button>
                     <button 
                       onClick={() => { setReview(row); setDecision('revision_requested'); }} 
-                      className="rounded-xl border border-slate-250 hover:bg-slate-50 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-700 transition-all bg-white"
+                      className="rounded-xl border border-slate-250 hover:bg-slate-50 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-slate-700 transition-all bg-white shadow-sm"
                     >
                       Request Revision
                     </button>
                     <button 
                       onClick={() => { setReview(row); setDecision('rejected'); }} 
-                      className="rounded-xl border border-red-200 hover:bg-red-50/50 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-red-650 transition-all bg-white"
+                      className="rounded-xl border border-red-200 hover:bg-red-50 px-5 py-2.5 text-xs font-black uppercase tracking-wider text-red-600 transition-all bg-white shadow-sm"
                     >
                       Reject Quotation
                     </button>
@@ -290,8 +259,6 @@ export default function BuyerQuotations() {
       {review && (
         <div className="fixed inset-0 z-50 grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
           <form onSubmit={respond} className="w-full max-w-lg rounded-3xl bg-white p-7 relative overflow-hidden shadow-2xl">
-            <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[22px]" />
-            
             <h2 className="text-2xl font-black capitalize text-slate-90">
               {decision.replaceAll('_', ' ')} Proposal
             </h2>
@@ -317,14 +284,14 @@ export default function BuyerQuotations() {
               <button 
                 type="button" 
                 onClick={() => setReview(null)} 
-                className="rounded-xl border border-slate-250 px-5 py-3 text-xs font-black uppercase tracking-wider text-slate-500 hover:text-slate-800 transition-colors"
+                className="rounded-xl border border-slate-250 px-5 py-3 text-xs font-black uppercase tracking-wider text-slate-500 hover:text-slate-800 transition-colors bg-white shadow-sm"
               >
                 Cancel
               </button>
               <button 
                 disabled={saving} 
                 className={`rounded-xl px-6 py-3 text-xs font-black uppercase tracking-wider text-white transition-all ${
-                  decision === 'accepted' ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-rose-600 hover:bg-rose-700'
+                  decision === 'accepted' ? 'bg-emerald-600 hover:bg-emerald-700 shadow-[0_4px_12px_rgba(16,185,129,0.2)]' : 'bg-rose-600 hover:bg-rose-700 shadow-[0_4px_12px_rgba(225,29,72,0.2)]'
                 }`}
               >
                 {saving ? 'Processing…' : 'Confirm Action'}
@@ -333,6 +300,6 @@ export default function BuyerQuotations() {
           </form>
         </div>
       )}
-    </Shell>
+    </PortalShell>
   );
 }

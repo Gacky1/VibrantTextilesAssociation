@@ -267,7 +267,7 @@ export default function Marketplace() {
                  searchType === 'location' ? 'Grouped by Craft Location' :
                  searchType === 'textile' ? 'Grouped by Textile Type' :
                  searchType === 'cluster' ? 'Grouped by Textile Cluster' :
-                 'Sourcing Hub Directory'}
+                 'Market Place Directory'}
               </h2>
             </div>
             

@@ -1,15 +1,20 @@
 import { useMemo, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBuilding, faShieldHalved, faUser, faEnvelope, faFileInvoiceDollar, faHeart, faGlobe, faPlus, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { 
+  faBuilding, faShieldHalved, faUser, faEnvelope, 
+  faFileInvoiceDollar, faHeart, faGlobe, faBoxOpen, 
+  faCheckCircle, faClock, faExclamationTriangle, faLandmark 
+} from '@fortawesome/free-solid-svg-icons';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import favicon from '../assets/Favicon.png';
-import logoRect from '../assets/LogoRectTransparent.png';
+import PortalShell from '../components/PortalShell';
 
 const loginModes = {
   buyer: { label: 'Buyer', role: 'user', icon: faUser, description: 'Access enquiries, quotations and saved products.', destination: '/account' },
   member: { label: 'Industry Partner', role: 'industry_member', icon: faBuilding, description: 'Manage your company, products, enquiries and quotations.', destination: '/member' },
   admin: { label: 'VTA Administration', role: 'master_admin', icon: faShieldHalved, description: 'Restricted access for authorised VTA administrators.', destination: '/admin/dashboard' },
+  stakeholder: { label: 'Government Stakeholder', role: 'state_stakeholder', icon: faLandmark, description: 'State-scoped textile intelligence for authorised ministries and departments.', destination: '/stakeholder' },
 };
 
 export function AccountLogin() {
@@ -226,112 +231,58 @@ export function AccountLogin() {
   );
 }
 
-const Tile = ({ to, title, text, icon, badge }) => (
+const Tile = ({ to, title, text, icon, badge, isMember = false }) => (
   <Link 
     to={to} 
-    className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg flex flex-col justify-between min-h-[180px]"
+    className={`group relative overflow-hidden rounded-3xl border bg-white p-6 shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between min-h-[190px] ${
+      isMember 
+        ? 'border-slate-200/80 hover:border-indigo-300/50 shadow-[0_4px_12px_rgba(79,70,229,0.01)] hover:shadow-[0_12px_32px_rgba(79,70,229,0.08)]' 
+        : 'border-slate-200/80 hover:border-rose-350/50 shadow-[0_4px_12px_rgba(225,29,72,0.01)] hover:shadow-[0_12px_32px_rgba(225,29,72,0.08)]'
+    }`}
   >
-    <div className="absolute inset-1.5 border border-dashed border-transparent group-hover:border-slate-200 pointer-events-none rounded-[18px] transition-colors duration-300" />
+    {/* Micro-glow backdrop overlay */}
+    <div className={`absolute top-0 right-0 w-24 h-24 rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-all duration-500 pointer-events-none ${
+      isMember ? 'bg-indigo-500' : 'bg-rose-500'
+    }`} />
     
     <div>
       <div className="flex justify-between items-start">
-        <div className="h-11 w-11 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-base font-bold group-hover:scale-110 transition-transform duration-300 border border-indigo-100">
+        <div className={`h-12 w-12 rounded-2xl flex items-center justify-center text-sm font-bold group-hover:scale-110 transition-transform duration-300 border ${
+          isMember 
+            ? 'bg-indigo-50/70 text-indigo-600 border-indigo-100/60' 
+            : 'bg-rose-50/70 text-rose-600 border-rose-100/60'
+        }`}>
           <FontAwesomeIcon icon={icon} />
         </div>
         {badge && (
-          <span className="rounded-full bg-indigo-50 border border-indigo-100 px-2.5 py-0.5 text-[9px] font-extrabold uppercase text-indigo-700 tracking-wider">
+          <span className={`rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider border ${
+            isMember 
+              ? 'bg-indigo-50/70 border-indigo-100 text-indigo-700' 
+              : 'bg-rose-50/70 border-rose-100 text-rose-700'
+          }`}>
             {badge}
           </span>
         )}
       </div>
-      <h2 className="mt-4 text-base font-black text-slate-900 group-hover:text-primary-700 transition-colors leading-tight">{title}</h2>
-      <p className="mt-2 text-xs font-medium text-slate-500 leading-relaxed">{text}</p>
+      <h2 className="mt-4 text-base font-extrabold text-slate-800 group-hover:text-slate-950 transition-colors leading-tight">{title}</h2>
+      <p className="mt-2 text-xs font-semibold text-slate-500 leading-relaxed">{text}</p>
     </div>
     
-    <div className="mt-4 flex items-center gap-1 text-[9px] font-black uppercase tracking-widest text-primary-700 group-hover:gap-2 transition-all">
+    <div className={`mt-4 flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-widest group-hover:gap-2.5 transition-all ${
+      isMember ? 'text-indigo-600 group-hover:text-indigo-700' : 'text-rose-600 group-hover:text-rose-750'
+    }`}>
       <span>Access Panel</span>
       <span>→</span>
     </div>
   </Link>
 );
 
-function Shell({ title, subtitle, isMember = false, children }) { 
-  const auth = useAuth(); 
-  const navLinks = isMember 
-    ? [
-        { label: 'Overview', to: '/member' },
-        { label: 'Products', to: '/member/products' },
-        { label: 'Enquiries', to: '/member/enquiries' },
-        { label: 'Quotations', to: '/member/quotations' },
-        { label: 'Company Profile', to: '/member/profile' }
-      ]
-    : [
-        { label: 'Overview', to: '/account' },
-        { label: 'Enquiries', to: '/account/enquiries' },
-        { label: 'Quotations', to: '/account/quotations' },
-        { label: 'Saved Products', to: '/account/saved' }
-      ];
-
-  return (
-    <main data-lenis-prevent className="min-h-screen bg-slate-50 text-slate-900 bg-textile-linen">
-      <header className={`border-b ${isMember ? 'bg-slate-950 border-slate-900 text-white' : 'bg-white border-slate-100 text-slate-900'}`}>
-        <div className="section-container flex flex-wrap items-center justify-between gap-4 py-4">
-          <Link to="/marketplace" className="flex items-center gap-3">
-            <img src={logoRect} alt="VTA Logo" className="h-8 w-auto object-contain" />
-            <span className="font-black text-base tracking-tight uppercase">
-              VTA <span className={isMember ? 'text-primary-400' : 'text-primary-700'}>Marketplace</span>
-            </span>
-          </Link>
-          <nav className="flex flex-wrap gap-5 text-xs font-black uppercase tracking-wider">
-            {navLinks.map((link) => (
-              <Link 
-                key={link.to} 
-                to={link.to} 
-                className={`transition-colors ${
-                  isMember 
-                    ? 'text-slate-300 hover:text-white' 
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-          <button 
-            onClick={auth.signOut} 
-            className={`text-xs font-black uppercase tracking-widest px-4 py-2 rounded-xl transition-all ${
-              isMember 
-                ? 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:text-white' 
-                : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
-            }`}
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-      
-      <section className="section-container py-12">
-        <div className="mb-10 relative overflow-hidden rounded-3xl border border-slate-200/60 bg-white p-8 shadow-sm">
-          <div className="absolute inset-1 border border-dashed border-slate-150 pointer-events-none rounded-[20px]" />
-          
-          <div className="relative z-10">
-            <h1 className="text-3xl font-black tracking-tight text-slate-900 sm:text-4xl">{title}</h1>
-            <p className="mt-2 text-sm font-medium text-slate-500 max-w-2xl leading-relaxed">{subtitle}</p>
-          </div>
-        </div>
-
-        {children}
-      </section>
-    </main>
-  ); 
-}
-
 export function AccountHome() { 
   const auth = useAuth(); 
   return (
-    <Shell 
-      title={`Welcome, ${auth.profile?.full_name || 'buyer'}`} 
-      subtitle="Manage your marketplace enquiries, track received supplier quotations, and view saved B2B products."
+    <PortalShell 
+      title={`✨ Welcome back, ${auth.profile?.full_name || 'Buyer'}`} 
+      subtitle="Overview of your buyer activity, active sourcing enquiries, and vendor quotation requests."
     >
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <Tile 
@@ -348,12 +299,12 @@ export function AccountHome() {
         />
         <Tile 
           to="/account/saved" 
-          title="Saved products" 
+          title="Saved Products" 
           text="Browse your shortlist of saved marketplace items." 
           icon={faHeart} 
         />
       </div>
-    </Shell>
+    </PortalShell>
   ); 
 }
 
@@ -363,37 +314,47 @@ export function MemberHome() {
   const verification = auth.memberVerificationStatus || 'pending';
   
   return (
-    <Shell 
-      title={auth.memberProfile?.organization_name || 'Industry partner portal'} 
-      subtitle="Complete your supplier profile, update your B2B products catalog, and reply to buyer enquiries."
+    <PortalShell 
+      title={`👋 ${auth.memberProfile?.organization_name || 'Industry Partner Portal'}`} 
+      subtitle="Complete your supplier verification, manage your products catalog, and reply to buyers."
       isMember={true}
     >
       <div className="space-y-6 w-full col-span-full">
         {/* Verification Status Card */}
-        <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
-          <div className="absolute inset-1 border border-dashed border-slate-100 pointer-events-none rounded-[22px]" />
-          
-          <div className="space-y-2 relative z-10">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Account Status</span>
-              <span className={`rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider border ${
-                verification === 'verified' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
-                verification === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-200' :
-                'bg-amber-50 text-amber-700 border-amber-200'
-              }`}>
-                {verification}
-              </span>
+        <div className="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="flex items-start gap-4 relative z-10">
+            <div className={`h-12 w-12 rounded-full flex items-center justify-center shrink-0 ${
+              verification === 'verified' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' :
+              verification === 'rejected' ? 'bg-rose-50 text-rose-600 border border-rose-100' :
+              'bg-amber-50 text-amber-600 border border-amber-100'
+            }`}>
+              <FontAwesomeIcon 
+                icon={verification === 'verified' ? faCheckCircle : verification === 'rejected' ? faExclamationTriangle : faClock} 
+                className="text-lg" 
+              />
             </div>
-            <h3 className="text-lg font-black text-slate-900">
-              {verification === 'verified' 
-                ? 'Your company profile is verified' 
-                : 'Verification is currently pending review'}
-            </h3>
-            <p className="text-xs font-medium text-slate-500 max-w-xl leading-relaxed">
-              {verification === 'verified'
-                ? 'You can publish new products directly to the public B2B marketplace and send formal quotations to active buyers.'
-                : 'VTA administrators are currently reviewing your partner registration. You can still modify your profile details and create draft products.'}
-            </p>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Account Status</span>
+                <span className={`rounded-full px-2.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider border ${
+                  verification === 'verified' ? 'bg-emerald-50 text-emerald-700 border-emerald-200' :
+                  verification === 'rejected' ? 'bg-rose-50 text-rose-700 border-rose-200' :
+                  'bg-amber-50 text-amber-700 border-amber-200'
+                }`}>
+                  {verification}
+                </span>
+              </div>
+              <h3 className="text-lg font-extrabold text-slate-900">
+                {verification === 'verified' 
+                  ? 'Your company profile is verified' 
+                  : 'Verification is currently pending review'}
+              </h3>
+              <p className="text-xs font-semibold text-slate-500 max-w-xl leading-relaxed">
+                {verification === 'verified'
+                  ? 'You can publish new products directly to the public B2B marketplace and send formal quotations to active buyers.'
+                  : 'VTA administrators are currently reviewing your partner registration. You can still modify your profile details and create draft products.'}
+              </p>
+            </div>
           </div>
 
           <div className="w-full md:w-64 space-y-2 relative z-10">
@@ -401,7 +362,7 @@ export function MemberHome() {
               <span>Profile Completion</span>
               <span>{completion}%</span>
             </div>
-            <div className="h-2 rounded-full bg-slate-100 overflow-hidden border">
+            <div className="h-2 rounded-full bg-slate-100 overflow-hidden border border-slate-200">
               <div 
                 className={`h-full rounded-full transition-all duration-500 ${
                   completion >= 80 ? 'bg-gradient-to-r from-emerald-500 to-teal-500' :
@@ -419,46 +380,68 @@ export function MemberHome() {
             to="/member/products" 
             title="Products" 
             text="Manage public B2B marketplace listings and drafts." 
-            icon={faBuilding} 
+            icon={faBoxOpen} 
+            isMember={true}
           />
           <Tile 
             to="/member/enquiries" 
             title="Enquiry Inbox" 
             text="Review buyer RFQs and start sending quotes." 
             icon={faEnvelope} 
+            isMember={true}
           />
           <Tile 
             to="/member/quotations" 
             title="Quotations" 
             text="Build, revise, and track sent price proposals." 
             icon={faFileInvoiceDollar} 
+            isMember={true}
           />
           <Tile 
             to="/member/profile" 
             title="Company Profile" 
             text="Manage public branding, address, and certifications." 
-            icon={faGlobe} 
+            icon={faBuilding} 
             badge={`${completion}% Complete`}
+            isMember={true}
           />
         </div>
       </div>
-    </Shell>
+    </PortalShell>
   ); 
 }
 
-export const AccountStatus = () => <Shell title="Account unavailable" subtitle="Your account is not active. Contact VTA support." />;
+export const AccountStatus = () => (
+  <PortalShell title="Account unavailable" subtitle="Your account is not active. Contact VTA support.">
+    <div className="rounded-3xl border border-red-200 bg-red-50/50 p-6 text-sm font-semibold text-red-700 max-w-lg">
+      Your account status is currently set to inactive. Please reach out to Vibrant Textiles Association support to reactivate your credentials.
+    </div>
+  </PortalShell>
+);
 
-export function BuyerVerification(){
+export function BuyerVerification() {
   const auth = useAuth();
   return (
-    <Shell 
-      title="Buyer verification" 
-      subtitle={`Your verification status is ${auth.buyerVerificationStatus || 'pending'}. VTA administrators will review your account before marketplace enquiries and quotations are enabled.`}
+    <PortalShell 
+      title="Buyer Verification" 
+      subtitle={`Your verification status is currently: ${auth.buyerVerificationStatus || 'pending'}`}
     >
-      <div className="col-span-full">
-        <Tile to="/marketplace" title="Browse marketplace" text="You may continue exploring verified products while your account is reviewed." icon={faGlobe} />
+      <div className="grid gap-6 max-w-2xl">
+        <div className="rounded-3xl border border-amber-200 bg-amber-50/40 p-6 text-xs text-amber-850 font-semibold space-y-2">
+          <h4 className="font-extrabold text-sm text-amber-900">Verification Pending</h4>
+          <p className="leading-relaxed">
+            VTA administrators will review your account before marketplace enquiries and quotations are enabled.
+            In the meantime, you are welcome to browse the public marketplace directory.
+          </p>
+        </div>
+        <Tile 
+          to="/marketplace" 
+          title="Browse Marketplace" 
+          text="You may continue exploring verified products while your account is reviewed." 
+          icon={faGlobe} 
+        />
       </div>
-    </Shell>
+    </PortalShell>
   );
 }
 
