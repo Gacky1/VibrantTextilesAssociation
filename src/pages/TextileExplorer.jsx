@@ -1,11 +1,11 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faSearch, faThLarge, faList, faMoon, faSun,
-  faCertificate, faMapMarkerAlt, faStar, faChevronRight,
-  faChevronDown, faUndo, faFilter, faCheck, faTimes, faLeaf, faTag, faCogs
+  faSearch, faThLarge, faList,
+  faCertificate, faMapMarkerAlt, faChevronRight,
+  faChevronDown, faUndo, faFilter, faTimes, faLeaf, faCogs
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -42,16 +42,18 @@ const TextileExplorer = () => {
   // Expanded states for Sidebar collapsible groups
   const [expandedGroups, setExpandedGroups] = useState({
     location: true,
-    textile: true,
-    recognition: true,
-    industry: true,
-    sustainability: true,
-    occasion: true,
-    price: true
+    textile: false,
+    recognition: false,
+    industry: false,
+    sustainability: false,
+    occasion: false,
+    price: false
   });
 
   const toggleGroup = (group) => {
-    setExpandedGroups(prev => ({ ...prev, [group]: !prev[group] }));
+    setExpandedGroups(prev => Object.fromEntries(
+      Object.keys(prev).map(key => [key, key === group ? !prev[group] : false])
+    ));
   };
 
   // Get full textile list from Supabase database
@@ -251,6 +253,17 @@ const TextileExplorer = () => {
       return true;
     });
   }, [allTextiles, searchQuery, selectedRegion, selectedState, selectedCity, selectedMaterial, selectedTextileType, selectedCategory, selectedTechnique, selectedWeavingStyle, selectedDyeingMethod, selectedEmbroideryType, selectedRecognitions, selectedIndustries, selectedSustainability, selectedOccasions, selectedPrices]);
+
+  const activeFilterCount = [
+    selectedRegion, selectedState, selectedCity, selectedMaterial,
+    selectedTextileType, selectedCategory, selectedTechnique,
+    selectedWeavingStyle, selectedDyeingMethod, selectedEmbroideryType
+  ].filter(Boolean).length
+    + selectedRecognitions.length
+    + selectedIndustries.length
+    + selectedSustainability.length
+    + selectedOccasions.length
+    + selectedPrices.length;
 
   // Sidebar Filter Panel (Reusable)
   const FilterPanel = () => (
@@ -658,6 +671,7 @@ const TextileExplorer = () => {
             >
               <FontAwesomeIcon icon={faFilter} />
               Filters
+              {activeFilterCount > 0 && <span className="grid h-5 min-w-5 place-items-center rounded-full bg-rose-600 px-1 text-[10px] text-white">{activeFilterCount}</span>}
             </button>
           </div>
 
@@ -675,15 +689,20 @@ const TextileExplorer = () => {
         <div className="flex gap-8 items-start">
           
           {/* Left Sidebar (Sticky Filters) - Hidden on mobile/tablet */}
-          <aside className="hidden lg:block w-72 bg-white/85 dark:bg-slate-900/85 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] p-6 shadow-lg backdrop-blur-md sticky top-28 max-h-[calc(100vh-7rem)] overflow-y-auto pr-3 pb-12 border-stitch">
+          <aside className="hidden lg:block w-80 shrink-0 bg-white/85 dark:bg-slate-900/85 border border-slate-200/50 dark:border-slate-800/50 rounded-[32px] p-6 shadow-lg backdrop-blur-md sticky top-28 border-stitch">
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-slate-200/50 dark:border-slate-800">
-              <h3 className="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <FontAwesomeIcon icon={faFilter} className="text-xs text-rose-500" />
-                Refine Search
-              </h3>
+              <div>
+                <h3 className="font-extrabold text-sm text-slate-800 dark:text-white uppercase tracking-wider flex items-center gap-2">
+                  <FontAwesomeIcon icon={faFilter} className="text-xs text-rose-500" />
+                  Refine Search
+                  {activeFilterCount > 0 && <span className="grid h-5 min-w-5 place-items-center rounded-full bg-rose-600 px-1 text-[10px] text-white">{activeFilterCount}</span>}
+                </h3>
+                <p className="mt-1 text-[10px] font-semibold text-slate-400">Choose a category to reveal its options</p>
+              </div>
               <button
                 onClick={handleResetFilters}
-                className="text-[10px] font-black uppercase text-rose-500 hover:underline flex items-center gap-1.5"
+                disabled={activeFilterCount === 0 && !searchQuery}
+                className="text-[10px] font-black uppercase text-rose-500 hover:underline flex items-center gap-1.5 disabled:cursor-not-allowed disabled:opacity-35"
               >
                 <FontAwesomeIcon icon={faUndo} className="text-[8px]" />
                 Reset
@@ -717,7 +736,7 @@ const TextileExplorer = () => {
             ) : (
               <>
                 <AnimatePresence mode="wait">
-                  <motion.div
+                  <Motion.div
                     key={`${viewMode}-${filteredTextiles.length}`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -733,7 +752,7 @@ const TextileExplorer = () => {
                       const hasGi = textile.gi_tag;
                       
                       return (
-                        <motion.div
+                        <Motion.div
                           layout
                           key={textile.id}
                           className={`glass-panel border border-slate-200/50 dark:border-slate-800/50 bg-white/90 dark:bg-slate-900/90 rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 group flex border-stitch ${
@@ -834,10 +853,10 @@ const TextileExplorer = () => {
                             </div>
                           </div>
 
-                        </motion.div>
+                        </Motion.div>
                       );
                     })}
-                  </motion.div>
+                  </Motion.div>
                 </AnimatePresence>
 
                 {/* Empty state placeholder */}
@@ -870,7 +889,7 @@ const TextileExplorer = () => {
       <AnimatePresence>
         {isMobileFilterOpen && (
           <div className="fixed inset-0 z-[100] flex justify-end">
-            <motion.div
+            <Motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -878,7 +897,7 @@ const TextileExplorer = () => {
               className="absolute inset-0 bg-slate-950/60 backdrop-blur-sm"
             />
             
-            <motion.div
+            <Motion.div
               initial={{ x: '100%' }}
               animate={{ x: 0 }}
               exit={{ x: '100%' }}
@@ -922,7 +941,7 @@ const TextileExplorer = () => {
                   Apply Filters
                 </button>
               </div>
-            </motion.div>
+            </Motion.div>
           </div>
         )}
       </AnimatePresence>
