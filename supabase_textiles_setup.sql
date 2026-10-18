@@ -75,7 +75,7 @@ CREATE TABLE textiles (
   origin TEXT,
   weaving_process TEXT,
   dyeing_process TEXT,
-  motifs TEXT[] DEFAULT '{}',
+  motifs TEXT[] DEFAULT ARRAY[]::TEXT[],
   color_palette JSONB DEFAULT '[]'::jsonb,
   thumbnail TEXT,
   hero_image TEXT,
