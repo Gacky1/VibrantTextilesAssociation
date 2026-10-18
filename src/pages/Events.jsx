@@ -1,9 +1,8 @@
 import { useState, useEffect, useMemo } from 'react';
-import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faCalendarAlt, faMapMarkerAlt, faArrowRight, faCheckCircle, 
-  faClock, faGlobe, faTimes, faChevronRight, faChevronLeft, faSearch
+  faClock, faGlobe, faTimes, faSearch
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';

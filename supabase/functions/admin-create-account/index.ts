@@ -1,4 +1,12 @@
+// @ts-ignore -- Supabase Edge Functions resolve URL imports in the Deno runtime.
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+// Keep the file understandable to editors using the workspace TypeScript service.
+// Supabase provides this global when the function runs on Deno.
+declare const Deno: {
+  env: { get(name: string): string | undefined };
+  serve(handler: (request: Request) => Response | Promise<Response>): void;
+};
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',

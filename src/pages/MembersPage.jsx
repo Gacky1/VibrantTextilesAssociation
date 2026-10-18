@@ -1,13 +1,12 @@
 import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as solidIcons from '@fortawesome/free-solid-svg-icons';
 import { 
   faArrowRight, faGraduationCap, faNetworkWired, 
-  faChartBar, faBriefcase, faTrophy, faNewspaper, 
-  faUsers, faArrowLeft, faUserTie 
+  faChartBar, faBriefcase, faTrophy, faNewspaper,
+  faUserTie
 } from '@fortawesome/free-solid-svg-icons';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
